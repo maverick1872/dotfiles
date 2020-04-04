@@ -1,0 +1,6 @@
+fpath=($HOME/.custom-zsh-config/completions $fpath)
+source $HOME/.custom-zsh-config/aliases
+source $HOME/.custom-zsh-config/functions
+source $HOME/.custom-zsh-config/plugins
+source $HOME/.custom-zsh-config/plugin-configs
+source $HOME/.custom-zsh-config/personal-theme

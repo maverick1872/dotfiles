@@ -1,0 +1,17 @@
+# General
+alias c='clear'
+
+# GIT
+alias git-rm-local-merged='git branch -d $(git branch --merged | cut -c 3- | grep -i -v master | grep -i -v develop | grep -i -v integration | grep -v "*")'
+alias log='git log'
+alias checkout='git checkout'
+alias status='git status'
+alias commit='git commit'
+alias push='git push'
+alias pull='git pull'
+alias fetch='git fetch --all'
+
+# Configs
+alias zshconfig='vim ~/.zshrc'
+alias aliasedit='vim ~/.private_aliases'
+alias reload='source ~/.zshrc'
