@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ZshCustomDir=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
+echo "Current Working Dir '${PWD}'"
 echo "Default Shell = ${SHELL}"
 echo "Using ZSH Custom Dir of '${ZshCustomDir}'"
 
@@ -114,70 +115,72 @@ else
   echo "'history-search-multi-word' plugin is already installed"
 fi
 
+echo ""
 echo -n "Would you like to apply the custom ZSH configurations contained within this repository? (Yy/Nn)"
 read answer
 if [[ $answer != "${answer#[Yy]}" ]]; then
   ## Should .zshrc be applied
+  echo ""
   if [[ -f ${HOME}/.zshrc ]]; then
-    echo -n "Do you want to overwrite ${HOME}/.zshrc? (Yy/Nn)"
+    echo -n "Do you want to overwrite ${HOME}/.zshrc with a symlink? (Yy/Nn)"
     read answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
-        cp -a ./shellconfig/.zshrc "${HOME}"
-        echo "Applied ${HOME}/.zshrc"
+        ln -sf "${PWD}"/shellconfig/.zshrc "${HOME}"/.zshrc
+        echo "Symlinked .zshrc to ${HOME}/.zshrc"
     else
       echo "Skipping..."
-      echo ""
     fi
   else
     echo "Applied ${HOME}/.zshrc"
   fi
 
   ## Should aliases be applied
+  echo ""
   if [[ -f ${ZshCustomDir}/aliases.zsh ]]; then
-    echo -n "Do you want to overwrite ${ZshCustomDir}/aliases.zsh? (Yy/Nn)"
+    echo -n "Do you want to overwrite ${ZshCustomDir}/aliases.zsh with a symlink? (Yy/Nn)"
     read answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
-        cp -a ./shellconfig/aliases.zsh "${ZshCustomDir}"/
-        echo "Applied ${ZshCustomDir}/aliases.zsh"
+        ln -sf "${PWD}"/shellconfig/aliases.zsh "${ZshCustomDir}"/aliases.zsh
+        echo "Symlinked aliases to ${ZshCustomDir}/aliases.zsh"
     else
       echo "Skipping..."
-      echo ""
     fi
   else
-    cp -a ./shellconfig/aliases.zsh "${ZshCustomDir}"/
-    echo "Applied ${ZshCustomDir}/aliases.zsh"
+    ln -sf "${PWD}"/shellconfig/aliases.zsh "${ZshCustomDir}"/aliases.zsh
+    echo "Symlinked aliases to ${ZshCustomDir}/aliases.zsh"
   fi
 
   ## Should functions be applied
+  echo ""
   if [[ -f ${ZshCustomDir}/functions.zsh ]]; then
-    echo -n "Do you want to overwrite ${ZshCustomDir}/functions.zsh? (Yy/Nn)"
+    echo -n "Do you want to overwrite ${ZshCustomDir}/functions.zsh with a symlink? (Yy/Nn)"
     read answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
-        cp -a ./shellconfig/functions.zsh "${ZshCustomDir}"
-        echo "Applied ${ZshCustomDir}/functions.zsh"
+        ln -sf "${PWD}"/shellconfig/functions.zsh "${ZshCustomDir}"/functions.zsh
+        echo "Symlinked functions to ${ZshCustomDir}/functions.zsh"
     else
       echo "Skipping..."
-      echo ""
     fi
   else
-    cp -a ./shellconfig/functions.zsh "${ZshCustomDir}"
-    echo "Applied ${ZshCustomDir}/functions.zsh"
+    ln -sf "${PWD}"/shellconfig/functions.zsh "${ZshCustomDir}"/functions.zsh
+    echo "Symlinked functions to ${ZshCustomDir}/functions.zsh"
   fi
 
-  ## Should themese be copied over
-  echo -n "Do you want to copy all themes? (Yy/Nn)"
+  ## Should themes be copied over
+  echo ""
+  echo -n "Do you want to copy all themes with a symlink? (Yy/Nn)"
   read answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
-      cp -a ./shellconfig/themes/*.zsh-theme "${ZshCustomDir}"/themes
-      echo "Copied all themes to ${ZshCustomDir}/themes"
+      ln -sf "${PWD}"/shellconfig/themes "${ZshCustomDir}"/themes
+      echo "Symlinked themes to ${ZshCustomDir}/themes"
   else
     echo "Skipping..."
     echo ""
   fi
 else
   echo "Skipping..."
-  echo ""
 fi
 
+echo ""
 echo "Installation of ZSH and Oh-My-Zsh is complete. Please restart your terminals for changes to take effect."
 exit
