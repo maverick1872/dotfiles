@@ -19,7 +19,7 @@ if ! command -v zsh &>/dev/null; then
     if ! command -v brew &>/dev/null; then
       # Install Homebrew
       echo -n "Homebrew is required to install ZSH. Do you wish to install Homebrew? (Yy/Nn)"
-      read answer
+      read -r answer
       if [[ $answer != "${answer#[Yy]}" ]]; then
         echo "Installing Homebrew to proceed with installing ZSH."
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -39,10 +39,10 @@ fi
 
 if [[ ${SHELL} != $(command -v zsh) ]]; then
   echo -n "Do you wish to make ZSH your default shell? (Yy/Nn)"
-  read answer
+  read -r answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Making ZSH your default shell."
-    chsh -s $(command -v zsh)
+    chsh -s "$(command -v zsh)"
   else
     echo "Skipping..."
     echo ""
@@ -54,7 +54,7 @@ fi
 echo ""
 if [[ ! -d "${HOME}/.oh-my-zsh" ]]; then
   echo -n "Do you wish to install Oh-My-Zsh?"
-  read answer
+  read -r answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Installing Oh-My-Zsh."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -68,7 +68,7 @@ fi
 
 if [[ ! -d "${ZshCustomDir}/plugins/zsh-syntax-highlighting" ]]; then
   echo -n "Would you like to install the 'zsh-syntax-highlighting' plugin? (Yy/Nn)"
-  read answer
+  read -r answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Cloning zsh-users/zsh-syntax-highlighting.git"
     git clone git://github.com/zsh-users/zsh-syntax-highlighting.git "${ZshCustomDir}"/plugins/zsh-syntax-highlighting
@@ -84,7 +84,7 @@ fi
 
 if [[ ! -d "${ZshCustomDir}/plugins/zsh-autosuggestions" ]]; then
   echo -n "Would you like to install the 'zsh-autosuggestions' plugin? (Yy/Nn)"
-  read answer
+  read -r answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Cloning zsh-users/zsh-autosuggestions.git"
     git clone git://github.com/zsh-users/zsh-autosuggestions.git "${ZshCustomDir}"/plugins/zsh-autosuggestions
@@ -101,7 +101,7 @@ fi
 
 if [[ ! -d "${ZshCustomDir}/plugins/history-search-multi-word" ]]; then
   echo -n "Would you like to install the 'history-search-multi-word' plugin? (Yy/Nn)"
-  read answer
+  read -r answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Cloning zdharma/history-search-multi-word.git"
     git clone git://github.com/zdharma/history-search-multi-word.git "${ZshCustomDir}"/plugins/history-search-multi-word
@@ -117,13 +117,13 @@ fi
 
 echo ""
 echo -n "Would you like to apply the custom ZSH configurations contained within this repository? (Yy/Nn)"
-read answer
+read -r answer
 if [[ $answer != "${answer#[Yy]}" ]]; then
   ## Should .zshrc be symlinked
   echo ""
   if [[ -f ${HOME}/.zshrc ]]; then
     echo -n "Do you want to overwrite ${HOME}/.zshrc with a symlink? (Yy/Nn)"
-    read answer
+    read -r answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
         ln -snf "${PWD}"/shellconfig/.zshrc "${HOME}"/.zshrc
         echo "Symlinked .zshrc to ${HOME}/.zshrc"
@@ -138,7 +138,7 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
   echo ""
   if [[ -f ${ZshCustomDir}/aliases.zsh ]]; then
     echo -n "Do you want to overwrite ${ZshCustomDir}/aliases.zsh with a symlink? (Yy/Nn)"
-    read answer
+    read -r answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
         ln -snf "${PWD}"/shellconfig/aliases.zsh "${ZshCustomDir}"/aliases.zsh
         echo "Symlinked aliases to ${ZshCustomDir}/aliases.zsh"
@@ -154,7 +154,7 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
   echo ""
   if [[ -f ${ZshCustomDir}/functions.zsh ]]; then
     echo -n "Do you want to overwrite ${ZshCustomDir}/functions.zsh with a symlink? (Yy/Nn)"
-    read answer
+    read -r answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
         ln -snf "${PWD}"/shellconfig/functions.zsh "${ZshCustomDir}"/functions.zsh
         echo "Symlinked functions to ${ZshCustomDir}/functions.zsh"
@@ -169,12 +169,12 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
   ## Should themes be copied over
   echo ""
   echo -n "Do you want to copy all themes with a symlink? (Yy/Nn)"
-  read answer
+  read -r answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
       if [[ -d "${ZshCustomDir}"/themes ]]; then
         echo "${ZshCustomDir}/themes already exists and is a directory."
         echo -n "Should ${ZshCustomDir}/themes be removed and be replaced with a symlink? (Yy/Nn)"
-        read answer
+        read -r answer
         if [[ $answer != "${answer#[Yy]}" ]]; then
           rm -rf "${ZshCustomDir}"/themes
           ln -snf "${PWD}"/shellconfig/themes "${ZshCustomDir}"
