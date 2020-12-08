@@ -15,7 +15,7 @@ if ! hash zsh 2>/dev/null; then
     if ! hash brew 2>/dev/null; then
       # Install Homebrew
       echo "Installing Homebrew to proceed with installing ZSH."
-      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     else
       echo "Updating Homebrew prior to installing ZSH"
       brew update
@@ -35,16 +35,22 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
 #    chsh -s $(command -v zsh)
   fi
     echo "ZSH was already your default shell."
-fi 
+fi
    
 echo ""
-echo "Installing Oh-My-Zsh."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+echo -n "Do you wish to install Oh-My-Zsh?"
+read answer
+if [[ $answer != "${answer#[Yy]}" ]]; then
+  echo "Installing Oh-My-Zsh."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
 
-echo "Copying ZSH shell config files to home dir."
-cp -a ./shellconfig/.* $HOME/
-echo "Copying ZSH theme to ZSH Themes dir."
-cp -a ./shellconfig/zed.zsh-theme $ZSH/custom/themes/
+## The below is broken - please fix!!!
+
+#echo "Copying ZSH shell config files to home dir."
+#cp -a ./shellconfig/.* $HOME/
+#echo "Copying ZSH theme to ZSH Themes dir."
+#cp -a ./shellconfig/zed.zsh-theme $ZSH/custom/themes/
 
 echo -n "Would you like to install the 'zsh-syntax-highlighting' plugin? (Yy/Nn)"
 read answer
