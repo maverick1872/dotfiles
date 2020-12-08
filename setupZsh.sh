@@ -1,9 +1,8 @@
 #!/bin/bash
 
-#pstree -p $$ | tr ' ()' '\012\012\012' | grep -i "sh$" | grep -v "$0" | tail -1
-echo "Default Shell = ${SHELL}"
-echo "ZSH_CUSTOM env var = ${ZSH_CUSTOM}"
 ZshCustomDir=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
+echo "Default Shell = ${SHELL}"
+echo "Using ZSH Custom Dir of '${ZshCustomDir}'"
 
 # Check to see if ZSH is already installed.
 if ! command -v zsh &>/dev/null; then
@@ -45,6 +44,7 @@ if [[ ${SHELL} != $(command -v zsh) ]]; then
     chsh -s $(command -v zsh)
   else
     echo "Skipping..."
+    echo ""
   fi
 else
   echo "ZSH is already your default shell."
@@ -59,6 +59,7 @@ if [[ ! -d "${HOME}/.oh-my-zsh" ]]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
   else
     echo "Skipping..."
+    echo ""
   fi
 else
   echo "Oh-My-ZSH is already installed"
@@ -74,6 +75,7 @@ if [[ ! -d "${ZshCustomDir}/plugins/zsh-syntax-highlighting" ]]; then
     # - add zsh-syntax-highlighting tp .zshrc plugins list.
   else
     echo "Skipping..."
+    echo ""
   fi
 else
   echo "'zsh-syntax-highlighting' plugin is already installed"
@@ -90,6 +92,7 @@ if [[ ! -d "${ZshCustomDir}/plugins/zsh-autosuggestions" ]]; then
     #   - add AUTOSUGGESTION="true" to .zshrc
   else
     echo "Skipping..."
+    echo ""
   fi
 else
   echo "'zsh-autosuggestions' plugin is already installed"
@@ -105,33 +108,76 @@ if [[ ! -d "${ZshCustomDir}/plugins/history-search-multi-word" ]]; then
     # - add history-search-multi-word to .zshrc plugins list.
   else
     echo "Skipping..."
+    echo ""
   fi
 else
   echo "'history-search-multi-word' plugin is already installed"
 fi
 
-## The below is broken - please fix!!!
 echo -n "Would you like to apply the custom ZSH configurations contained within this repository? (Yy/Nn)"
 read answer
 if [[ $answer != "${answer#[Yy]}" ]]; then
-  cp -a ./shellconfig/.zshrc "${HOME}"
-  cp -a ./shellconfig/themes/* "${ZshCustomDir}"/themes
-## TODO: The below can be used for more selective applications later.
-#  echo -n "Would you like to apply the custom themes? (Yy/Nn)"
-#  read answer
-#  if [[ $answer != "${answer#[Yy]}" ]]; then
-#    echo "Applying ZSH theme"
-#    echo "cp -a ./shellconfig/* ${ZshCustomDir}/themes/"
-#  else
-#    echo "Skipping..."
-#  fi
+  ## Should .zshrc be applied
+  if [[ -f ${HOME}/.zshrc ]]; then
+    echo -n "Do you want to overwrite ${HOME}/.zshrc? (Yy/Nn)"
+    read answer
+    if [[ $answer != "${answer#[Yy]}" ]]; then
+        cp -a ./shellconfig/.zshrc "${HOME}"
+        echo "Applied ${HOME}/.zshrc"
+    else
+      echo "Skipping..."
+      echo ""
+    fi
+  else
+    echo "Applied ${HOME}/.zshrc"
+  fi
 
-#  echo "Copying ZSH shell config files to home dir."
-#  cp -a ./shellconfig/.* $HOME/
+  ## Should aliases be applied
+  if [[ -f ${ZshCustomDir}/aliases.zsh ]]; then
+    echo -n "Do you want to overwrite ${ZshCustomDir}/aliases.zsh? (Yy/Nn)"
+    read answer
+    if [[ $answer != "${answer#[Yy]}" ]]; then
+        cp -a ./shellconfig/aliases.zsh "${ZshCustomDir}"/
+        echo "Applied ${ZshCustomDir}/aliases.zsh"
+    else
+      echo "Skipping..."
+      echo ""
+    fi
+  else
+    cp -a ./shellconfig/aliases.zsh "${ZshCustomDir}"/
+    echo "Applied ${ZshCustomDir}/aliases.zsh"
+  fi
+
+  ## Should functions be applied
+  if [[ -f ${ZshCustomDir}/functions.zsh ]]; then
+    echo -n "Do you want to overwrite ${ZshCustomDir}/functions.zsh? (Yy/Nn)"
+    read answer
+    if [[ $answer != "${answer#[Yy]}" ]]; then
+        cp -a ./shellconfig/functions.zsh "${ZshCustomDir}"
+        echo "Applied ${ZshCustomDir}/functions.zsh"
+    else
+      echo "Skipping..."
+      echo ""
+    fi
+  else
+    cp -a ./shellconfig/functions.zsh "${ZshCustomDir}"
+    echo "Applied ${ZshCustomDir}/functions.zsh"
+  fi
+
+  ## Should themese be copied over
+  echo -n "Do you want to copy all themes? (Yy/Nn)"
+  read answer
+  if [[ $answer != "${answer#[Yy]}" ]]; then
+      cp -a ./shellconfig/themes/*.zsh-theme "${ZshCustomDir}"/themes
+      echo "Copied all themes to ${ZshCustomDir}/themes"
+  else
+    echo "Skipping..."
+    echo ""
+  fi
 else
   echo "Skipping..."
+  echo ""
 fi
 
-echo ""
 echo "Installation of ZSH and Oh-My-Zsh is complete. Please restart your terminals for changes to take effect."
 exit

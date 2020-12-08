@@ -72,7 +72,7 @@ plugins=(
 
 # ZSH_THEME and ZSH_CUSTOM must be configured prior to sourcing oh-my-zsh.sh
 export ZSH_CUSTOM=$ZSH/custom
-# ZSH_THEME="maverick1872"
+ZSH_THEME="robbyrussell"
 
 source $ZSH/oh-my-zsh.sh
 
