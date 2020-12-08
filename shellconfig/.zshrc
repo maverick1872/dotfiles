@@ -1,22 +1,5 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=$PATH:$HOME/bin
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-export ZSH_CUSTOM=$ZSH/custom
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME="maverick1872"
-ZSH_THEME="robbyrussell"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Autosuggest -- requires in order: zsh-syntax-highlighting zsh-autosuggestions
 AUTOSUGGESTION="true"
@@ -62,9 +45,6 @@ ENHANCED_COMPLETION="true"
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -76,7 +56,7 @@ plugins=(
   zsh-autosuggestions
   history-search-multi-word
 )
-# TODO: evaluate the remainder of this configuration. The plugins below are from catmeme/dotfiles
+# TODO: Evaluate following plugins from catmeme/dotfiles
 # plugins=(
 #     git
 #     z
@@ -86,34 +66,45 @@ plugins=(
 #     history-search-multi-word
 #     docker
 # )
-# source $HOME/.custom-zsh-config/zsh-config
+
+## User configuration ##
+# ZSH_THEME and ZSH_CUSTOM must be configured prior to sourcing oh-my-zsh.sh
+export ZSH_CUSTOM=$ZSH/custom
+# ZSH_THEME="maverick1872"
+
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# Set path
+export PATH=$PATH:$HOME/bin
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# Set OS envvar
+if [[ $(uname) == 'Linux' ]]; then
+    export OS="linux"
+elif [[ $(uname) == 'Darwin' ]]; then
+    export OS="osx"
+fi
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Set default editor
+export EDITOR='vim'
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
+## All of the following could likely be removed if the files end in .zsh ##
+
+# # Source ZSH Custom aliases
+# if [ -f $ZSH_CUSTOM/aliases ]; then
+#     source $ZSH_CUSTOM/aliases
 # fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# # Source ZSH Custom functions
+# if [ -f $ZSH_CUSTOM/functions ]; then
+#     source $ZSH_CUSTOM/functions
+# fi
+#
+# # Source ZSH Custom plugins
+# if [ -f $ZSH_CUSTOM/plugins ]; then
+#     source $ZSH_CUSTOM/plugins
+# fi
+#
+# # Source ZSH Custom completions
+# if [ -f $ZSH_CUSTOM/completions ]; then
+#     source $ZSH_CUSTOM/completions
+# fi
