@@ -119,50 +119,50 @@ echo ""
 echo -n "Would you like to apply the custom ZSH configurations contained within this repository? (Yy/Nn)"
 read answer
 if [[ $answer != "${answer#[Yy]}" ]]; then
-  ## Should .zshrc be applied
+  ## Should .zshrc be symlinked
   echo ""
   if [[ -f ${HOME}/.zshrc ]]; then
     echo -n "Do you want to overwrite ${HOME}/.zshrc with a symlink? (Yy/Nn)"
     read answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
-        ln -sf "${PWD}"/shellconfig/.zshrc "${HOME}"/.zshrc
+        ln -snf "${PWD}"/shellconfig/.zshrc "${HOME}"/.zshrc
         echo "Symlinked .zshrc to ${HOME}/.zshrc"
     else
       echo "Skipping..."
     fi
   else
-    echo "Applied ${HOME}/.zshrc"
+    echo "Symlinked .zshrc to ${HOME}/.zshrc"
   fi
 
-  ## Should aliases be applied
+  ## Should aliases be symlinked
   echo ""
   if [[ -f ${ZshCustomDir}/aliases.zsh ]]; then
     echo -n "Do you want to overwrite ${ZshCustomDir}/aliases.zsh with a symlink? (Yy/Nn)"
     read answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
-        ln -sf "${PWD}"/shellconfig/aliases.zsh "${ZshCustomDir}"/aliases.zsh
+        ln -snf "${PWD}"/shellconfig/aliases.zsh "${ZshCustomDir}"/aliases.zsh
         echo "Symlinked aliases to ${ZshCustomDir}/aliases.zsh"
     else
       echo "Skipping..."
     fi
   else
-    ln -sf "${PWD}"/shellconfig/aliases.zsh "${ZshCustomDir}"/aliases.zsh
+    ln -snf "${PWD}"/shellconfig/aliases.zsh "${ZshCustomDir}"/aliases.zsh
     echo "Symlinked aliases to ${ZshCustomDir}/aliases.zsh"
   fi
 
-  ## Should functions be applied
+  ## Should functions be symlinked
   echo ""
   if [[ -f ${ZshCustomDir}/functions.zsh ]]; then
     echo -n "Do you want to overwrite ${ZshCustomDir}/functions.zsh with a symlink? (Yy/Nn)"
     read answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
-        ln -sf "${PWD}"/shellconfig/functions.zsh "${ZshCustomDir}"/functions.zsh
+        ln -snf "${PWD}"/shellconfig/functions.zsh "${ZshCustomDir}"/functions.zsh
         echo "Symlinked functions to ${ZshCustomDir}/functions.zsh"
     else
       echo "Skipping..."
     fi
   else
-    ln -sf "${PWD}"/shellconfig/functions.zsh "${ZshCustomDir}"/functions.zsh
+    ln -snf "${PWD}"/shellconfig/functions.zsh "${ZshCustomDir}"/functions.zsh
     echo "Symlinked functions to ${ZshCustomDir}/functions.zsh"
   fi
 
@@ -171,11 +171,23 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
   echo -n "Do you want to copy all themes with a symlink? (Yy/Nn)"
   read answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
-      ln -sf "${PWD}"/shellconfig/themes "${ZshCustomDir}"/themes
-      echo "Symlinked themes to ${ZshCustomDir}/themes"
+      if [[ -d "${ZshCustomDir}"/themes ]]; then
+        echo "${ZshCustomDir}/themes already exists and is a directory."
+        echo -n "Should ${ZshCustomDir}/themes be removed and be replaced with a symlink? (Yy/Nn)"
+        read answer
+        if [[ $answer != "${answer#[Yy]}" ]]; then
+          rm -rf "${ZshCustomDir}"/themes
+          ln -snf "${PWD}"/shellconfig/themes "${ZshCustomDir}"
+          echo "Symlinked themes to ${ZshCustomDir}/themes"
+        else
+          echo "Skipping..."
+        fi
+      else
+        ln -snf "${PWD}"/shellconfig/themes "${ZshCustomDir}"
+        echo "Symlinked themes to ${ZshCustomDir}/themes"
+      fi
   else
     echo "Skipping..."
-    echo ""
   fi
 else
   echo "Skipping..."
