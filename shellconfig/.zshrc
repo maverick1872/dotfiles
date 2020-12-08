@@ -1,20 +1,27 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$PATH:$HOME/bin
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+export ZSH_CUSTOM=$ZSH/custom
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="maverick1872"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Autosuggest -- requires in order: zsh-syntax-highlighting zsh-autosuggestions
+AUTOSUGGESTION="true"
+
+# Faster, more descriptions, colored
+ENHANCED_COMPLETION="true"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -64,10 +71,22 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+  history-search-multi-word
 )
-
-source $HOME/.custom-zsh-config/zsh-config  
-source $ZSH/oh-my-zsh.sh
+# TODO: evaluate the remainder of this configuration. The plugins below are from catmeme/dotfiles
+# plugins=(
+#     git
+#     z
+#     zsh-syntax-highlighting
+#     zsh-autosuggestions
+#     history-substring-search
+#     history-search-multi-word
+#     docker
+# )
+# source $HOME/.custom-zsh-config/zsh-config
+# source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
