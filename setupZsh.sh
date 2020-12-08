@@ -42,7 +42,7 @@ if [[ ${SHELL} != $(command -v zsh) ]]; then
   read answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Making ZSH your default shell."
-    #    chsh -s $(command -v zsh)
+    chsh -s $(command -v zsh)
   else
     echo "Skipping..."
   fi
