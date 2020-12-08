@@ -1,5 +1,0 @@
-# Autosuggest -- requires in order: zsh-syntax-highlighting zsh-autosuggestions
-AUTOSUGGESTIONS="true"
-
-# Faster, more descriptions, colored
-ENHANCED_COMPLETEIONS="true"

@@ -67,7 +67,9 @@ plugins=(
 #     docker
 # )
 
-## User configuration ##
+### User configuration ###
+## All of the following could likely be broken out to a custom zsh file that's sourced into the .zshrc ##
+
 # ZSH_THEME and ZSH_CUSTOM must be configured prior to sourcing oh-my-zsh.sh
 export ZSH_CUSTOM=$ZSH/custom
 # ZSH_THEME="maverick1872"

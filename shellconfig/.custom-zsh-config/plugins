@@ -1,9 +1,0 @@
-plugins=(
-   git
-   z
-   zsh-syntax-highlighting
-   zsh-autosuggestions
-   history-substring-search
-   history-search-multi-word
-   docker
- )
