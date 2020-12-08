@@ -2,15 +2,15 @@
 # http://michelebologna.net
 #
 # This a theme for oh-my-zsh. Features a colored prompt with:
-# * username@host: [jobs] [git] workdir % 
-# * hostname color is based on hostname characters. When using as root, the 
+# * username@host: [jobs] [git] workdir %
+# * hostname color is based on hostname characters. When using as root, the
 # prompt shows only the hostname in red color.
 # * [jobs], if applicable, counts the number of suspended jobs tty
 # * [git], if applicable, represents the status of your git repo (more on that
 # later)
 # * '%' prompt will be green if last command return value is 0, yellow otherwise.
-# 
-# git prompt is inspired by official git contrib prompt: 
+#
+# git prompt is inspired by official git contrib prompt:
 # https://github.com/git/git/tree/master/contrib/completion/git-prompt.sh
 # and it adds:
 # * the current branch
@@ -92,24 +92,7 @@ ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE="$yellowb>"
 ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE="$yellowb<"
 ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE="$redb<>"
 
-
-function get_pwd(){
-  git_root=$PWD
-  while [[ $git_root != / && ! -e $git_root/.git ]]; do
-    git_root=$git_root:h
-  done
-  if [[ $git_root = / ]]; then
-    unset git_root
-    prompt_short_dir=%~
-  else
-    parent=${git_root%\/*}
-    prompt_short_dir=REPO@${PWD#$parent/}
-  fi
-  echo $prompt_short_dir
-}
-
-
-PROMPT='$(get_pwd)%1(j. $jobs_bg.)'
+PROMPT='$username_output$hostname_output:$current_dir_output%1(j. $jobs_bg.)'
 GIT_PROMPT='$(out=$(git_prompt_info)$(git_prompt_status)$(git_remote_status);if [[ -n $out ]]; then printf %s " $whiteb($reset$yellow$out$whiteb)$reset $blue| ";fi)'
 
 RPROMPT=${GIT_PROMPT}'%F{green}%D{%L:%M} %F{yellow}%D{%p}'

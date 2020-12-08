@@ -6,9 +6,6 @@ It will check to see if ZSH is installed, the associated plugins I use, then pro
 would like to apply the custom configurations from this repository. Additionally, if any pre-requisite
 to use my configuration is missing, it will prompt you to install it.
 
-*Note: The install script is not smart enough to selectively pull items from my configuration. 
-It's all or nothing. That being said warnings are included where applicable.*
-
 ## Configure VIM ##
 
 ## Configure TMUX ##
