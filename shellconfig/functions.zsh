@@ -30,6 +30,22 @@ ssh_copy_id() {
 }
 
 # Short-hand to grep all aliases available
-function search-aliases {
+search-aliases() {
     alias | grep "$1" --color;
+}
+
+# List IPs of all running docker containers for each network they are attached to
+docker-ips() {
+    docker ps --format "table {{.ID}}|{{.Names}}|{{.Status}}" | while read line
+    do
+        if `echo $line | grep -q 'CONTAINER ID'`
+        then
+            output="${line}|IP ADDRESSES\n"
+        else
+            CID=$(echo $line | awk -F '|' '{print $1}')
+            IP=$(docker inspect $CID | jq -r ".[0].NetworkSettings.Networks | to_entries[] | \"\(.key): \(.value.IPAddress)\"")
+            output+="${line}|${IP}\n"
+        fi
+    done
+    echo $output | column -t -s '|'
 }
