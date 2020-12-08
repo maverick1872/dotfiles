@@ -1,11 +1,16 @@
 # Traverses directory structure and pulls any changes in the git repo
-zsh_plugin_update() {
+update-zsh-plugins() {
   for d in $(find ${HOME}/.oh-my-zsh/custom/plugins/ -maxdepth 1 -type d); do
     cd $d
     git pull
     cd -
   done
 }
+
+## Convenience function to update personal ZSH customizations
+#update-zsh-customizations() {
+#
+#}
 
 # Short-hand to grep all aliases available
 search-aliases() {
@@ -26,11 +31,6 @@ docker-ips() {
   echo $output | column -t -s '|'
 }
 
-## Pulls personal customization updates down and applies them to local users zsh configurations
-#update_zsh_customizations() {
-#
-#}
-#
 ## Lists all branches that are considered merged in the current dirs git repo
 #list_merged() {
 #  for branch in `git branch -r --merged | grep -v HEAD`;do echo -e `git show --format="%ai %ar by %an" $branch | head -n 1` \\t$branch; done | sort -r
