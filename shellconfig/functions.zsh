@@ -1,6 +1,10 @@
 # Traverses directory structure and pulls any changes in the git repo
 zsh_plugin_update() {
-  for d in $(find ${HOME}/.oh-my-zsh/custom/plugins/ -maxdepth 1 -type d); do cd $d; git pull; cd -; done
+  for d in $(find ${HOME}/.oh-my-zsh/custom/plugins/ -maxdepth 1 -type d); do
+    cd $d
+    git pull
+    cd -
+  done
 }
 
 ## Pulls personal customization updates down and applies them to local users zsh configurations
@@ -23,29 +27,27 @@ ssh_copy_id() {
   local ssh_connection=${1}
   local ssh_key=${2:-~/.ssh/id_rsa.pub}
   if [[ "${ssh_connection}" == "" ]]; then
-    echo "ssh connection string required";
-    exit 1;
+    echo "ssh connection string required"
+    exit 1
   fi
   cat ${ssh_key} | ssh ${ssh_connection} "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys"
 }
 
 # Short-hand to grep all aliases available
 search-aliases() {
-    alias | grep "$1" --color;
+  alias | grep "$1" --color
 }
 
 # List IPs of all running docker containers for each network they are attached to
 docker-ips() {
-    docker ps --format "table {{.ID}}|{{.Names}}|{{.Status}}" | while read line
-    do
-        if `echo $line | grep -q 'CONTAINER ID'`
-        then
-            output="${line}|IP ADDRESSES\n"
-        else
-            CID=$(echo $line | awk -F '|' '{print $1}')
-            IP=$(docker inspect $CID | jq -r ".[0].NetworkSettings.Networks | to_entries[] | \"\(.key): \(.value.IPAddress)\"")
-            output+="${line}|${IP}\n"
-        fi
-    done
-    echo $output | column -t -s '|'
+  docker ps --format "table {{.ID}}|{{.Names}}|{{.Status}}" | while read line; do
+    if $(echo $line | grep -q 'CONTAINER ID'); then
+      output="${line}|IP ADDRESSES\n"
+    else
+      CID=$(echo $line | awk -F '|' '{print $1}')
+      IP=$(docker inspect $CID | jq -r ".[0].NetworkSettings.Networks | to_entries[] | \"\(.key): \(.value.IPAddress)\"")
+      output+="${line}|${IP}\n"
+    fi
+  done
+  echo $output | column -t -s '|'
 }
