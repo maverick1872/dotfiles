@@ -1,6 +1,5 @@
 # General
 alias please='sudo'
-alias c='clear'
 alias cat='cat -n'
 
 # GIT
