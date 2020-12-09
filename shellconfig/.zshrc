@@ -72,7 +72,7 @@ plugins=(
 
 # ZSH_THEME and ZSH_CUSTOM must be configured prior to sourcing oh-my-zsh.sh
 export ZSH_CUSTOM=$ZSH/custom
-ZSH_THEME="robbyrussell"
+ZSH_THEME="zed"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -110,3 +110,11 @@ export EDITOR='vim'
 # if [ -f $ZSH_CUSTOM/completions ]; then
 #     source $ZSH_CUSTOM/completions
 # fi
+
+## Source NVM if it is installed
+# This only works if NVM is installed to the users home dir. Breaks for non-standard installs.
+if [[ -d ${HOME}/.nvm ]] && [[ -f ${HOME}/.nvm/nvm.sh ]]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
