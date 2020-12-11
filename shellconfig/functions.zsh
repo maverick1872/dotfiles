@@ -31,6 +31,10 @@ docker-ips() {
   echo $output | column -t -s '|'
 }
 
+gcl-from-user() {
+  gcl "git@github.com-$1:$1/$2.git" "${DEV_DIR}/$1/$2"
+}
+
 ## Lists all branches that are considered merged in the current dirs git repo
 #list_merged() {
 #  for branch in `git branch -r --merged | grep -v HEAD`;do echo -e `git show --format="%ai %ar by %an" $branch | head -n 1` \\t$branch; done | sort -r

@@ -1,6 +1,7 @@
 # General
 alias please='sudo'
 alias cat='cat -n'
+alias list-path-dirs='sed "s/:/\n/g" <<< "$PATH"'
 
 # GIT
 alias gcuwm='gau && gcmsg'
