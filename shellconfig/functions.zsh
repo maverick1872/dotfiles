@@ -1,17 +1,26 @@
 # Traverses directory structure and pulls any changes in the git repo
 update-zsh-plugins() {
-  for d in $(find ${HOME}/.oh-my-zsh/custom/plugins/ -maxdepth 1 -type d); do
+  for d in $(find ${HOME}/.oh-my-zsh/custom/plugins -maxdepth 1 -mindepth 1 ! -name 'example' -type d); do
     cd $d || return
-    git pull
+    echo "Updating $d"
+    git pull -q
     cd - > /dev/null || return
   done
 }
 
 ## Convenience function to update personal ZSH customizations
-update-shell() {
+update-zsh-customizations() {
   cd ${DEV_DIR}/Maverick1872/dotfiles || return
-  gl
+  echo "Updating zsh customizations"
+  git pull -q
   cd - > /dev/null || return
+}
+
+## Update all things shell related
+update-shell() {
+  omz update
+  update-zsh-customizations
+  update-zsh-plugins
 }
 
 # Short-hand to grep all aliases available
