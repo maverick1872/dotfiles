@@ -1,8 +1,8 @@
 # Traverses directory structure and pulls any changes in the git repo
 update-zsh-plugins() {
-  for d in $(find ${HOME}/.oh-my-zsh/custom/plugins -maxdepth 1 -mindepth 1 ! -name 'example' -type d); do
+  for d in $(find ${ZSH_CUSTOM}/plugins -maxdepth 1 -mindepth 1 ! -name 'example' -type d); do
+    echo "Updating custom plugin: $(basename "$d")"
     cd $d || return
-    echo "Updating $d"
     git pull -q
     cd - > /dev/null || return
   done
@@ -11,7 +11,7 @@ update-zsh-plugins() {
 ## Convenience function to update personal ZSH customizations
 update-zsh-customizations() {
   cd ${DEV_DIR}/Maverick1872/dotfiles || return
-  echo "Updating zsh customizations"
+  echo "Updating personal zsh customizations"
   git pull -q
   cd - > /dev/null || return
 }
