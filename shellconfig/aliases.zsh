@@ -13,6 +13,7 @@ alias gcuwm='gau && gcmsg'
 
 
 # Configurations
+alias reload-zsh='source ~/.zshrc'
 alias edit-zshconfig='vim ~/.zshrc'
 alias edit-aliases='vim ${ZSH_CUSTOM}/aliases.zsh'
 alias edit-functions='vim ${ZSH_CUSTOM}/functions.zsh'

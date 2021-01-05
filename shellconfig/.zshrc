@@ -52,6 +52,7 @@ ENHANCED_COMPLETION="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  extract
   zsh-syntax-highlighting
   zsh-autosuggestions
   history-search-multi-word
