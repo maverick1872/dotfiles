@@ -19,7 +19,7 @@ if ! command -v zsh &>/dev/null; then
     if ! command -v brew &>/dev/null; then
       # Install Homebrew
       echo -n "Homebrew is required to install ZSH. Do you wish to install Homebrew? (Yy/Nn)"
-      read -r answer
+      read -r answerd
       if [[ $answer != "${answer#[Yy]}" ]]; then
         echo "Installing Homebrew to proceed with installing ZSH."
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -171,21 +171,8 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
   echo -n "Do you want to copy all themes with a symlink? (Yy/Nn)"
   read -r answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
-      if [[ -d "${ZshCustomDir}"/themes ]]; then
-        echo "${ZshCustomDir}/themes already exists and is a directory."
-        echo -n "Should ${ZshCustomDir}/themes be removed and be replaced with a symlink? (Yy/Nn)"
-        read -r answer
-        if [[ $answer != "${answer#[Yy]}" ]]; then
-          rm -rf "${ZshCustomDir}"/themes
-          ln -snf "${PWD}"/shellconfig/themes "${ZshCustomDir}"
-          echo "Symlinked themes to ${ZshCustomDir}/themes"
-        else
-          echo "Skipping..."
-        fi
-      else
-        ln -snf "${PWD}"/shellconfig/themes "${ZshCustomDir}"
-        echo "Symlinked themes to ${ZshCustomDir}/themes"
-      fi
+    ln -snf "${PWD}"/shellconfig/themes/* "${ZshCustomDir}/themes"
+    echo "Symlinked themes to ${ZshCustomDir}/themes"
   else
     echo "Skipping..."
   fi
