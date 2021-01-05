@@ -53,6 +53,7 @@ ENHANCED_COMPLETION="true"
 plugins=(
   git
   extract
+  universalarchive
   zsh-syntax-highlighting
   zsh-autosuggestions
   history-search-multi-word
