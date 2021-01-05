@@ -3,7 +3,7 @@ update-zsh-plugins() {
   for d in $(find ${ZSH_CUSTOM}/plugins -maxdepth 1 -mindepth 1 ! -name 'example' -type d); do
     echo "Updating custom plugin: $(basename "$d")"
     cd $d || return
-    git pull -q
+    git pull
     cd - > /dev/null || return
   done
 }
@@ -12,7 +12,7 @@ update-zsh-plugins() {
 update-zsh-customizations() {
   cd ${DEV_DIR}/Maverick1872/dotfiles || return
   echo "Updating personal zsh customizations"
-  git pull -q
+  git pull
   cd - > /dev/null || return
 }
 
