@@ -2,6 +2,7 @@
 alias please='sudo'
 alias catn='cat -n'
 alias list-path-dirs='sed "s/:/\n/g" <<< "$PATH"'
+alias update-system='sudo apt update -y && sudo apt upgrade -y'
 
 # GIT
 alias gcuwm='gau && gcmsg'
