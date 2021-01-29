@@ -82,7 +82,8 @@ source $ZSH/oh-my-zsh.sh
 export USER_BIN="$HOME/bin"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-15.0.1.jdk/Contents/Home"
 export M2_HOME="$USER_BIN/apache-maven-3.6.3/bin"
-export DEV_DIR="${HOME}/dev"
+export DEV_DIR="$HOME/dev"
+export DOCKER_DIR="$HOME/docker-containers"
 
 # Set path
 export PATH=$PATH:$USER_BIN:$JAVA_HOME:$M2_HOME
