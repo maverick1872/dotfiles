@@ -12,8 +12,11 @@ alias gcuwm='gau && gcmsg'
 #alias branch-list='git branch | cut -c 3- | grep -i -v master | grep -i -v develop | grep -i -v integration | grep -v "*"'
 #alias stash-list='git stash list | cat'
 
-# Docker/Docker Compose
+# Docker & Docker Compose
 alias dco='docker-compose'
+
+# NODE & NPM
+alias update-npm='npm install -g npm'
 
 # Configurations
 alias reload-zsh='source ~/.zshrc'
