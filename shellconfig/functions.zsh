@@ -11,13 +11,16 @@ update-zsh-plugins() {
 # Traverses directory structure and updates all docker images
 update-docker-containers() {
   for dir in $(find ${DOCKER_DIR} -maxdepth 1 -mindepth 1 -type d); do
-  #for name in $(docker ps --format "table {{.Names}}" | sed -n "1!p"); do
-    #echo "Updating container: $name"
-    #cd $DOCKER_DIR/$name || return
-    echo "Updating container: $(basename $dir)"
+    containerName=$(basename $dir)
     cd $dir || return
-    docker-compose up --force-recreate --build -d
-    cd - > /dev/null || return
+    if [[ `docker-compose ps -q 2> /dev/null` ]]; then
+      echo "Updating container: $containerName"
+      docker-compose up --force-recreate --build -d
+      cd - > /dev/null || return
+    else
+      echo "Container is not running: $containerName"
+    fi
+    echo
   done    
 }                                                              
 
