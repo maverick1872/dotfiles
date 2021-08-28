@@ -1,5 +1,3 @@
-#!/bin/bash
-
 ZshCustomDir=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
 echo "Current Working Dir '${PWD}'"
 echo "Default Shell = ${SHELL}"
@@ -126,7 +124,7 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
     read -r answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
         ln -snf "${PWD}"/shellconfig/.zshrc "${HOME}"/.zshrc
-        echo "Symlinked .zshrc to ${HOME}/.zshrc"
+        echo -n "Symlinked ${PWD}/shellconfig/.zshrc to ${HOME}/.zshrc"
     else
       echo "Skipping..."
     fi
