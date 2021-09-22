@@ -19,3 +19,5 @@ else
     echo "Skipping..."
     echo ""
 fi
+
+#TODO: Add setup steps for vim/tmux/screen when desired
