@@ -82,10 +82,9 @@ source $ZSH/oh-my-zsh.sh
 export USER_BIN="$HOME/bin"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-15.0.1.jdk/Contents/Home"
 export M2_HOME="$USER_BIN/apache-maven-3.6.3/bin"
-export DEV_DIR="$HOME/dev"
 export DOCKER_DIR="$HOME/docker-containers"
 
-# Set path
+# Add personal exports to path
 export PATH=$PATH:$USER_BIN:$JAVA_HOME:$M2_HOME
 
 # Set OS envvar
@@ -98,32 +97,11 @@ fi
 # Set default editor
 export EDITOR='vim'
 
-## All of the following could likely be removed if the files end in .zsh ##
-
-# # Source ZSH Custom aliases
-# if [ -f $ZSH_CUSTOM/aliases ]; then
-#     source $ZSH_CUSTOM/aliases
-# fi
-#
-# # Source ZSH Custom functions
-# if [ -f $ZSH_CUSTOM/functions ]; then
-#     source $ZSH_CUSTOM/functions
-# fi
-#
-# # Source ZSH Custom plugins
-# if [ -f $ZSH_CUSTOM/plugins ]; then
-#     source $ZSH_CUSTOM/plugins
-# fi
-#
-# # Source ZSH Custom completions
-# if [ -f $ZSH_CUSTOM/completions ]; then
-#     source $ZSH_CUSTOM/completions
-# fi
-
 ## Source NVM if it is installed
 # This only works if NVM is installed to the users home dir. Breaks for non-standard installs.
 if [[ -d ${HOME}/.nvm ]] && [[ -f ${HOME}/.nvm/nvm.sh ]]; then
     export NVM_DIR="$HOME/.nvm"
+    export PATH=$PATH:NVM_DIR
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi

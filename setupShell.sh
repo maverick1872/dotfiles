@@ -129,6 +129,7 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
       echo "Skipping..."
     fi
   else
+    ln -snf "${PWD}"/zsh/config "${HOME}"/.zshrc
     echo "Symlinked zsh config to ${HOME}/.zshrc"
   fi
 
