@@ -123,13 +123,13 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Do you want to overwrite ${HOME}/.zshrc with a symlink? (Yy/Nn)\c"
     read -r answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
-        ln -snf "${PWD}"/shellconfig/.zshrc "${HOME}"/.zshrc
-        echo "Symlinked ${PWD}/shellconfig/.zshrc to ${HOME}/.zshrc"
+        ln -snf "${PWD}"/zsh/config "${HOME}"/.zshrc
+        echo "Symlinked ${PWD}/zsh/config to ${HOME}/.zshrc"
     else
       echo "Skipping..."
     fi
   else
-    echo "Symlinked .zshrc to ${HOME}/.zshrc"
+    echo "Symlinked zsh config to ${HOME}/.zshrc"
   fi
 
   ## Should aliases be symlinked
@@ -138,13 +138,13 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Do you want to overwrite ${ZshCustomDir}/aliases.zsh with a symlink? (Yy/Nn)\c"
     read -r answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
-        ln -snf "${PWD}"/shellconfig/aliases.zsh "${ZshCustomDir}"/aliases.zsh
+        ln -snf "${PWD}"/zsh/aliases.zsh "${ZshCustomDir}"/aliases.zsh
         echo "Symlinked aliases to ${ZshCustomDir}/aliases.zsh"
     else
       echo "Skipping..."
     fi
   else
-    ln -snf "${PWD}"/shellconfig/aliases.zsh "${ZshCustomDir}"/aliases.zsh
+    ln -snf "${PWD}"/zsh/aliases.zsh "${ZshCustomDir}"/aliases.zsh
     echo "Symlinked aliases to ${ZshCustomDir}/aliases.zsh"
   fi
 
@@ -154,13 +154,13 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Do you want to overwrite ${ZshCustomDir}/functions.zsh with a symlink? (Yy/Nn)\c"
     read -r answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
-        ln -snf "${PWD}"/shellconfig/functions.zsh "${ZshCustomDir}"/functions.zsh
+        ln -snf "${PWD}"/zsh/functions.zsh "${ZshCustomDir}"/functions.zsh
         echo "Symlinked functions to ${ZshCustomDir}/functions.zsh"
     else
       echo "Skipping..."
     fi
   else
-    ln -snf "${PWD}"/shellconfig/functions.zsh "${ZshCustomDir}"/functions.zsh
+    ln -snf "${PWD}"/zsh/functions.zsh "${ZshCustomDir}"/functions.zsh
     echo "Symlinked functions to ${ZshCustomDir}/functions.zsh"
   fi
 
@@ -169,7 +169,7 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
   echo "Do you want to copy all themes with a symlink? (Yy/Nn)\c"
   read -r answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
-    ln -snf "${PWD}"/shellconfig/themes/* "${ZshCustomDir}/themes"
+    ln -snf "${PWD}"/zsh/themes/* "${ZshCustomDir}/themes"
     echo "Symlinked themes to ${ZshCustomDir}/themes"
   else
     echo "Skipping..."
