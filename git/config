@@ -1,0 +1,13 @@
+[commit]
+    gpgSign=true
+
+[pull]
+    rebase=false
+
+[tag]
+    gpgSign=true
+
+[user]
+    email=10217028+Maverick1872@users.noreply.github.com
+    name=Jonathon Terry
+    signingkey=6EEB600D204F4C3F
