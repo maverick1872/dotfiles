@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "===== Shell configuration ====="
 echo "Do you wish to configure your shell? (Yy/Nn)\c"
 read -r answer
