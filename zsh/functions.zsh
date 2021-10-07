@@ -3,7 +3,7 @@ function git_develop_branch() {
   command git rev-parse --git-dir &>/dev/null || return
 
   devBranchName=$(command git config user.developBranchName)
-  command git show-ref -q --verify "refs/heads/$devBranchName)" && echo "$devBranchName" && return
+  command git show-ref -q --verify "refs/heads/$devBranchName" && echo "$devBranchName" && return
 
   local branch
   for branch in dev devel develop development; do
