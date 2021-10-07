@@ -33,7 +33,7 @@ update-docker-containers() {
     cd $dir || return
     if [[ `docker-compose ps -q 2> /dev/null` ]]; then
       echo "Updating container: $containerName"
-      docker-compose up --force-recreate --build -d
+      docker-compose pull && docker-compose up --force-recreate --build -d
       cd - > /dev/null || return
     else
       echo "Container is not running: $containerName"
@@ -52,9 +52,7 @@ update-zsh-customizations() {
 
 ## Update all things shell related
 update-shell() {
-  omz update
-  update-zsh-customizations
-  update-zsh-plugins
+  omz update && update-zsh-customizations && update-zsh-plugins
 }
 
 # Short-hand to grep all aliases available
