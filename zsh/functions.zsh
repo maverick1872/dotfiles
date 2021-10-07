@@ -1,3 +1,21 @@
+unset -f git_develop_branch
+function git_develop_branch() {
+  command git rev-parse --git-dir &>/dev/null || return
+
+  devBranchName=$(command git config user.developBranchName)
+  command git show-ref -q --verify "refs/heads/$devBranchName)" && echo "$devBranchName" && return
+
+  local branch
+  for branch in dev devel develop development; do
+    if command git show-ref -q --verify refs/heads/$branch; then
+      echo $branch
+      return
+    fi
+  done
+  echo "No develop branch found. Set git local config 'user.developBranchName' to specify a non traditional branch" >&2
+  return 1
+}
+
 # Traverses directory structure and pulls any changes in the git repo
 update-zsh-plugins() {
   for d in $(find ${ZSH_CUSTOM}/plugins -maxdepth 1 -mindepth 1 ! -name 'example' -type d); do
