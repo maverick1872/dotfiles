@@ -1,4 +1,22 @@
 unset -f git_develop_branch
+unset -f git_main_branch
+function git_main_branch() {
+  command git rev-parse --git-dir &>/dev/null || return
+  
+  mainBranchName=$(command git config user.mainBranchName)
+  command git show-ref -q --verify "refs/heads/$mainBranchName" && echo "$mainBranchName" && return
+
+  local ref
+  for ref in refs/{heads,remotes/{origin,upstream}}/{master,main,trunk}; do
+    if command git show-ref -q --verify $ref; then
+      echo ${ref:t}
+      return
+    fi
+  done
+  echo "No main branch found. Set git local config 'user.mainBranchName' to specify a non traditional branch" >&2
+  return 1
+}
+
 function git_develop_branch() {
   command git rev-parse --git-dir &>/dev/null || return
 
