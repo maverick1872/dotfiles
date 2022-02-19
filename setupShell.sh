@@ -41,7 +41,7 @@ if [[ ${SHELL} != $(command -v zsh) ]]; then
   if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Making ZSH your default shell."
     chsh -s "$(command -v zsh)"
-  else
+
     echo "Skipping..."
     echo ""
   fi
@@ -133,6 +133,13 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Symlinked zsh config to ${HOME}/.zshrc"
   fi
 
+  ## Should private aliase file be created
+  echo ""
+  if [[ ! -f ${ZshCustomDir}/private-aliases.zsh ]]; then
+    touch "${ZshCustomDir}"/private-aliases.zsh
+    echo "Created ${ZshCustomDir}/private-aliases.zsh to maintain aliases custom to this machine"
+  fi
+ 
   ## Should aliases be symlinked
   echo ""
   if [[ -f ${ZshCustomDir}/aliases.zsh ]]; then

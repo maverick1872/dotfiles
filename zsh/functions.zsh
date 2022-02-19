@@ -34,6 +34,11 @@ function git_develop_branch() {
   return 1
 }
 
+# Find process running on specified port
+show-port() {
+  lsof -P -n -i :"$1"
+}
+
 # Traverses directory structure and pulls any changes in the git repo
 update-zsh-plugins() {
   for d in $(find ${ZSH_CUSTOM}/plugins -maxdepth 1 -mindepth 1 ! -name 'example' -type d); do
