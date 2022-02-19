@@ -123,14 +123,15 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
     echo "Do you want to overwrite ${HOME}/.zshrc? (Yy/Nn)\c"
     read -r answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
-        cp "${PWD}"/zsh/config "${HOME}"/.zshrc
+        rm "${HOME}"/.zshrc
+        cp -f "${PWD}"/zsh/config "${HOME}"/.zshrc
         echo "Overwrote ${PWD}/zsh/config to ${HOME}/.zshrc"
     else
       echo "Skipping..."
     fi
   else
-    ln -snf "${PWD}"/zsh/config "${HOME}"/.zshrc
-    echo "Symlinked zsh config to ${HOME}/.zshrc"
+    cp "${PWD}"/zsh/config "${HOME}"/.zshrc
+    echo "Copied ${PWD}/zsh/config to ${HOME}/.zshrc"
   fi
 
   ## Should private aliase file be created
