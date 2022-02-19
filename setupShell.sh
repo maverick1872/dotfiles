@@ -120,11 +120,11 @@ if [[ $answer != "${answer#[Yy]}" ]]; then
   ## Should .zshrc be symlinked
   echo ""
   if [[ -f ${HOME}/.zshrc ]]; then
-    echo "Do you want to overwrite ${HOME}/.zshrc with a symlink? (Yy/Nn)\c"
+    echo "Do you want to overwrite ${HOME}/.zshrc? (Yy/Nn)\c"
     read -r answer
     if [[ $answer != "${answer#[Yy]}" ]]; then
-        ln -snf "${PWD}"/zsh/config "${HOME}"/.zshrc
-        echo "Symlinked ${PWD}/zsh/config to ${HOME}/.zshrc"
+        cp "${PWD}"/zsh/config "${HOME}"/.zshrc
+        echo "Overwrote ${PWD}/zsh/config to ${HOME}/.zshrc"
     else
       echo "Skipping..."
     fi
