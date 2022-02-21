@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ZshCustomDir=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
 # echo "Current Working Dir '${PWD}'"
 echo "Current Default Shell = ${SHELL}"
