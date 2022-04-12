@@ -3,7 +3,7 @@ unset -f git_main_branch
 function git_main_branch() {
   command git rev-parse --git-dir &>/dev/null || return
   
-  mainBranchName=$(command git config user.mainBranchName)
+  mainBranchName=$(command git config --local user.mainBranchName)
   command git show-ref -q --verify "refs/heads/$mainBranchName" && echo "$mainBranchName" && return
 
   local ref
