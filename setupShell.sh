@@ -103,8 +103,8 @@ if [[ ! -d "${ZshCustomDir}/plugins/history-search-multi-word" ]]; then
   echo "Would you like to install the 'history-search-multi-word' plugin? (Yy/Nn)\c"
   read -r answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
-    echo "Cloning zdharma/history-search-multi-word.git"
-    git clone git://github.com/zdharma/history-search-multi-word.git "${ZshCustomDir}"/plugins/history-search-multi-word
+    echo "Cloning zdharma-continuum/history-search-multi-word.git"
+    git clone git://github.com/zdharma-continuum/history-search-multi-word.git "${ZshCustomDir}"/plugins/history-search-multi-word
     #TODO:
     # - add history-search-multi-word to .zshrc plugins list.
   else
