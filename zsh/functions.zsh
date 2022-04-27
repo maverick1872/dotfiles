@@ -34,6 +34,16 @@ function git_develop_branch() {
   return 1
 }
 
+# Checkout Github PR
+gcopr() {
+  gh pr checkout "$1"
+}
+
+# View Github PR
+viewpr() {
+  gh pr view "$1" --web
+}
+
 # Find process running on specified port
 show-port() {
   lsof -P -n -i :"$1"
@@ -95,10 +105,6 @@ docker-ips() {
     fi
   done
   echo $output | column -t -s '|'
-}
-
-gcl-from-user() {
-  gcl "git@github.com-$1:$1/$2.git" "${DEV_DIR}/$1/$2"
 }
 
 ## Lists all branches that are considered merged in the current dirs git repo

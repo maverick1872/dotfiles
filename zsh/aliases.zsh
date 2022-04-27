@@ -14,6 +14,9 @@ alias gbdlocal='git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git b
 #alias branch-list='git branch | cut -c 3- | grep -i -v master | grep -i -v develop | grep -i -v integration | grep -v "*"'
 #alias stash-list='git stash list | cat'
 
+# Github CLI
+alias newpr='gh pr create'
+
 # Docker & Docker Compose
 alias dco='docker-compose'
 
