@@ -68,7 +68,12 @@ hostname_color=%(!.$hostname_root_color.$hostname_normal_color)
 
 local current_dir_color=$blueb
 local username_command="%n"
-local hostname_command="$(hostnamectl hostname)"
+# TODO: This doesn't work on OS X Apparently
+if [[ $(uname) == 'Darwin' ]]; then
+    local hostname_command="$(hostname)"
+else
+    local hostname_command="$(hostnamectl hostname)"
+fi
 local current_dir="%~"
 
 local username_output="%(!..$username_normal_color$username_command$cyan@)"
