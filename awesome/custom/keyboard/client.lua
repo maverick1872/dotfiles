@@ -9,7 +9,7 @@ return gears.table.join(
                     c:raise()
                 end,
                 { description = "toggle fullscreen", group = "client" }),
-        awful.key({ vars.modifier, "Shift" }, "c", function(c)
+        awful.key({ vars.modifier, }, "q", function(c)
             c:kill()
         end,
                 { description = "close", group = "client" }),
