@@ -2,6 +2,8 @@
 alias please='sudo'
 alias catn='cat -n'
 alias list-path-dirs='sed "s/:/\n/g" <<< "$PATH"'
+alias lsdir='ls -d */'
+alias lldir='ll -d */'
 alias update-system='sudo apt update -y && sudo apt upgrade -y'
 
 # GIT
@@ -18,7 +20,7 @@ alias gbdlocal='git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git b
 alias newpr='gh pr create'
 
 # Docker & Docker Compose
-alias dco='docker-compose'
+alias dco='docker compose'
 
 # NODE & NPM
 alias update-npm='npm install -g npm'
