@@ -10,17 +10,14 @@ alias update-system='sudo apt update -y && sudo apt upgrade -y'
 alias glo='git log --pretty=format:"%Cred%cs%Creset - %C(auto)%h%Creset - %<(16,trunc)%Cgreen%an%Creset - %s %C(auto)%d" --date=local'
 alias gcuwm='gau && gcmsg'
 alias gbdlocal='git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d'
-#alias git-rm-local-merged='git branch -d $(git branch --merged | cut -c 3- | grep -i -v master | grep -i -v develop | grep -i -v integration | grep -v "*")'
-#alias git-list-merged='git branch --merged | cut -c 3- | grep -i -v master | grep -i -v develop | grep -i -v integration | grep -v "*"'
-#alias git-list-not-merged='git branch --no-merged | cut -c 3- | grep -i -v master | grep -i -v develop | grep -i -v integration | grep -v "*"'
-#alias branch-list='git branch | cut -c 3- | grep -i -v master | grep -i -v develop | grep -i -v integration | grep -v "*"'
-#alias stash-list='git stash list | cat'
 
 # Github CLI
 alias newpr='gh pr create'
 
 # Docker & Docker Compose
 alias dco='docker compose'
+alias clean-images='docker images -aq | xargs docker rmi'
+alias clean-containers='docker ps -aq | xargs docker rm'
 
 # NODE & NPM
 alias update-npm='npm install -g npm'
