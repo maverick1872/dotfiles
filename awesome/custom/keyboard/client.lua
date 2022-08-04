@@ -21,11 +21,15 @@ return gears.table.join(
         awful.key({ vars.modifier, "Control" }, "Return", function(c)
             c:swap(awful.client.getmaster())
         end,
-                { description = "move to master", group = "client" }),
+                { description = "move to master layout position", group = "client" }),
         awful.key({ vars.modifier, }, "o", function(c)
             c:move_to_screen()
         end,
-                { description = "move to screen", group = "client" }),
+                { description = "move to next screen", group = "client" }),
+        awful.key({ vars.modifier, "Shift" }, "o", function(c)
+            c:move_to_screen(c.screen.index - 1)
+        end,
+                { description = "move to previous screen", group = "client" }),
         awful.key({ vars.modifier, }, "t", function(c)
             c.ontop = not c.ontop
         end,
@@ -54,5 +58,19 @@ return gears.table.join(
                     c.maximized_horizontal = not c.maximized_horizontal
                     c:raise()
                 end,
-                { description = "(un)maximize horizontally", group = "client" })
+                { description = "(un)maximize horizontally", group = "client" }),
+        awful.key({ vars.modifier, 'Control', 'Shift' }, "k", function()
+            awful.client.incwfact(0.1)
+        end,
+                { description = "increase client window factor", group = "client" }),
+        awful.key({ vars.modifier, 'Control', 'Shift' }, "j", function()
+            awful.client.incwfact(-0.1)
+        end,
+                { description = "decrease client window factor", group = "client" }),
+
+        awful.key({ }, "XF86AudioRaiseVolume", function() awful.spawn("amixer -D pulse sset Master 5%+") end),
+        awful.key({ }, "XF86AudioLowerVolume", function() awful.spawn("amixer -D pulse sset Master 5%-") end),
+        awful.key({ }, "XF86AudioPlay", function() awful.spawn("playerctl play-pause") end),
+        awful.key({ }, "XF86AudioNext", function() awful.spawn("playerctl next") end),
+        awful.key({ }, "XF86AudioPrev", function() awful.spawn("playerctl previous") end)
 )

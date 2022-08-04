@@ -50,7 +50,7 @@ local globalKeys = gears.table.join(
                 {description = "go back", group = "client"}),
 
 -- Standard program
-        awful.key({ vars.modifier,           }, "Return", function () awful.spawn(terminal) end,
+        awful.key({ vars.modifier,           }, "Return", function () awful.spawn(vars.defaultPrograms.terminal) end,
                 {description = "open a terminal", group = "launcher"}),
         awful.key({ vars.modifier, "Control" }, "r", awesome.restart,
                 {description = "reload awesome", group = "awesome"}),
