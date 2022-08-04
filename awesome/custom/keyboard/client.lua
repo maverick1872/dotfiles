@@ -60,11 +60,11 @@ return gears.table.join(
                 end,
                 { description = "(un)maximize horizontally", group = "client" }),
         awful.key({ vars.modifier, 'Control', 'Shift' }, "k", function()
-            awful.client.incwfact(0.1)
+            awful.client.incwfact(0.05)
         end,
                 { description = "increase client window factor", group = "client" }),
         awful.key({ vars.modifier, 'Control', 'Shift' }, "j", function()
-            awful.client.incwfact(-0.1)
+            awful.client.incwfact(-0.05)
         end,
                 { description = "decrease client window factor", group = "client" }),
 
