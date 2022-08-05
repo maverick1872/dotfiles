@@ -108,7 +108,7 @@ local globalKeys = gears.table.join(
                 {description = "show the menubar", group = "launcher"})
 )
 
-for i = 1, 9 do
+for i = 1, #vars.tags do
     globalKeys = gears.table.join(globalKeys,
     -- View tag only.
             awful.key({ vars.modifier }, "#" .. i + 9,
@@ -119,7 +119,7 @@ for i = 1, 9 do
                             tag:view_only()
                         end
                     end,
-                    {description = "view tag #"..i, group = "tag"}),
+                    {description = "view tag N", group = "tag"}),
     -- Toggle tag display.
             awful.key({ vars.modifier, "Control" }, "#" .. i + 9,
                     function ()
@@ -129,7 +129,7 @@ for i = 1, 9 do
                             awful.tag.viewtoggle(tag)
                         end
                     end,
-                    {description = "toggle tag #" .. i, group = "tag"}),
+                    {description = "toggle tag N", group = "tag"}),
     -- Move client to tag.
             awful.key({ vars.modifier, "Shift" }, "#" .. i + 9,
                     function ()
@@ -140,7 +140,7 @@ for i = 1, 9 do
                             end
                         end
                     end,
-                    {description = "move focused client to tag #"..i, group = "tag"}),
+                    {description = "move focused client to tag N", group = "tag"}),
     -- Toggle tag on focused client.
             awful.key({ vars.modifier, "Control", "Shift" }, "#" .. i + 9,
                     function ()
@@ -151,7 +151,7 @@ for i = 1, 9 do
                             end
                         end
                     end,
-                    {description = "toggle focused client on tag #" .. i, group = "tag"})
+                    {description = "toggle focused client on tag N", group = "tag"})
     )
 end
 

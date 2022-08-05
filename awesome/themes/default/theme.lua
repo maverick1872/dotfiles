@@ -5,6 +5,7 @@
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local rnotification = require("ruled.notification")
+local gears = require("gears")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
@@ -52,6 +53,8 @@ theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
     taglist_square_size, theme.fg_normal
 )
+theme.taglist_spacing = 1
+theme.taglist_shape = gears.shape.rounded_rect
 
 -- Variables set for theming notifications:
 -- notification_font
