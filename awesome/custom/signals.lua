@@ -7,85 +7,89 @@ local utils = require("custom/utils")
 
 --Toggle titlebar on floating status change
 return {
-    configureSignals = function()
-        -- Signal function to execute when a new client appears.
-        client.connect_signal("manage", function (c)
-            -- Set the windows at the slave,
-            -- i.e. put it at the end of others instead of setting it master.
-            -- if not awesome.startup then awful.client.setslave(c) end
+  configureSignals = function()
+    -- Signal function to execute when a new client appears.
+    client.connect_signal("manage", function(c)
+      -- Set the windows at the slave,
+      -- i.e. put it at the end of others instead of setting it master.
+      -- if not awesome.startup then awful.client.setslave(c) end
 
-            if awesome.startup
-                    and not c.size_hints.user_position
-                    and not c.size_hints.program_position then
-                -- Prevent clients from being unreachable after screen count changes.
-                awful.placement.no_offscreen(c)
-            end
-        end)
+      if awesome.startup
+          and not c.size_hints.user_position
+          and not c.size_hints.program_position then
+        -- Prevent clients from being unreachable after screen count changes.
+        awful.placement.no_offscreen(c)
+      end
+    end)
 
-        -- Add a titlebar if titlebars_enabled is set to true in the rules.
-        client.connect_signal("request::titlebars", function(c)
-            -- buttons for the titlebar
-            local buttons = gears.table.join(
-                    awful.button({ }, 1, function()
-                        c:emit_signal("request::activate", "titlebar", {raise = true})
-                        awful.mouse.client.move(c)
-                    end),
-                    awful.button({ }, 3, function()
-                        c:emit_signal("request::activate", "titlebar", {raise = true})
-                        awful.mouse.client.resize(c)
-                    end)
-            )
+    -- Add a titlebar if titlebars_enabled is set to true in the rules.
+    client.connect_signal("request::titlebars", function(c)
+      -- buttons for the titlebar
+      local buttons = gears.table.join(
+          awful.button({ }, 1, function()
+            c:emit_signal("request::activate", "titlebar", { raise = true })
+            awful.mouse.client.move(c)
+          end),
+          awful.button({ }, 3, function()
+            c:emit_signal("request::activate", "titlebar", { raise = true })
+            awful.mouse.client.resize(c)
+          end)
+      )
 
-            awful.titlebar(c) : setup {
-                { -- Left
-                    awful.titlebar.widget.iconwidget(c),
-                    buttons = buttons,
-                    layout  = wibox.layout.fixed.horizontal
-                },
-                { -- Middle
-                    { -- Title
-                        align  = "center",
-                        widget = awful.titlebar.widget.titlewidget(c)
-                    },
-                    buttons = buttons,
-                    layout  = wibox.layout.flex.horizontal
-                },
-                { -- Right
-                    awful.titlebar.widget.floatingbutton (c),
-                    awful.titlebar.widget.maximizedbutton(c),
-                    awful.titlebar.widget.stickybutton   (c),
-                    awful.titlebar.widget.ontopbutton    (c),
-                    awful.titlebar.widget.closebutton    (c),
-                    layout = wibox.layout.fixed.horizontal()
-                },
-                layout = wibox.layout.align.horizontal
-            }
-        end)
+      awful.titlebar(c):setup {
+        { -- Left
+          awful.titlebar.widget.iconwidget(c),
+          buttons = buttons,
+          layout = wibox.layout.fixed.horizontal
+        },
+        { -- Middle
+          { -- Title
+            align = "center",
+            widget = awful.titlebar.widget.titlewidget(c)
+          },
+          buttons = buttons,
+          layout = wibox.layout.flex.horizontal
+        },
+        { -- Right
+          awful.titlebar.widget.floatingbutton(c),
+          awful.titlebar.widget.maximizedbutton(c),
+          awful.titlebar.widget.stickybutton(c),
+          awful.titlebar.widget.ontopbutton(c),
+          awful.titlebar.widget.closebutton(c),
+          layout = wibox.layout.fixed.horizontal()
+        },
+        layout = wibox.layout.align.horizontal
+      }
+    end)
 
-        -- Focus behavior
-        client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-        client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+    -- Focus behavior
+    client.connect_signal("focus", function(c)
+      c.border_color = beautiful.border_focus
+    end)
+    client.connect_signal("unfocus", function(c)
+      c.border_color = beautiful.border_normal
+    end)
 
-        -- Better titlebar behavior
-        client.connect_signal("property::floating", function(c)
-            utils.setTitlebar(c, c.floating or c.first_tag and c.first_tag.layout.name == "floating")
-        end)
-        -- Hook called when a client spawns
-        client.connect_signal("manage", function(c)
-            utils.setTitlebar(c, c.floating or c.first_tag.layout == awful.layout.suit.floating)
-        end)
-        -- Show titlebars on tags with the floating layout
-        tag.connect_signal("property::layout", function(t)
-            -- New to Lua ?
-            -- pairs iterates on the table and return a key value pair
-            -- I don't need the key here, so I put _ to ignore it
-            for _, c in pairs(t:clients()) do
-                if t.layout == awful.layout.suit.floating then
-                    utils.setTitlebar(c, true)
-                else
-                    utils.setTitlebar(c, false)
-                end
-            end
-        end)
-    end
+    -- Better titlebar behavior
+    client.connect_signal("property::floating", function(c)
+      utils.setTitlebar(c, c.floating or c.first_tag and c.first_tag.layout.name == "floating")
+    end)
+    -- Hook called when a client spawns
+    client.connect_signal("manage", function(c)
+      utils.setTitlebar(c, c.floating or c.first_tag.layout == awful.layout.suit.floating)
+    end)
+    -- Show titlebars on tags with the floating layout
+    tag.connect_signal("property::layout", function(t)
+      -- New to Lua ?
+      -- pairs iterates on the table and return a key value pair
+      -- I don't need the key here, so I put _ to ignore it
+      for _, c in pairs(t:clients()) do
+        if t.layout == awful.layout.suit.floating then
+          utils.setTitlebar(c, true)
+        else
+          utils.setTitlebar(c, false)
+        end
+      end
+    end)
+  end
 }
