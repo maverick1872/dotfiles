@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Turn off non-primary displays
+xrandr \
+  --output Displayport-2 --off \
+  --output Displayport-3 --off
