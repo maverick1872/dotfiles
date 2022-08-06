@@ -54,4 +54,15 @@ return {
   -- Set Firefox to always map on the tag named "2" on screen 1.
   -- { rule = { class = "Firefox" },
   --   properties = { screen = 1, tag = "2" } },
+
+  -- Rocket League
+  {
+    rule = { class = "steam_app_252950"},
+    properties = {
+      tag = "Games",
+      titlebars_enabled = false,
+      maximized_vertical   = true,
+      maximized_horizontal = true
+    }
+  }
 }
