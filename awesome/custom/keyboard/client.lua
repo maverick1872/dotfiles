@@ -23,11 +23,11 @@ return gears.table.join(
         end,
                 { description = "move to master layout position", group = "client" }),
         awful.key({ vars.modifier, }, "o", function(c)
-            c:move_to_screen()
+            c:move_to_screen(c.screen.index - 1)
         end,
                 { description = "move to next screen", group = "client" }),
         awful.key({ vars.modifier, "Shift" }, "o", function(c)
-            c:move_to_screen(c.screen.index - 1)
+            c:move_to_screen()
         end,
                 { description = "move to previous screen", group = "client" }),
         awful.key({ vars.modifier, }, "t", function(c)
