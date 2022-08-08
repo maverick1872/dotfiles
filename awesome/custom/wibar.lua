@@ -112,7 +112,7 @@ wibar.configure = function()
             layout = wibox.layout.fixed.horizontal,
           },
           left = 5,
-          right = 5,5
+          right = 5,
           widget = wibox.container.margin
         },
         id = 'background_role',
