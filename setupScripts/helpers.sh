@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+CONFIG_DIR=${XDG_CONFIG_HOME:-$HOME/.config/}
 
 promptUser() {
   echo -e "$1 (Yy/Nn)\c"

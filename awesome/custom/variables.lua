@@ -19,6 +19,27 @@ variables.layouts = {
   awful.layout.suit.tile,
   awful.layout.suit.tile.top,
 }
+variables.screens = {
+  layouts = {
+    {
+      awful.layout.suit.max,
+      awful.layout.suit.tile.bottom,
+      awful.layout.suit.tile.top,
+    },
+    {
+      awful.layout.suit.max,
+      awful.layout.suit.tile,
+    },
+    {
+      awful.layout.suit.max,
+      awful.layout.suit.tile.bottom,
+      awful.layout.suit.tile.top,
+    }
+  },
+  tags = {
+    { "Personal", " Work", " Random", " Games" },
+  }
+}
 variables.defaultPrograms = {
   terminal = "kitty",
   editor = os.getenv("EDITOR") or "vim",
