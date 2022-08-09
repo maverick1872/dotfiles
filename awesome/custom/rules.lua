@@ -19,6 +19,10 @@ return {
   -- Floating clients.
   {
     rule_any = {
+      type = {
+        "normal",
+        "dialog"
+      },
       instance = {
         "DTA", -- Firefox addon DownThemAll.
         "copyq", -- Includes session name in class.
@@ -43,6 +47,7 @@ return {
         "Event Tester", -- xev.
         "Steam - News",
         "Welcome to IntelliJ IDEA",
+        "History for Selection",
         "splash"
       },
       role = {
@@ -54,22 +59,9 @@ return {
     properties = {
       floating = true,
       placement = awful.placement.centered,
-    }
-  },
-
-  -- Add Titlebars
-  {
-    rule_any = {
-      type = {
-        "normal",
-        "dialog"
-      }
-    },
-    properties = {
       titlebars_enabled = true
     }
   },
-
 
   -- Games
   {

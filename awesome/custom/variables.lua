@@ -37,7 +37,9 @@ variables.screens = {
     }
   },
   tags = {
+    { "Browsing", " Work", " Spotify",  },
     { "Personal", " Work", " Random", " Games" },
+    { "Browsing", " Work", " Chat",  },
   }
 }
 variables.defaultPrograms = {
