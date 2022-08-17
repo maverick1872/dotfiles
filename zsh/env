@@ -1,0 +1,29 @@
+# Set OS envvar
+if [[ $(uname) == 'Linux' ]]; then
+    export OS="linux"
+elif [[ $(uname) == 'Darwin' ]]; then
+    export OS="osx"
+fi
+
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+export EDITOR='vim'
+export ZSH_CUSTOM=$ZSH/custom
+export ZSH_THEME="personal"
+export USER_BIN="$HOME/bin"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-15.0.1.jdk/Contents/Home"
+export M2_HOME="$USER_BIN/apache-maven-3.6.3/bin"
+export DOCKER_DIR="$HOME/docker-containers"
+
+# Add personal exports to path where appropriate
+export PATH=$PATH:$USER_BIN:$JAVA_HOME:$M2_HOME
+
+## Source NVM if it is installed
+# This only works if NVM is installed to the users home dir. Breaks for non-standard installs.
+if [[ -d ${HOME}/.nvm ]] && [[ -f ${HOME}/.nvm/nvm.sh ]]; then
+    export NVM_DIR="$HOME/.nvm"
+    export PATH=$PATH:NVM_DIR
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi

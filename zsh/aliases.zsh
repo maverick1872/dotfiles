@@ -25,7 +25,6 @@ alias npmid='npm i -D'
 alias npmip='npm i -P'
 
 # Configurations
-alias reload-zsh='source ~/.zshrc'
 alias edit-zshconfig='vim ~/.zshrc'
 alias edit-common-aliases='vim ${ZSH_CUSTOM}/aliases.zsh'
 alias edit-private-aliases='vim ${ZSH_CUSTOM}/private-aliases.zsh'

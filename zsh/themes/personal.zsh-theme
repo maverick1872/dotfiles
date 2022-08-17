@@ -2,15 +2,15 @@
 # http://michelebologna.net
 #
 # This a theme for oh-my-zsh. Features a colored prompt with:
-# * username@host: [jobs] [git] workdir % 
-# * hostname color is based on hostname characters. When using as root, the 
+# * username@host: [jobs] [git] workdir %
+# * hostname color is based on hostname characters. When using as root, the
 # prompt shows only the hostname in red color.
 # * [jobs], if applicable, counts the number of suspended jobs tty
 # * [git], if applicable, represents the status of your git repo (more on that
 # later)
 # * '%' prompt will be green if last command return value is 0, yellow otherwise.
-# 
-# git prompt is inspired by official git contrib prompt: 
+#
+# git prompt is inspired by official git contrib prompt:
 # https://github.com/git/git/tree/master/contrib/completion/git-prompt.sh
 # and it adds:
 # * the current branch
@@ -68,7 +68,12 @@ hostname_color=%(!.$hostname_root_color.$hostname_normal_color)
 
 local current_dir_color=$blueb
 local username_command="%n"
-local hostname_command="localhost"
+# TODO: This doesn't work on OS X Apparently
+if [[ $(uname) == 'Darwin' ]]; then
+    local hostname_command="$(hostname)"
+else
+    local hostname_command="$(hostnamectl hostname)"
+fi
 local current_dir="%~"
 
 local username_output="%(!..$username_normal_color$username_command$cyan@)"
@@ -76,6 +81,7 @@ local hostname_output="$hostname_color$hostname_command$reset"
 local current_dir_output="$current_dir_color$current_dir$reset"
 local jobs_bg="${red}[${redb}fg: %j$reset${red}]$reset"
 local last_command_output="%(?.%(!.$redb.$greenb).$yellowb)"
+local truncated_git_prompt_info="%4>…>$(git_prompt_info)%>>"
 
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=blue,fg=white,bold'
 
@@ -109,10 +115,13 @@ function get_pwd(){
 }
 
 
-PROMPT='$(get_pwd)%1(j. $jobs_bg.)'
+#PROMPT='$(get_pwd)%1(j. $jobs_bg.)'
+PROMPT='$username_output$hostname_output:$current_dir_output%1(j. $jobs_bg.)'
 GIT_PROMPT='$(out=$(git_prompt_info)$(git_prompt_status)$(git_remote_status);if [[ -n $out ]]; then printf %s " $whiteb($reset$yellow$out$whiteb)$reset $blue| ";fi)'
+#GIT_PROMPT='$(out=%10>…>$(git_prompt_info)%>>$(git_prompt_status)$(git_remote_status);if [[ -n $out ]]; then printf %s " $whiteb($reset$yellow$out$whiteb)$reset $blue| ";fi)'
 
-RPROMPT=${GIT_PROMPT}'%F{green}%D{%L:%M} %F{yellow}%D{%p}'
+#RPROMPT=${GIT_PROMPT}'%F{green}%D{%L:%M} %F{yellow}%D{%p}'
+RPROMPT=${GIT_PROMPT}'%F{yellow}%D{%b(%m) %a %d} %F{green}%D{%H:%M}'
 
 PROMPT+=" $last_command_output%#$reset "
 

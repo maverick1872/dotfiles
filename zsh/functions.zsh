@@ -107,6 +107,10 @@ docker-ips() {
   echo $output | column -t -s '|'
 }
 
+reload-zsh() {
+  source ~/.zshenv
+  source ~/.zshrc
+}
 ## Lists all branches that are considered merged in the current dirs git repo
 #list_merged() {
 #  for branch in `git branch -r --merged | grep -v HEAD`;do echo -e `git show --format="%ai %ar by %an" $branch | head -n 1` \\t$branch; done | sort -r

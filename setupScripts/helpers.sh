@@ -2,7 +2,7 @@
 CONFIG_DIR=${XDG_CONFIG_HOME:-$HOME/.config/}
 
 promptUser() {
-  echo -e "$1 (Yy/Nn)\c"
+  echo -e "\n$1 (Yy/Nn)\c"
   read -r answer
   if [[ $answer != "${answer#[Yy]}" ]]; then
     return 0
