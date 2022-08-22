@@ -2,5 +2,5 @@
 
 # Turn off non-primary displays
 xrandr \
-  --output Displayport-2 --off \
-  --output Displayport-3 --off
+  --output DisplayPort-2 --off \
+  --output DisplayPort-3 --off
