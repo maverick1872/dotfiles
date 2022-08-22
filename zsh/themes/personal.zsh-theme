@@ -82,7 +82,6 @@ local hostname_output="$hostname_color$hostname_command$reset"
 local current_dir_output="$current_dir_color$current_dir$reset"
 local jobs_bg="${red}[${redb}fg: %j$reset${red}]$reset"
 local last_command_output="%(?.%(!.$redb.$greenb).$yellowb)"
-local truncated_git_prompt_info="%4>…>$(git_prompt_info)%>>"
 
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=blue,fg=white,bold'
 
@@ -100,26 +99,34 @@ ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE="$yellowb<"
 ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE="$redb<>"
 
 
-function get_pwd(){
-  git_root=$PWD
-  while [[ $git_root != / && ! -e $git_root/.git ]]; do
-    git_root=$git_root:h
+function get_current_dir(){
+  # Traverse the current directory path one parent at a time until we hit the root, or a directory that contains a .git
+  # directory
+  dir_under_test=$(pwd)
+  unset git_root
+  while [[ $dir_under_test != / && ! -e $dir_under_test/.git ]]; do
+    dir_under_test=$dir_under_test:h
   done
-  if [[ $git_root = / ]]; then
-    unset git_root
-    prompt_short_dir=%~
-  else
-    parent=${git_root%\/*}
-    prompt_short_dir=REPO@${PWD#$parent/}
+
+  if [[ $dir_under_test != / ]]; then
+    git_root=$dir_under_test
   fi
-  echo $prompt_short_dir
+
+  if [[ -n $git_root ]]; then
+    parent=${git_root:h}
+    repo=$(git config --get remote.origin.url | sed -r 's/^.*\:(.*)\.git/\1/')
+    dir=$magentab$repo$reset
+  else
+    dir=%~
+  fi
+
+  echo $current_dir_color$dir$reset
 }
 
 
-#PROMPT='$(get_pwd)%1(j. $jobs_bg.)'
-PROMPT='$username_output$hostname_output:$current_dir_output%1(j. $jobs_bg.)'
-#GIT_PROMPT='$(out=$(git_prompt_info)$(git_prompt_status)$(git_remote_status);if [[ -n $out ]]; then printf %s " $whiteb($reset$yellow$out$whiteb)$reset $blue| ";fi)'
-GIT_PROMPT='$(out="%35>…>$(git_prompt_info)%>>$(git_prompt_status)$(git_remote_status)"; if [[ -n $(git_prompt_info) ]]; then printf %s " $whiteb($reset$yellow$out$whiteb)$reset $blue| ";fi)'
+PROMPT='$username_output$hostname_output:$(get_current_dir)%1(j. $jobs_bg.)'
+# PROMPT='$username_output$hostname_output:$current_dir_output%1(j. $jobs_bg.)'
+GIT_PROMPT='$(out="%25>…>$(git_prompt_info)%>>$(git_prompt_status)$(git_remote_status)"; if [[ -n $(git_prompt_info) ]]; then printf %s " $whiteb($reset$yellow$out$whiteb)$reset $blue| ";fi)'
 
 RPROMPT=${GIT_PROMPT}'%F{yellow}%D{%b(%m) %a %d} %F{green}%D{%H:%M}'
 
