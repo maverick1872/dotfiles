@@ -1,5 +1,6 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
+local naughty = require("naughty")
 
 return {
   -- All clients will match this rule.
@@ -20,8 +21,8 @@ return {
   {
     rule_any = {
       type = {
-        "normal",
-        "dialog"
+        "dialog",
+        "override",
       },
       instance = {
         "DTA", -- Firefox addon DownThemAll.
@@ -38,7 +39,7 @@ return {
         "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
         "Wpa_gui",
         "veromix",
-        "xtightvncviewer"
+        "xtightvncviewer",
       },
 
       -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -48,7 +49,7 @@ return {
         "Steam - News",
         "Welcome to IntelliJ IDEA",
         "History for Selection",
-        "splash"
+        "splash",
       },
       role = {
         "AlarmWindow", -- Thunderbird's calendar.
@@ -80,6 +81,38 @@ return {
     }
   },
 
+  -- Steam
+  {
+    rule_any = {
+      name = {
+        "Steam"
+      },
+      class = {
+        "Steam"
+      }
+    },
+    properties = {
+      tag = "Games",
+      screen = 2,
+    }
+  },
+
+  -- Discord
+  {
+    rule_any = {
+      name = {
+        "discord"
+      },
+      class = {
+        "discord"
+      }
+    },
+    properties = {
+      tag = "Games",
+      screen = 3,
+    }
+  },
+
   -- Slack
   {
     rule_any = {
@@ -93,9 +126,13 @@ return {
     properties = {
       screen = 3,
       tag = "Work",
+      --fullscreen = false,
+      --maximized_vertical   = false,
+      --maximized_horizontal = false,
       floating = false,
-      fullscreen = false
-    }
+      --maximized = false
+    },
+
   },
 
   -- IDE Settings
@@ -110,32 +147,50 @@ return {
     },
     properties = {
       screen = 1,
-    }
-  },
-
-  {
-    rule_any = {
-      except_any = {
-        name = {
-          "dotfiles.*",
-          "erudite.*"
-        }
-      }
     },
-    properties = {
-      tag = "Work"
-    }
+    callback = function(c)
+      naughty.notify({text = "IDE was started on screen 1"})
+    end
   },
+
+  --{
+  --  rule_any = {
+  --    class = {
+  --      "jetbrains-idea"
+  --    },
+  --    instance = {
+  --      "jetbrains-idea"
+  --    },
+  --    except_any = {
+  --      type = {
+  --        "dialog"
+  --      },
+  --      name = {
+  --        "dotfiles.*",
+  --        "erudite.*"
+  --      }
+  --    }
+  --  },
+  --  properties = {
+  --    tag = "Work"
+  --  }
+  --},
 
   {
     rule_any = {
+      class = {
+        "jetbrains-idea"
+      },
+      instance = {
+        "jetbrains-idea"
+      },
       name = {
-        "dotfiles.*",
-        "erudite.*"
+        "dotfile",
+        "erudite"
       }
     },
-    properties = {
-      tag = "Personal"
-    }
+    callback = function(c)
+      naughty.notify({text = "personal project in idea was started"})
+    end
   }
 }
