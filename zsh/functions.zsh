@@ -107,6 +107,14 @@ docker-ips() {
   echo $output | column -t -s '|'
 }
 
+# Creates a temp file name and leverages it to swap to files "in place"
+swap() {
+  tmp_name=$(TMPDIR=$(dirname -- "$1") mktemp) &&
+  mv -f -- "$1" "$tmp_name" &&
+  mv -f -- "$2" "$1" &&
+  mv -f -- "$tmp_name" "$2"
+}
+
 reload-zsh() {
   source ~/.zshenv
   source ~/.zshrc
