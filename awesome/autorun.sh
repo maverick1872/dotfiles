@@ -9,6 +9,3 @@ xrandr --output DisplayPort-4 --mode 1920x1200 --pos 4640x0 --rotate right
 #xrandr --newmode "2560x1440_33.00"  162.77  2560 2688 2960 3360  1440 1441 1444 1468  -HSync +Vsync
 #xrandr --addmode DisplayPort-0 2560x1440_33.00
 #xrandr --auto --output DisplayPort-0 --mode 2560x1440_33.00 --primary --left-of DisplayPort-1
-
-# Keyboard repeat rate for XOrg TODO: this should be moved to xinitrc??
-xset r rate 180 15
