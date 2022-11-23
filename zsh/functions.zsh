@@ -119,6 +119,21 @@ reload-zsh() {
   source ~/.zshenv
   source ~/.zshrc
 }
+
+clean_merged_branches() {
+  git checkout -q main && git for-each-ref refs/heads/ "--format=%(refname:short)" | \
+  while read branch; do
+    mergeBase=$(git merge-base main $branch) &&
+    if [[ $(git cherry main $(git commit-tree $(git rev-parse "$branch^{tree}") -p $mergeBase -m _)) == "-"* ]]; then
+      read -q "REPLY?Would you like to delete branch: '${branch}'? (YyNn)"
+      echo ""
+      if [[ $? -eq 0 ]]; then
+        git branch -D $branch;
+        echo ""
+      fi
+    fi
+   done
+}
 ## Lists all branches that are considered merged in the current dirs git repo
 #list_merged() {
 #  for branch in `git branch -r --merged | grep -v HEAD`;do echo -e `git show --format="%ai %ar by %an" $branch | head -n 1` \\t$branch; done | sort -r
