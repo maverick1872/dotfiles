@@ -50,6 +50,7 @@ return {
         "Welcome to IntelliJ IDEA",
         "History for Selection",
         "splash",
+        "Polls/Quizzes"
       },
       role = {
         "AlarmWindow", -- Thunderbird's calendar.
@@ -64,7 +65,25 @@ return {
     }
   },
 
-  -- Games
+  -- Floating but have built in titlebar
+  {
+    rule_any = {
+      class = {
+        "peek",
+      },
+      name = {
+        "Peek",
+      },
+    },
+    properties = {
+      callback = function(c)
+        naughty.notify({text = "Peek was launched"})
+        awful.titlebar.remove(c)
+      end
+    }
+  },
+
+  -- Games!
   {
     rule_any = {
       class = {
@@ -76,8 +95,10 @@ return {
     properties = {
       tag = "Games",
       titlebars_enabled = false,
-      maximized_vertical = true,
-      maximized_horizontal = true
+      fullscreen = true,
+      screen = 1
+      --maximized_vertical = true,
+      --maximized_horizontal = true
     }
   },
 

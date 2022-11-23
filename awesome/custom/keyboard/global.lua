@@ -69,8 +69,11 @@ local globalKeys = gears.table.join(
         { description = "quit awesome", group = "awesome" }),
     awful.key({ }, "Print", function()
       awful.spawn("flameshot gui")
+    end, { description = "Take screenshot", group = "launcher" }),
+    awful.key({ "Shift" }, "Print", function()
+      awful.spawn("peek")
     end,
-        { description = "Take screenshot", group = "launcher" }),
+        { description = "Take screen recording", group = "launcher" }),
 
     awful.key({ vars.modifier, }, "l", function()
       awful.tag.incmwfact(0.05)
