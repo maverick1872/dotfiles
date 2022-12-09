@@ -7,7 +7,6 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-
 export EDITOR='vim'
 export ZSH_CUSTOM=$ZSH/custom
 export ZSH_THEME="personal"
@@ -25,7 +24,12 @@ export PATH=$PATH:$USER_BIN:$JAVA_HOME:$M2_HOME
 if [[ -d ${HOME}/.nvm ]] && [[ -f ${HOME}/.nvm/nvm.sh ]]; then
     export NVM_DIR="$HOME/.nvm"
     export PATH=$PATH:NVM_DIR
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    # nvm lazy loader wrapper
+    function nvm() {
+      unset -f nvm
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+      nvm $@
+    }
     [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 

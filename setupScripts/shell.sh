@@ -114,13 +114,13 @@ if [[ $? -eq 0 ]]; then
           cp -f "${HOME}"/.zshrc "${HOME}"/.zshrc.bak
           echo -e "\tBackup of .zshrc made: ${HOME}/.zshrc.bak "
         fi
-        cp -f "${PWD}"/zsh/config "${HOME}"/.zshrc
+        cp -f "${PWD}"/zsh/zshrc "${HOME}"/.zshrc
         echo -e "\tOverwrote ${PWD}/zsh/config to ${HOME}/.zshrc"
     else
       echo -e "\tSkipping..."
     fi
   else
-    cp "${PWD}"/zsh/config "${HOME}"/.zshrc
+    cp "${PWD}"/zsh/zshrc "${HOME}"/.zshrc
     echo -e "\tCopied ${PWD}/zsh/config to ${HOME}/.zshrc"
   fi
 
