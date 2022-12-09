@@ -16,43 +16,68 @@ export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-15.0.1.jdk/Contents/Home
 export M2_HOME="$USER_BIN/apache-maven-3.6.3/bin"
 export DOCKER_DIR="$HOME/docker-containers"
 
-# Add personal exports to path where appropriate
+# Add personal exports to __path where appropriate
 export PATH=$PATH:$USER_BIN:$JAVA_HOME:$M2_HOME
 
 ## Source NVM if it is installed
 # This only works if NVM is installed to the users home dir. Breaks for non-standard installs.
 if [[ -d ${HOME}/.nvm ]] && [[ -f ${HOME}/.nvm/nvm.sh ]]; then
+    export NVM_LOADED
     export NVM_DIR="$HOME/.nvm"
     export PATH=$PATH:NVM_DIR
+
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
     # nvm lazy loader wrapper
     function nvm() {
-      unset -f nvm
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-      nvm $@
+      __load_nvm
+      nvm $@k
     }
-    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-#    autoload -U add-zsh-hook
-#    load-nvmrc() {
-#      local nvmrc_path="$(nvm_find_nvmrc)"
-#
-#      if [ -n "$nvmrc_path" ]; then
-#        local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-#
-#        if [ "$nvmrc_node_version" = "N/A" ]; then
-#          nvm install
-#        elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-#          nvm use
-#        fi
-#      elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-#        echo "Reverting to nvm default version"
-#        nvm use default
-#      fi
-#    }
-#    add-zsh-hook chpwd load-nvmrc
-#    load-nvmrc
+    autoload -U add-zsh-hook
+    add-zsh-hook chpwd __lazy-autoload-nvmrc
 fi
 
 if [[ -f ${HOME}/.private-zshenv ]]; then
     source ${HOME}/.private-zshenv
 fi
+
+function __lazy-autoload-nvmrc() {
+  local _path=$PWD
+  local nvmrc_path
+
+  # If NVM hasn't yet been loaded, load it so all later nvm commands work
+  __load_nvm
+
+  # Traverse parent directories until an nvmrc is encountered
+  while [[ "${_path}" != "" && ! -e "${_path}/.nvmrc" ]]; do
+    _path=${_path%/*}
+  done
+
+  # Check if nvmrc exists in the final directory from above
+  if [ -e "${_path}/.nvmrc" ]; then
+    nvmrc_path="${_path}/.nvmrc"
+  fi
+
+  # Load appropriate NVM version
+  if [ -n "${nvmrc_path}" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ "$(nvm version)" != "$(nvm version default)" ]; then
+    nvm use default
+  fi
+}
+
+function __load_nvm() {
+  if [ -n $NVM_LOADED ]; then
+    unset -f nvm
+    if [ -s "$NVM_DIR/nvm.sh" ]; then
+      . "$NVM_DIR/nvm.sh"
+      export NVM_LOADED="true"
+    fi
+  fi
+}
