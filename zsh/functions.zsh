@@ -1,6 +1,6 @@
 unset -f git_develop_branch
 unset -f git_main_branch
-function git_main_branch() {
+git_main_branch() {
   command git rev-parse --git-dir &>/dev/null || return
   
   mainBranchName=$(command git config --local user.mainBranchName)
@@ -17,7 +17,7 @@ function git_main_branch() {
   return 1
 }
 
-function git_develop_branch() {
+git_develop_branch() {
   command git rev-parse --git-dir &>/dev/null || return
 
   devBranchName=$(command git config user.developBranchName)
@@ -115,11 +115,6 @@ swap() {
   mv -f -- "$tmp_name" "$2"
 }
 
-reload-zsh() {
-  source ~/.zshenv
-  source ~/.zshrc
-}
-
 clean_merged_branches() {
   git checkout -q main && git for-each-ref refs/heads/ "--format=%(refname:short)" | \
   while read branch; do
@@ -134,12 +129,46 @@ clean_merged_branches() {
     fi
    done
 }
-## Lists all branches that are considered merged in the current dirs git repo
-#list_merged() {
-#  for branch in `git branch -r --merged | grep -v HEAD`;do echo -e `git show --format="%ai %ar by %an" $branch | head -n 1` \\t$branch; done | sort -r
-#}
-#
-## Lists all branches that are considered unmerged in the current dirs git repo
-#list_unmerged() {
-#  for branch in `git branch -r --no-merged | grep -v HEAD`;do echo -e `git show --format="%ai %ar by %an" $branch | head -n 1` \\t$branch; done | sort -r
-#}
+
+# Traverses PWD and up to find and autoload an nvmrc if exists. Compatible with lazy loading.
+__lazy-autoload-nvmrc() {
+  local _path=$PWD
+  local nvmrc_path
+
+  # If NVM hasn't yet been loaded, load it so all later nvm commands work
+  __load_nvm
+
+  # Traverse parent directories until an nvmrc is encountered
+  while [[ "${_path}" != "" && ! -e "${_path}/.nvmrc" ]]; do
+    _path=${_path%/*}
+  done
+
+  # Check if nvmrc exists in the final directory from above
+  if [ -e "${_path}/.nvmrc" ]; then
+    nvmrc_path="${_path}/.nvmrc"
+  fi
+
+  # Load appropriate NVM version
+  if [[ -n "${nvmrc_path}" ]]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [[ "${nvmrc_node_version}" = "N/A" ]]; then
+      nvm install
+    elif [[ "${nvmrc_node_version}" != "$(nvm version)" ]]; then
+      nvm use
+    fi
+  elif [[ "$(nvm version)" != "$(nvm version default)" ]]; then
+    nvm use default
+  fi
+}
+
+# Lazily load NVM
+__load_nvm() {
+  if [[ -z "${NVM_LOADED}" ]]; then
+    unset -f nvm node npm
+    if [[ -s "${NVM_DIR}/nvm.sh" ]]; then
+      . "${NVM_DIR}/nvm.sh"
+      export NVM_LOADED="true"
+    fi
+  fi
+}

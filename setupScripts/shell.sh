@@ -108,20 +108,20 @@ promptUser "Would you like to apply the custom ZSH configurations contained with
 if [[ $? -eq 0 ]]; then
   ## Should .zshrc be symlinked
   if [[ -f ${HOME}/.zshrc ]]; then
-    promptUser "Do you want to overwrite ${HOME}/.zshrc?"
+    promptUser "Do you want to overwrite ${HOME}/.zshrc with a symlink?"
     if [[ $? -eq 0 ]]; then
         if [[ ! -L ${HOME}/.zshrc ]]; then
           cp -f "${HOME}"/.zshrc "${HOME}"/.zshrc.bak
           echo -e "\tBackup of .zshrc made: ${HOME}/.zshrc.bak "
         fi
-        cp -f "${PWD}"/zsh/zshrc "${HOME}"/.zshrc
-        echo -e "\tOverwrote ${PWD}/zsh/config to ${HOME}/.zshrc"
+        ln -snf "${PWD}"/zsh/zshrc "${HOME}"/.zshrc
+        echo -e "\tSymlinked ${PWD}/zsh/zshrc to ${HOME}/.zshrc"
     else
       echo -e "\tSkipping..."
     fi
   else
     cp "${PWD}"/zsh/zshrc "${HOME}"/.zshrc
-    echo -e "\tCopied ${PWD}/zsh/config to ${HOME}/.zshrc"
+    echo -e "\tCopied ${PWD}/zsh/zshrc to ${HOME}/.zshrc"
   fi
 
   if [[ -f ${HOME}/.zshenv ]]; then
@@ -131,14 +131,14 @@ if [[ $? -eq 0 ]]; then
           cp -f "${HOME}"/.zshenv "${HOME}"/.zshenv.bak
           echo -e "\tBackup of .zshenv made: ${HOME}/.zshenv.bak "
         fi
-        ln -snf "${PWD}"/zsh/env "${HOME}"/.zshenv
-        echo -e "\tSymlinked ${PWD}/zsh/env to ${HOME}/.zshenv"
+        ln -snf "${PWD}"/zsh/zshenv "${HOME}"/.zshenv
+        echo -e "\tSymlinked ${PWD}/zsh/zshenv to ${HOME}/.zshenv"
     else
       echo -e "\tSkipping..."
     fi
   else
-    ln -sn "${PWD}"/zsh/env "${HOME}"/.zshenv
-    echo -e "\tSymlinked ${PWD}/zsh/env to ${HOME}/.zshenv"
+    ln -sn "${PWD}"/zsh/zshenv "${HOME}"/.zshenv
+    echo -e "\tSymlinked ${PWD}/zsh/zshenv to ${HOME}/.zshenv"
   fi
 
   ## Should private aliases file be created

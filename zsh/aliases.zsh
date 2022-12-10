@@ -15,7 +15,7 @@ alias gbdlocal='git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git b
 alias newpr='gh pr create'
 
 # Docker & Docker Compose
-alias dco='docker compose'
+#alias dco='docker compose'
 alias clean-images='docker images -aq | xargs docker rmi'
 alias clean-containers='docker ps -aq | xargs docker rm'
 
