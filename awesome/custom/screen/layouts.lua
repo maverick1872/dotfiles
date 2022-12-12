@@ -2,12 +2,12 @@ local awful = require("awful")
 local vars = require("custom/variables")
 
 -- Configure layouts
---awful.layout.layouts = vars.layouts
+-- awful.layout.layouts = vars.layouts
 
 -- Each screen has its own tag table that each individually have their own layouts.
 local function set_tags_per_screen(s)
-    screenTags = vars.screens.tags[s]
-    screenLayouts = vars.screens.layouts[s]
+    screenTags = vars.screens.tags[s.index]
+    screenLayouts = vars.screens.layouts[s.index]
 
     awful.tag(screenTags, s, screenLayouts)
 end
