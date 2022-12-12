@@ -21,7 +21,7 @@ require("errorHandling").handleErrors()
 -- Initialize theme
 beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/" .. vars.theme .. "theme.lua")
 
-require('screen.wallpaper')
+require('custom/screen/wallpaper')
 
 -- Configure layouts
 awful.layout.layouts = vars.layouts

@@ -189,3 +189,5 @@ fi
 
 echo -e "\nInstallation of ZSH and Oh-My-Zsh is complete. Please restart your terminals for changes to take effect."
 exit
+
+# Ask to setup global env vars aka "dev dir" which will support a function to trigger an update of these dotfiles

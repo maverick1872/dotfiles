@@ -1,7 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
-local beautiful = require("beautiful")
 local vars = require("custom/variables")
 
 local wibar = {}
@@ -27,13 +26,6 @@ wibar.configure = function()
   )
 
   awful.screen.connect_for_each_screen(function(s)
-    -- Each screen has its own tag table.
-    tagNames = {}
-    for i = 1, #vars.tags do
-      tagNames[i] = vars.tags[i].name
-    end
-    awful.tag(tagNames, s, awful.layout.layouts[1])
-
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
