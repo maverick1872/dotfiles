@@ -2,6 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local vars = require("custom/variables")
+local batteryWidget = require("custom/widgets/battery")
 
 local wibar = {}
 
@@ -112,6 +113,7 @@ wibar.configure = function()
         mykeyboardlayout,
         wibox.widget.systray(),
         mytextclock,
+	batteryWidget,
         s.mylayoutbox,
       },
     }

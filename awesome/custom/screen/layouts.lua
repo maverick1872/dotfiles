@@ -20,7 +20,6 @@ local function set_tags_per_screen(s)
       screenTags = vars.screens[s.index].tags
       screenLayouts = vars.screens[s.index].layouts
     end
-    naughty.notify({text = tostring(#screenLayouts)})
     awful.tag(screenTags, s, screenLayouts)
 end
 
