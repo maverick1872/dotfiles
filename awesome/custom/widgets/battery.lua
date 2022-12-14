@@ -21,13 +21,13 @@ local naughty = require("naughty")
 --   level_widget,
 --   layout = wibox.layout.fixed.horizontal,
 -- }
+
 local textStatus = awful.widget.watch(
   'cat /sys/class/power_supply/BAT1/capacity',
   90,
   function(widget, stdout)
-    local percent = string.gsub(stdout, "\n", "")
-    naughty.notify({text = 'updating bat: '..percent.."%"})
-    widget:set_text(percent.."%")
+    local percent = string.gsub(stdout, "\n", "").."%"
+    widget:set_text(percent)
   end
 )
 
