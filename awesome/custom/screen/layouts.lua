@@ -12,9 +12,9 @@ local function set_tags_per_screen(s)
 
   for i, tagName in ipairs(screenTags) do
     local tag = awful.tag.add(tagName, {
-	screen = s,
-	layout = screenLayouts[1],
-	layouts = screenLayouts
+        screen = s,
+        layout = screenLayouts[1],
+        layouts = screenLayouts
       })
     if i == 1 then 
       tag.selected = true
@@ -23,5 +23,5 @@ local function set_tags_per_screen(s)
 end
 
 awful.screen.connect_for_each_screen(function(s)
-    set_tags_per_screen(s)
+  set_tags_per_screen(s)
 end)

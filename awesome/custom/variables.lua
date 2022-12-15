@@ -20,29 +20,29 @@ variables.layouts = {
   awful.layout.suit.tile.top,
 }
 variables.screens = {
-    {
-      layouts = {
-        awful.layout.suit.max,
-        awful.layout.suit.tile.bottom,
-        awful.layout.suit.tile.top,
-      },
-      tags = { "Browsing", " Work", " Spotify" },
+  {
+    layouts = {
+      awful.layout.suit.max,
+      awful.layout.suit.tile,
     },
-    {
-      layouts = {
-     	awful.layout.suit.max,
-     	awful.layout.suit.tile,
-      },
-      tags = { "Personal", " Work", " Random", " Games" },
-    }, 
-    {
-      layouts = {
-        awful.layout.suit.max,
-        awful.layout.suit.tile.bottom,
-        awful.layout.suit.tile.top,
-      },
-      tags = { "Browsing", " Work", " Chat" },
-    }
+    tags = { "Personal", " Work", " Random", " Games" },
+  },
+  {
+    layouts = {
+      awful.layout.suit.max,
+      awful.layout.suit.tile.bottom,
+      awful.layout.suit.tile.top,
+    },
+    tags = { "Browsing", " Work", " Spotify" },
+  },
+  {
+    layouts = {
+      awful.layout.suit.max,
+      awful.layout.suit.tile.bottom,
+      awful.layout.suit.tile.top,
+    },
+    tags = { "Browsing", " Work", " Chat" },
+  }
 }
 variables.defaultPrograms = {
   terminal = "kitty",
