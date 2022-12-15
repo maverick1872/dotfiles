@@ -11,13 +11,16 @@ local function set_tags_per_screen(s)
   screenLayouts = vars.screens[id].layouts
 
   for i, tagName in ipairs(screenTags) do
-    awful.tag.add(tagName, {
-      screen = s,
-      layout = screenLayouts[1],
-      layouts = screenLayouts
-    }
+    local tag = awful.tag.add(tagName, {
+	screen = s,
+	layout = screenLayouts[1],
+	layouts = screenLayouts
+      })
+    if i == 1 then 
+      tag.selected = true
+    end
+  end
 end
-
 
 awful.screen.connect_for_each_screen(function(s)
     set_tags_per_screen(s)
