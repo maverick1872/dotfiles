@@ -6,21 +6,16 @@ local naughty = require("naughty")
 
 -- Each screen has its own tag table that each individually have their own layouts.
 local function set_tags_per_screen(s)
-    primaryScreen = screen.primary
-    id = s.index
+  id = s.index
+  screenTags = vars.screens[id].tags
+  screenLayouts = vars.screens[id].layouts
 
-    if (screen.count() == 1) then
-      for i = 1, #vars.screens do
-        if (vars.screens[i].primary) then
-	  screenTags = vars.screens[i].tags
-          screenLayouts = vars.screens[i].layouts
-	end
-      end
-    else
-      screenTags = vars.screens[s.index].tags
-      screenLayouts = vars.screens[s.index].layouts
-    end
-    awful.tag(screenTags, s, screenLayouts)
+  for i, tagName in ipairs(screenTags) do
+    awful.tag.add(tagName, {
+      screen = s,
+      layout = screenLayouts[1],
+      layouts = screenLayouts
+    }
 end
 
 

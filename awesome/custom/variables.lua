@@ -26,10 +26,9 @@ variables.screens = {
         awful.layout.suit.tile.bottom,
         awful.layout.suit.tile.top,
       },
-      tags ={ "Browsing", " Work", " Spotify",  },
+      tags = { "Browsing", " Work", " Spotify" },
     },
     {
-      primary = true,
       layouts = {
      	awful.layout.suit.max,
      	awful.layout.suit.tile,
@@ -42,7 +41,7 @@ variables.screens = {
         awful.layout.suit.tile.bottom,
         awful.layout.suit.tile.top,
       },
-      tags = { "Browsing", " Work", " Chat",  },
+      tags = { "Browsing", " Work", " Chat" },
     }
 }
 variables.defaultPrograms = {
