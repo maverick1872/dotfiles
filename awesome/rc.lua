@@ -24,16 +24,15 @@ require("custom/wibar")
 
 -- Set Global Keybindings
 require("keybinds")
---root.keys(require('custom/keyboard/global'))
 
 -- Set Rules
-awful.rules.rules = require('custom/rules')
+require('custom/rules')
 
 -- Set Signals
 require('custom/signals')
 
 -- Auto-started applications
-awful.spawn.with_shell("$HOME/.config/awesome/autorun.sh")
+--awful.spawn.with_shell("$HOME/.config/awesome/autorun.sh")
 
 -- Reduce memory consumption
 collectgarbage("setpause", 110)

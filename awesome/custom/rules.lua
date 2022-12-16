@@ -2,7 +2,7 @@ local awful = require("awful")
 local beautiful = require("beautiful")
 local naughty = require("naughty")
 
-return {
+awful.rules.rules = {
   -- All clients will match this rule.
   { rule = { },
     properties = {
@@ -75,8 +75,8 @@ return {
     },
     properties = {
       callback = function(c)
-        naughty.notify({text = "Peek was launched"})
-        awful.titlebar.remove(c)
+        naughty.notify({text = "Hiding peek's titlebar"})
+        awful.titlebar.hide(c)
       end
     }
   },
