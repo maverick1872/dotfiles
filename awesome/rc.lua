@@ -10,7 +10,6 @@ require("errorHandling")
 -- Standard awesome library
 require("awful.autofocus")
 local gears = require("gears")
-local awful = require("awful")
 local beautiful = require("beautiful")
 local vars = require("custom/variables")
 
