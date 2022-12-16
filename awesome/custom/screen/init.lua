@@ -1,2 +1,3 @@
-require(... .. '.layouts')
 require(... .. '.wallpaper')
+require(... .. '.layouts')
+require(... .. '.taskbar')

@@ -19,9 +19,6 @@ beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/" .. vars.th
 
 require('custom/screen')
 
--- Configure Wibar
-require("custom/wibar")
-
 -- Set Global Keybindings
 require("keybinds")
 

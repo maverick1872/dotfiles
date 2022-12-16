@@ -7,18 +7,19 @@ variables.themeDir = "${HOME}/.config/awesome/themes/"
 variables.theme = "default/"
 variables.themeStyle = "dark/"
 variables.titlebarsEnabled = false
-variables.tags = {
-  { name = "Personal" },
-  { name = "Work" },
-  { name = "Random" },
-  { name = "Games" },
-}
-variables.layouts = {
-  awful.layout.suit.max,
-  awful.layout.suit.tile.bottom,
-  awful.layout.suit.tile,
-  awful.layout.suit.tile.top,
-}
+variables.taskbarLocation = "bottom"
+--variables.tags = {
+--  { name = "Personal" },
+--  { name = "Work" },
+--  { name = "Random" },
+--  { name = "Games" },
+--}
+--variables.layouts = {
+--  awful.layout.suit.max,
+--  awful.layout.suit.tile.bottom,
+--  awful.layout.suit.tile,
+--  awful.layout.suit.tile.top,
+--}
 variables.screens = {
   {
     layouts = {
