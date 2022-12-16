@@ -1,7 +1,7 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local vars = require("custom.variables")
-local widgets = require("custom.widgets")
+local widgets = require("widgets")
 
 -- Want global clock instance so created outside of function
 local clock = wibox.widget.textclock()

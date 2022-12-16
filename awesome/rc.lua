@@ -16,7 +16,7 @@ local vars = require("custom/variables")
 -- Initialize theme
 beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/" .. vars.theme .. "theme.lua")
 
-require('custom/screen')
+require('screen')
 
 -- Set Global Keybindings
 require("keybinds")
