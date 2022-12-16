@@ -5,7 +5,7 @@
 pcall(require, "luarocks.loader")
 
 -- Error handling
-require("errorHandling").handleErrors()
+require("errorHandling")
 
 -- Standard awesome library
 require("awful.autofocus")
@@ -23,7 +23,8 @@ require('custom/screen')
 require("custom/wibar")
 
 -- Set Global Keybindings
-root.keys(require('custom/keyboard/global'))
+require("keybinds")
+--root.keys(require('custom/keyboard/global'))
 
 -- Set Rules
 awful.rules.rules = require('custom/rules')

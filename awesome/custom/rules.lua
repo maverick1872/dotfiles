@@ -10,8 +10,6 @@ return {
       border_color = beautiful.border_normal,
       focus = awful.client.focus.filter,
       raise = true,
-      keys = require('custom/keyboard/client'),
-      buttons = require('custom/mouse/client'),
       screen = awful.screen.preferred,
       placement = awful.placement.no_overlap + awful.placement.no_offscreen
     }
