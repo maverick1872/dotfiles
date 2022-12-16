@@ -80,13 +80,13 @@ client.connect_signal("request::default_keybindings", function()
       awful.spawn("amixer -D pulse sset Master 5%-")
     end),
     awful.key({ }, "XF86AudioPlay", function()
-      awful.spawn("playerctl play-pause")
+      awful.spawn("playerctl --player spotify play-pause")
     end),
     awful.key({ }, "XF86AudioNext", function()
-      awful.spawn("playerctl next")
+      awful.spawn("playerctl --player spotify next")
     end),
     awful.key({ }, "XF86AudioPrev", function()
-      awful.spawn("playerctl previous")
+      awful.spawn("playerctl --player spotify previous")
     end)
   })
 end)
