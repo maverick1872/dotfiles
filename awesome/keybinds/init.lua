@@ -1,2 +1,6 @@
 require(... .. ".client")
 require(... .. ".global")
+require(... .. ".awesome")
+require(... .. ".tags")
+require(... .. ".launchers")
+require(... .. ".layouts")

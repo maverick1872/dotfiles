@@ -3,6 +3,12 @@ local awful = require('awful')
 
 return {
   modifier = modifiers.super,
+  modifiers = {
+    super = 'Mod4',
+    alt = 'Mod1',
+    shift = 'Shift',
+    ctrl = 'Control',
+  },
   themeDir = "${HOME}/.config/awesome/themes/",
   theme = "default/",
   themeStyle = "dark/",
