@@ -1,8 +1,5 @@
 local awful = require("awful")
 local vars = require("custom/variables")
-local naughty = require("naughty")
--- Configure layouts
--- awful.layout.layouts = vars.layouts
 
 -- Each screen has its own tag table that each individually have their own layouts.
 local function set_tags_per_screen(s)
@@ -11,14 +8,12 @@ local function set_tags_per_screen(s)
   screenLayouts = vars.screens[id].layouts
 
   for i, tagName in ipairs(screenTags) do
-    local tag = awful.tag.add(tagName, {
-        screen = s,
-        layout = screenLayouts[1],
-        layouts = screenLayouts
-      })
-    if i == 1 then 
-      tag.selected = true
-    end
+    awful.tag.add(tagName, {
+      screen = s,
+      layout = screenLayouts[1],
+      layouts = screenLayouts,
+      selected = i == 1
+    })
   end
 end
 

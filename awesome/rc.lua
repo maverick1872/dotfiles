@@ -4,31 +4,23 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
--- Standard awesome library
-local gears = require("gears")
-local awful = require("awful")
-require("awful.autofocus")
-
--- Theme handling library
-local beautiful = require("beautiful")
-
--- Custom Variables
-local vars = require("custom/variables")
-
 -- Error handling
 require("errorHandling").handleErrors()
+
+-- Standard awesome library
+require("awful.autofocus")
+local gears = require("gears")
+local awful = require("awful")
+local beautiful = require("beautiful")
+local vars = require("custom/variables")
 
 -- Initialize theme
 beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/" .. vars.theme .. "theme.lua")
 
-require('custom/screen/layouts')
-require('custom/screen/wallpaper')
-
--- Configure layouts
-awful.layout.layouts = vars.layouts
+require('custom/screen')
 
 -- Configure Wibar
-require("custom/wibar").configure()
+require("custom/wibar")
 
 -- Set Global Keybindings
 root.keys(require('custom/keyboard/global'))
@@ -37,7 +29,19 @@ root.keys(require('custom/keyboard/global'))
 awful.rules.rules = require('custom/rules')
 
 -- Set Signals
-require('custom/signals').configureSignals()
+require('custom/signals')
 
 -- Auto-started applications
 awful.spawn.with_shell("$HOME/.config/awesome/autorun.sh")
+
+-- Reduce memory consumption
+collectgarbage("setpause", 110)
+collectgarbage("setstepmul", 1000)
+gears.timer({
+  timeout = 5,
+  autostart = true,
+  call_now = true,
+  callback = function()
+    collectgarbage("collect")
+  end,
+})
