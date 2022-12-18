@@ -61,6 +61,8 @@ theme.taglist_shape = gears.shape.rounded_rect
 -- notification_[bg|fg]
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
+theme.notification_shape = gears.shape.rounded_rect
+theme.notification_opacity = .8
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
@@ -134,10 +136,10 @@ theme.icon_theme = nil
 
 -- Set different colors for urgent notifications.
 rnotification.connect_signal('request::rules', function()
-  rnotification.append_rule {
-    rule = { urgency = 'critical' },
-    properties = { bg = '#ff0000', fg = '#ffffff' }
-  }
+    rnotification.append_rule {
+        rule = { urgency = 'critical' },
+        properties = { bg = '#ff0000', fg = '#ffffff' }
+    }
 end)
 
 return theme

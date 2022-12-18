@@ -16,9 +16,11 @@ local vars = require("custom/variables")
 -- Initialize theme
 beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/" .. vars.theme .. "theme.lua")
 
+require('notifications')
 require('clients')
 require('screen')
-
+local naughty = require("naughty")
+naughty.notification({ title = 'some title', text = 'notification body' })
 -- Set Global Keybindings
 require("keybinds")
 
@@ -42,4 +44,3 @@ gears.timer({
     collectgarbage("collect")
   end,
 })
-
