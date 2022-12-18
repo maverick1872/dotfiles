@@ -9,10 +9,10 @@ local clock = wibox.widget.textclock()
 
 local function createTaskBar(s)
   -- Create the wibox
-  s.mywibox = awful.wibar({ 
+  s.mywibox = awful.wibar({
     position = vars.taskbarLocation,
     screen = s,
-    opacity = .5,
+    opacity = .85,
     shape = gears.shape.rounded_rect,
     margins = {
       bottom = 5,

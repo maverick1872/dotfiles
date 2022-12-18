@@ -16,6 +16,7 @@ local vars = require("custom/variables")
 -- Initialize theme
 beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/" .. vars.theme .. "theme.lua")
 
+require('clients')
 require('screen')
 
 -- Set Global Keybindings
@@ -41,3 +42,4 @@ gears.timer({
     collectgarbage("collect")
   end,
 })
+
