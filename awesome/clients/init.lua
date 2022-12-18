@@ -1,12 +1,12 @@
--- local client = require("awful.client")
 local gears = require("gears")
+local vars = require("custom.variables")
 
 function set_corners(c)
   if c.maximized or c.fullscreen then
     c.shape = gears.shape.rectangle
   else
     c.shape = function(cr, w, h)
-      gears.shape.rounded_rect(cr, w, h, 20)
+      gears.shape.rounded_rect(cr, w, h, vars.clientRadius)
     end
   end
 end

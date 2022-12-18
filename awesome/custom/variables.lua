@@ -2,6 +2,7 @@ local modifiers = require("custom/modifiers")
 local awful = require('awful')
 
 return {
+  clientRadius = 10,
   modifier = modifiers.super,
   modifiers = {
     super = 'Mod4',
