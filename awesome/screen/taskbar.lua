@@ -1,4 +1,5 @@
 local awful = require("awful")
+local gears = require("gears")
 local wibox = require("wibox")
 local vars = require("custom.variables")
 local widgets = require("widgets")
@@ -8,7 +9,17 @@ local clock = wibox.widget.textclock()
 
 local function createTaskBar(s)
   -- Create the wibox
-  s.mywibox = awful.wibar({ position = vars.taskbarLocation, screen = s })
+  s.mywibox = awful.wibar({ 
+    position = vars.taskbarLocation,
+    screen = s,
+    opacity = .5,
+    shape = gears.shape.rounded_rect,
+    margins = {
+      bottom = 5,
+      left = 10,
+      right = 10,
+    }
+  })
 
   -- Add widgets to the wibox
   s.mywibox:setup {
@@ -28,7 +39,6 @@ local function createTaskBar(s)
     {
       layout = wibox.layout.fixed.horizontal,
       wibox.widget.systray(),
-      wibox.widget.textclock(),
       clock,
       widgets.battery,
       widgets.layout(s),
