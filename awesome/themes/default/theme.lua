@@ -62,7 +62,7 @@ theme.taglist_shape = gears.shape.rounded_rect
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
 theme.notification_shape = gears.shape.rounded_rect
-theme.notification_opacity = .8
+theme.notification_opacity = .9
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
