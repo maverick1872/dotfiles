@@ -1,12 +1,7 @@
 local awful = require("awful")
 local vars = require('custom.variables')
-local naughty = require("naughty")
 
 client.connect_signal("request::default_keybindings", function()
-  --naughty.notification({ preset = naughty.config.presets.normal,
-  --                 title = "Oops, there were errors during startup!",
-  --                 text =  'some test text' })
-
   awful.keyboard.append_client_keybindings({
     awful.key({ vars.modifier, }, "f",
       function(c)
@@ -72,22 +67,6 @@ client.connect_signal("request::default_keybindings", function()
       awful.client.incwfact(-0.05)
     end,
       { description = "decrease client window factor", group = "client" }),
-
-    awful.key({ }, "XF86AudioRaiseVolume", function()
-      awful.spawn("amixer -D pulse sset Master 5%+")
-    end),
-    awful.key({ }, "XF86AudioLowerVolume", function()
-      awful.spawn("amixer -D pulse sset Master 5%-")
-    end),
-    awful.key({ }, "XF86AudioPlay", function()
-      awful.spawn("playerctl --player spotify play-pause")
-    end),
-    awful.key({ }, "XF86AudioNext", function()
-      awful.spawn("playerctl --player spotify next")
-    end),
-    awful.key({ }, "XF86AudioPrev", function()
-      awful.spawn("playerctl --player spotify previous")
-    end)
   })
 end)
 

@@ -1,7 +1,5 @@
 local awful = require("awful")
-local hotkeys_popup = require("awful.hotkeys_popup")
 local vars = require('custom.variables')
-
 
 awful.keyboard.append_global_keybindings({
   awful.key({ vars.modifier, }, "j", function()
@@ -20,14 +18,6 @@ awful.keyboard.append_global_keybindings({
   awful.key({ vars.modifier, "Shift" }, "k", function()
     awful.client.swap.byidx(1)
   end, { description = "swap with previous client by index", group = "client" }),
-
-  awful.key({ vars.modifier, "Control" }, "j", function()
-    awful.screen.focus_relative(1)
-  end, { description = "focus the next screen", group = "screen" }),
-
-  awful.key({ vars.modifier, "Control" }, "k", function()
-    awful.screen.focus_relative(-1)
-  end, { description = "focus the previous screen", group = "screen" }),
 
   awful.key({ vars.modifier, }, "u",
     awful.client.urgent.jumpto,
