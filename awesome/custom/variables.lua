@@ -18,8 +18,8 @@ return {
   screens = {
     {
       layouts = {
-        awful.layout.suit.max,
         awful.layout.suit.tile,
+        awful.layout.suit.max,
       },
       tags = { "Personal", " Work", " Random", " Games" },
     },

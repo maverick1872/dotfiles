@@ -4,11 +4,11 @@ local mods = require("custom.variables").modifiers
 local group = "Tag Control"
 
 awful.keyboard.append_global_keybindings({
-  awful.key({ mods.super, }, "Left",
+  awful.key({ mods.super, mods.alt}, "j",
     awful.tag.viewprev,
     { description = "view previous", group = group }),
 
-  awful.key({ mods.super, }, "Right",
+  awful.key({ mods.super, mods.alt}, "k",
     awful.tag.viewnext,
     { description = "view next", group = group }),
 
@@ -28,8 +28,7 @@ for i = 1, #vars.screens[1].tags do
         if tag then
           tag:view_only()
         end
-      end,
-      { description = "view tag N", group = group }),
+      end, { description = "view tag N", group = group }),
 -- Toggle tag display.
     awful.key({ mods.super, mods.ctrl }, "#" .. i + 9,
       function()
@@ -38,8 +37,7 @@ for i = 1, #vars.screens[1].tags do
         if tag then
           awful.tag.viewtoggle(tag)
         end
-      end,
-      { description = "toggle tag N", group = group }),
+      end, { description = "toggle tag N", group = group }),
 -- Move client to tag.
     awful.key({ mods.super, mods.shift }, "#" .. i + 9,
       function()
@@ -49,8 +47,7 @@ for i = 1, #vars.screens[1].tags do
             client.focus:move_to_tag(tag)
           end
         end
-      end,
-      { description = "move focused client to tag N", group = group }),
+      end, { description = "move focused client to tag N", group = group }),
 -- Toggle tag on focused client.
     awful.key({ mods.super, mods.ctrl, mods.shift }, "#" .. i + 9,
       function()
@@ -60,7 +57,6 @@ for i = 1, #vars.screens[1].tags do
             client.focus:toggle_tag(tag)
           end
         end
-      end,
-      { description = "toggle focused client on tag N", group = group })
+      end, { description = "toggle focused client on tag N", group = group })
   })
 end
