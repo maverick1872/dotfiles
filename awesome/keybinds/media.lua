@@ -2,8 +2,6 @@ local awful = require("awful")
 local utils = require("utils")
 local group = "Media Control"
 
-utils.testNotify('does this work')
-
 awful.keyboard.append_global_keybindings({
   awful.key({ }, "XF86AudioRaiseVolume", function()
     awful.spawn("amixer -D pulse sset Master 5%+")

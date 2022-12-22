@@ -7,3 +7,4 @@ if [[ playerStatus -ne 0 ]]; then
 fi
 
 playerctl --player=spotify,%any play-pause
+c
