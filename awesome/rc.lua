@@ -33,7 +33,7 @@ require('custom/signals')
 
 -- Auto-started applications
 --awful.spawn.with_shell("$HOME/.config/awesome/autorun.sh")
-awful.util.spawn_with_shell("xidlehook --not-when-audio --timer 600 'systemctl suspend' '' &")
+awful.spawn.once("xidlehook --not-when-audio --timer 600 'systemctl suspend' '' &")
 
 -- Reduce memory consumption
 collectgarbage("setpause", 110)
