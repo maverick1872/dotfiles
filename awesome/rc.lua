@@ -9,6 +9,7 @@ require("errorHandling")
 
 -- Standard awesome library
 require("awful.autofocus")
+local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
 local vars = require("custom/variables")
@@ -32,6 +33,7 @@ require('custom/signals')
 
 -- Auto-started applications
 --awful.spawn.with_shell("$HOME/.config/awesome/autorun.sh")
+awful.util.spawn_with_shell("xidlehook --not-when-audio --timer 600 'systemctl suspend' '' &")
 
 -- Reduce memory consumption
 collectgarbage("setpause", 110)
