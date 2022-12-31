@@ -9,6 +9,7 @@ require("errorHandling")
 
 -- Standard awesome library
 require("awful.autofocus")
+local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
 local vars = require("custom/variables")
@@ -16,8 +17,11 @@ local vars = require("custom/variables")
 -- Initialize theme
 beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/" .. vars.theme .. "theme.lua")
 
+require('notifications')
+require('clients')
 require('screen')
-
+local naughty = require("naughty")
+naughty.notification({ title = 'some title', text = 'notification body' })
 -- Set Global Keybindings
 require("keybinds")
 
@@ -29,6 +33,12 @@ require('custom/signals')
 
 -- Auto-started applications
 --awful.spawn.with_shell("$HOME/.config/awesome/autorun.sh")
+awful.spawn.with_shell("xidlehook \
+  --not-when-audio \
+  ----timer 300 '/home/jonathon/.config/awesome/utils/scripts/lockscreen.sh' '' \
+  --timer 3600 \
+  --'systemctl suspend ' '' \
+  &")
 
 -- Reduce memory consumption
 collectgarbage("setpause", 110)

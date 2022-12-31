@@ -2,6 +2,7 @@ local modifiers = require("custom/modifiers")
 local awful = require('awful')
 
 return {
+  clientRadius = 10,
   modifier = modifiers.super,
   modifiers = {
     super = 'Mod4',
@@ -17,8 +18,8 @@ return {
   screens = {
     {
       layouts = {
-        awful.layout.suit.max,
         awful.layout.suit.tile,
+        awful.layout.suit.max,
       },
       tags = { "Personal", " Work", " Random", " Games" },
     },
