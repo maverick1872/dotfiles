@@ -120,7 +120,7 @@ if [[ $? -eq 0 ]]; then
       echo -e "\tSkipping..."
     fi
   else
-    cp "${PWD}"/zsh/zshrc "${HOME}"/.zshrc
+    ln -sn "${PWD}"/zsh/zshrc "${HOME}"/.zshrc
     echo -e "\tCopied ${PWD}/zsh/zshrc to ${HOME}/.zshrc"
   fi
 
