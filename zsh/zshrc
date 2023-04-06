@@ -8,7 +8,6 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 plugins=(
   git
-  docker-compose
   extract
   universalarchive
   zsh-syntax-highlighting
@@ -46,3 +45,4 @@ fi
 
 ### User configuration ###
 source $ZSH/oh-my-zsh.sh
+

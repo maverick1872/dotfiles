@@ -49,6 +49,18 @@ show-port() {
   lsof -P -n -i :"$1"
 }
 
+dco() {
+# Can be improved with a proper jq function? https://stackoverflow.com/questions/62665537/how-to-calculate-time-duration-from-two-date-time-values-using-jq
+  if [[ $1 == "ps" ]]; then
+    command docker compose ps --format json | \
+	    jq -r '[{"Name": "Container Name", "Service": "Service Name", "Status": "Status", "Created": "Created"}, .[]] | .[] | [.Name, .Service, .Status, (.Created | if type=="number" then (.|strflocaltime("%Y-%m-%dT%H:%M:%S")) else . end)] | @tsv' | \
+      column -ts $'\t'
+    return
+  fi;
+
+  command docker compose "$@"
+}
+
 # Traverses directory structure and pulls any changes in the git repo
 update-zsh-plugins() {
   for d in $(find ${ZSH_CUSTOM}/plugins -maxdepth 1 -mindepth 1 ! -name 'example' -type d); do
@@ -172,3 +184,4 @@ __load_nvm() {
     fi
   fi
 }
+
