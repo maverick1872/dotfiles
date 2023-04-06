@@ -1,7 +1,7 @@
 # Autosuggest -- requires in order: zsh-syntax-highlighting zsh-autosuggestions
 AUTOSUGGESTION="true"
 ENHANCED_COMPLETION="true"
-COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="false"
 
 # Which plugins would you like to load
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
