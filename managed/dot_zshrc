@@ -1,0 +1,46 @@
+# Autosuggest -- requires in order: zsh-syntax-highlighting zsh-autosuggestions
+AUTOSUGGESTION="true"
+ENHANCED_COMPLETION="true"
+
+# Which plugins would you like to load
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+plugins=(
+  git
+  extract
+  universalarchive
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+  # history-search-multi-word
+)
+
+## Source NVM if it is installed
+# This only works if NVM is installed to the users home dir. Breaks for non-standard installs.
+if [[ -d ${HOME}/.nvm ]] && [[ -f ${HOME}/.nvm/nvm.sh ]]; then
+    export NVM_LOADED
+    export NVM_DIR="$HOME/.nvm"
+    export PATH=$PATH:NVM_DIR
+
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    # nvm lazy loader wrapper
+    function nvm() {
+      __load_nvm
+      nvm "$@"
+    }
+
+    function node() {
+      __load_nvm
+      node "$@"
+    }
+
+    function npm() {
+      __load_nvm
+      npm "$@"
+    }
+
+    autoload -U add-zsh-hook
+    add-zsh-hook chpwd __lazy-autoload-nvmrc
+fi
+
+### User configuration ###
+source $ZSH/oh-my-zsh.sh
