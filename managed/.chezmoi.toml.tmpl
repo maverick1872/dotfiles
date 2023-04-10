@@ -4,5 +4,5 @@
 
 [data.git]
   {{ $name := promptString  "What is your name" "Jonathon Terry"  -}}
-  name = "{{ $name }}"
+  name = {{ $name | quote }}
   signingkey = "some secret key"

@@ -1,0 +1,27 @@
+export EDITOR='nvim'
+export ZSH_CUSTOM=$ZSH/custom
+export ZSH_THEME="personal"
+export RPROMPT_MODE=2
+export USER_BIN="$HOME/bin"
+
+
+# Set OS specific envvars
+{{- if eq .chezmoi.os "linux" }}
+export OS="linux"
+export AWESOME_CONFIG=$HOME/.config/awesome
+
+# export DOCKER_DIR="$HOME/docker-containers"
+{{- end }}
+
+{{- if eq .chezmoi.os "darwin" }}
+export OS="osx"
+# export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-15.0.1.jdk/Contents/Home"
+# export M2_HOME="$USER_BIN/apache-maven-3.6.3/bin"
+
+# Add personal exports to __path where appropriate
+# export PATH=$PATH:$USER_BIN:$JAVA_HOME:$M2_HOME
+{{- end }}
+
+if [[ -f ${HOME}/.private-zprofile ]]; then
+    . ${HOME}/.private-zprofile
+fi
