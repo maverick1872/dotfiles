@@ -1,7 +1,7 @@
 #! /bin/bash
-{{- if eq .chezmoi.os "darwin" -}}
+{{- if eq .chezmoi.os "darwin" }}
 which -s brew
 if [[ $? != 0 ]] ; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
-{{- end -}}
+{{- end }}
