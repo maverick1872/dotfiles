@@ -49,6 +49,7 @@ show-port() {
   lsof -P -n -i :"$1"
 }
 
+## Wrapper around Docker Compose Short-hand to support functionality that's not supported by default ##
 dco() {
 # Can be improved with a proper jq function? https://stackoverflow.com/questions/62665537/how-to-calculate-time-duration-from-two-date-time-values-using-jq
   if [[ $1 == "ps" ]]; then
