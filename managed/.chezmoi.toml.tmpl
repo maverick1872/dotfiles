@@ -1,7 +1,8 @@
 [data.github]
   token = "some secret token"
   registries = [ "clearbanc" ]
+
 [data.git]
-  {{ $name := promptString "name" "What is your name"  -}}
-  name = 
+  {{ $name := promptString  "What is your name" "Jonathon Terry"  -}}
+  name = "{{ $name }}"
   signingkey = "some secret key"
