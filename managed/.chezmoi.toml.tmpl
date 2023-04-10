@@ -1,0 +1,6 @@
+[data.github]
+  token = "some secret token"
+  registries = [ "clearbanc" ]
+[data.git]
+  name = {{- promptStringOnce . "name" "What is your name?"  -}}
+  signingkey = "some secret key"
