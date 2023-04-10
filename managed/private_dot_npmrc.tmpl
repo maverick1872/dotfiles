@@ -1,0 +1,9 @@
+{{- if hasKey .github "token" }}
+//npm.pkg.github.com/:_authToken={{ github.token }}
+{{- end -}}
+
+{{- if hasKey .github "registries" }}
+{{- range .github.registries }}
+@{{ . }}:registry=https://npm.pkg.github.com/
+{{- end -}}
+{{- end -}}

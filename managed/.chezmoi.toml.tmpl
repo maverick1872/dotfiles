@@ -1,8 +1,15 @@
+{{ $name := promptString  "What is your name" "Jonathon Terry" -}}
+{{ $isPersonalMachine := promptBool  "Is this a personal machine" "false" -}}
+## {{ $githubToken := (get (bitwardenFields "item" "GitHub") "Package Access Token").value }}
+{{ $registries := promptString "Configure any GitHub Package Organizations" }}
+
+[data]
+  isPersonalMachine = {{ $isPersonalMachine }} 
+
 [data.github]
-  token = "some secret token"
-  registries = [ "clearbanc" ]
+  token = {{ $githubToken }}
+  registries = [{{ splitList " " $registries }}]
 
 [data.git]
-  {{ $name := promptString  "What is your name" "Jonathon Terry"  -}}
   name = {{ $name | quote }}
   signingkey = "some secret key"
