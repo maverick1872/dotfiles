@@ -7,7 +7,7 @@
   isPersonalMachine = {{ $isPersonalMachine }} 
 
 [data.github]
-  token = {{ $githubToken }}
+  token = {{ defaults $githubToken "replace-me" }}
   registries = [{{ splitList " " $registries }}]
 
 [data.git]
