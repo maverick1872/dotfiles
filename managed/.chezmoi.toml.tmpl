@@ -5,7 +5,7 @@
 {{ $githubToken := (get (bitwardenFields "item" "GitHub") "Access Token").value }}
 
 [data]
-  isPersonalMachine = {{ $isPersonalMachine }} 
+  isPersonalMachine = {{ $isPersonalMachine }}
 
 [data.github]
   token = {{ $githubToken | quote }}
