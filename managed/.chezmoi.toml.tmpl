@@ -1,6 +1,6 @@
 {{ $name := promptString  "What is your name" "Jonathon Terry" -}}
-{{ $isPersonalMachine := promptBool  "Is this a personal machine" "false" -}}
-## {{ $githubToken := (get (bitwardenFields "item" "GitHub") "Package Access Token").value }}
+{{ $isPersonalMachine := promptBool  "Is this a personal machine" false -}}
+# {{ $githubToken := (get (bitwardenFields "item" "GitHub") "Package Access Token").value }}
 {{ $registries := promptString "Configure any GitHub Package Organizations" }}
 
 [data]
