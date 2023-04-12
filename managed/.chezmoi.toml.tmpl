@@ -1,15 +1,32 @@
-{{ $name := promptString  "What is your name" "Jonathon Terry" -}}
-{{ $isPersonalMachine := promptBool  "Is this a personal machine" false -}}
-{{ $registries := promptString "Configure any GitHub Package Organizations" }}
-{{ $registriesList := splitList " " $registries }}
-{{ $githubToken := (get (bitwardenFields "item" "GitHub") "Access Token").value }}
+{{- $interactive := not (any (env "CI") (env "HEADLESS") (env "GITHUB_ACTIONS") (env "CODESPACES")) -}}
+
+{{ $name := false -}}
+{{ $isPersonalMachine := false -}}
+{{ $registries := false -}}
+{{ $githubToken := false -}}
+
+{{- $osID := .chezmoi.os -}}
+{{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
+{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
+{{- if $interactive -}}
+{{- writeToStdout "Interactive configuration generation\n" -}}
+{{- $name = promptString  "Desired git author name" -}}
+{{- $isPersonalMachine = promptBool  "Is this a personal machine" -}}
+{{- $registries = splitList " " (promptString "Configure any GitHub Package Organizations") }}
+{{- $githubToken = (get (bitwardenFields "item" "GitHub") "Access Token").value }}
+{{- end -}}
+
+sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [data]
+  osID = {{ $osID | quote }}
   isPersonalMachine = {{ $isPersonalMachine }}
 
 [data.github]
   token = {{ $githubToken | quote }}
-  registries = {{ $registriesList | toToml }}
+  registries = {{ $registries | toToml }}
 
 [data.git]
   name = {{ $name | quote }}
