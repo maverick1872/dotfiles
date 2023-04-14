@@ -13,6 +13,7 @@ alias gbdlocal='git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git b
 
 # Github CLI
 alias newpr='gh pr create'
+alias viewrepo='gh repo view -w'
 
 # Docker & Docker Compose
 #alias dco='docker compose'
