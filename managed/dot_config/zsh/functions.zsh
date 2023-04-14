@@ -62,45 +62,6 @@ dco() {
   command docker compose "$@"
 }
 
-# Traverses directory structure and pulls any changes in the git repo
-update-zsh-plugins() {
-  for d in $(find ${ZSH_CUSTOM}/plugins -maxdepth 1 -mindepth 1 ! -name 'example' -type d); do
-    echo "Updating custom plugin: $(basename "$d")"
-    cd $d || return
-    git pull
-    cd - > /dev/null || return
-  done
-}
-
-# Traverses directory structure and updates all docker images
-update-docker-containers() {
-  for dir in $(find ${DOCKER_DIR} -maxdepth 1 -mindepth 1 -type d); do
-    containerName=$(basename $dir)
-    cd $dir || return
-    if [[ `docker-compose ps -q 2> /dev/null` ]]; then
-      echo "Updating container: $containerName"
-      docker-compose pull && docker-compose up --force-recreate --build -d
-      cd - > /dev/null || return
-    else
-      echo "Container is not running: $containerName"
-    fi
-    echo
-  done    
-}                                                              
-
-## Convenience function to update personal ZSH customizations
-update-zsh-customizations() {
-  cd ${DEV_DIR}/Maverick1872/dotfiles || return
-  echo "Updating personal zsh customizations"
-  git pull
-  cd - > /dev/null || return
-}
-
-## Update all things shell related
-update-shell() {
-  omz update && update-zsh-customizations && update-zsh-plugins
-}
-
 # Short-hand to grep all aliases available
 search-aliases() {
   alias | grep "$1" --color
