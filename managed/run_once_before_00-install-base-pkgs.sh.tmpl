@@ -1,5 +1,5 @@
 {{- if eq .chezmoi.os "darwin" }}
-#! /bin/zsh
+#!/usr/bin/env zsh
 which -s brew
 if [[ $? != 0 ]] ; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

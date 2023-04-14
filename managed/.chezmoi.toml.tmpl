@@ -15,7 +15,6 @@
 {{- $name = promptString  "Desired git author name" -}}
 {{- $isPersonalMachine = promptBool  "Is this a personal machine" -}}
 {{- $registries = splitList " " (promptString "Configure any GitHub Package Organizations") }}
-{{- $githubToken = (get (bitwardenFields "item" "GitHub") "Access Token").value }}
 {{- end -}}
 
 sourceDir = {{ .chezmoi.sourceDir | quote }}
@@ -24,9 +23,10 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
   osID = {{ $osID | quote }}
   isPersonalMachine = {{ $isPersonalMachine }}
 
+{{- if $registries -}}
 [data.github]
-  token = {{ $githubToken | quote }}
   registries = {{ $registries | toToml }}
+{{- end -}}
 
 [data.git]
   name = {{ $name | quote }}

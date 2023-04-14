@@ -1,5 +1,8 @@
 # Maverick1872's Dotfiles #
 
+To leverage chezmoi in an interactive manner one must install the BitWarden CLI, login & unlock their vault, and then sync
+it accordingly PRIOR to running `chezmoi init`
+
 ## Configure Shell (ZSH)##
 If you would like to setup ZSH, or just try out my configuration you can run `setupShell.sh`.
 It will check to see if ZSH is installed, the associated plugins I use, then prompt you if you
