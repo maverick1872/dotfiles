@@ -1,5 +1,11 @@
-{{- if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env zsh
+
+which -s nvm
+if [[ $? != 0 ]] ; then
+ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)"
+fi
+
 which -s brew
 if [[ $? != 0 ]] ; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -37,9 +43,4 @@ brew "ffmpeg"
 
 EOF
 {{- end }}
-
-which -s nvm
-if [[ $? != 0 ]] ; then
- /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)"
-fi
 
