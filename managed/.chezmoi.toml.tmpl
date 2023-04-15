@@ -20,14 +20,10 @@
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [data]
-  osID = {{ $osID | quote }}
-  isPersonalMachine = {{ $isPersonalMachine }}
-
-{{- if $registries -}}
-[data.github]
-  registries = {{ $registries | toToml }}
-{{- end -}}
-
-[data.git]
   name = {{ $name | quote }}
-  signingkey = "some secret key"
+  isPersonalMachine = {{ $isPersonalMachine }}
+  {{ if ( first $registries ) -}}
+    registries = {{ $registries | toToml }}
+  {{ end -}}
+  osID = {{ $osID | quote }}
+
