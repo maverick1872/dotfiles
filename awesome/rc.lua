@@ -31,12 +31,7 @@ require('custom/rules')
 require('custom/signals')
 
 -- Auto-started applications
---- Compositor
-awful.spawn.once("picom")
-
---- Lockscreen
-awful.spawn.with_shell("xidlehook --timer 300 '$AWESOME_CONFIG/utils/scripts/lockscreen.sh' '' &")
-awful.spawn.with_shell("xidlehook --not-when-audio --timer 3600 'systemctl suspend' '' &")
+awful.spawn.with_shell("~/.config/awesome/autorun.sh")
 
 -- Reduce memory consumption
 collectgarbage("setpause", 110)
