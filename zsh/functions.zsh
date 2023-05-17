@@ -150,8 +150,8 @@ __lazy-autoload-nvmrc() {
   # If NVM hasn't yet been loaded, load it so all later nvm commands work
   __load_nvm
 
-  # Traverse parent directories until an nvmrc is encountered
-  while [[ "${_path}" != "" && ! -e "${_path}/.nvmrc" ]]; do
+  # Traverse parent directories until an nvmrc is encountered or root dev directory is encountered
+  while [[ "${_path}" != "" && "${_path}" == *"/home/\w+/dev/"* && ! -e "${_path}/.nvmrc" ]]; do
     _path=${_path%/*}
   done
 
