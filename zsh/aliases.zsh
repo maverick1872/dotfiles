@@ -9,8 +9,7 @@ alias list-path-dirs='sed "s/:/\n/g" <<< "$PATH"'
 alias lsdir='ls -d */'
 alias lldir='ll -d */'
 alias update-system='sudo apt update -y && sudo apt upgrade -y'
-alias vim='nvim'
-alias v='nvim'
+alias edit='$EDITOR'
 alias yeet='yay -Rns'
 
 # GIT
