@@ -151,8 +151,26 @@ awful.rules.rules = {
       floating = false,
       --maximized = false
     },
-
   },
+
+  -- Spotify
+  {
+    rule_any = {
+      instance = {
+        "spotify"
+      },
+      class = {
+        "Spotify",
+      }
+    },
+    properties = {
+      screen = 2,
+      -- tag = "Spotify",
+      tag = screen[2].tags[3],
+      floating = false,
+    },
+  },
+
 
   -- IDE Settings
   {
