@@ -34,8 +34,8 @@ alias npmid='npm i -D'
 alias npmip='npm i -P'
 
 # Configurations
-alias edit-zshconfig='vim ~/.zshrc'
-alias edit-common-aliases='vim ${ZSH_CUSTOM}/aliases.zsh'
-alias edit-private-aliases='vim ${ZSH_CUSTOM}/private-aliases.zsh'
-alias edit-private-functions='vim ${ZSH_CUSTOM}/private-functions.zsh'
-alias edit-functions='vim ${ZSH_CUSTOM}/functions.zsh'
+alias edit-zshconfig='edit ~/.zshrc'
+alias edit-common-aliases='edit ${ZSH_CUSTOM}/aliases.zsh'
+alias edit-private-aliases='edit ${ZSH_CUSTOM}/private-aliases.zsh'
+alias edit-private-functions='edit ${ZSH_CUSTOM}/private-functions.zsh'
+alias edit-functions='edit ${ZSH_CUSTOM}/functions.zsh'
