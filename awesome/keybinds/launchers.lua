@@ -14,7 +14,7 @@ awful.keyboard.append_global_keybindings({
     end, { description = "Show Rofi", group = group }),
 
   awful.key({ }, "Print", function()
-    awful.spawn("flameshot gui")
+    awful.spawn("flameshot gui -d 1000")
     end, { description = "Screenshot", group = group }),
 
   awful.key({ mods.shift }, "Print", function()

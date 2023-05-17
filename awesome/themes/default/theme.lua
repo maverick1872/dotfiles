@@ -93,7 +93,8 @@ theme.titlebar_maximized_button_normal_active = assets_dir .. "maximized_focus.s
 theme.titlebar_maximized_button_focus_inactive = assets_dir .. "maximized_focus.svg"
 theme.titlebar_maximized_button_focus_inactive = assets_dir .. "maximized_focus.svg"
 
-theme.wallpaper = selected_theme .. "Mountain_Highway.jpg"
+theme.wallpaper = selected_theme .. "cat-coffee.png"
+-- theme.wallpaper = selected_theme .. "Mountain_Highway.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path .. "default/layouts/fairhw.png"

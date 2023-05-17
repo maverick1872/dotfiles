@@ -31,12 +31,12 @@ require('custom/rules')
 require('custom/signals')
 
 -- Auto-started applications
-awful.spawn.with_shell("xidlehook \
-  --not-when-audio \
-  ----timer 300 '/home/jonathon/.config/awesome/utils/scripts/lockscreen.sh' '' \
-  --timer 3600 \
-  --'systemctl suspend ' '' \
-  &")
+--- Compositor
+awful.spawn.once("picom")
+
+--- Lockscreen
+awful.spawn.with_shell("xidlehook --timer 300 '$AWESOME_CONFIG/utils/scripts/lockscreen.sh' '' &")
+awful.spawn.with_shell("xidlehook --not-when-audio --timer 3600 'systemctl suspend' '' &")
 
 -- Reduce memory consumption
 collectgarbage("setpause", 110)
