@@ -19,6 +19,7 @@ alias gcuwm='gau && gcmsg'
 alias gbdlocal='git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d'
 
 # Github CLI
+alias viewRepo='gh repo view -w'
 alias newpr='gh pr create'
 alias prsToReview='gh search prs --state=open --review-requested=@me'
 alias prsOpen='gh search prs --state=open --author=@me'
