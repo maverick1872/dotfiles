@@ -8,13 +8,14 @@ alias catn='cat -n'
 alias list-path-dirs='sed "s/:/\n/g" <<< "$PATH"'
 alias lsdir='ls -d */'
 alias lldir='ll -d */'
-alias update-system='sudo apt update -y && sudo apt upgrade -y'
+alias update-apt='sudo apt update -y && sudo apt upgrade -y'
 alias edit='$EDITOR'
 alias yeet='yay -Rns'
 
 # GIT
 alias glo='git log --pretty=format:"%Cred%cs%Creset - %C(auto)%h%Creset - %<(16,trunc)%Cgreen%an%Creset - %s %C(auto)%d" --date=local'
 alias gcuwm='gau && gcmsg'
+alias gdom='git diff origin/$(git_main_branch)'
 alias gbdlocal='git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d'
 
 # Github CLI
@@ -35,7 +36,7 @@ alias npmip='npm i -P'
 
 # Configurations
 alias edit-zshconfig='edit ~/.zshrc'
-alias edit-common-aliases='edit ${ZSH_CUSTOM}/aliases.zsh'
+alias edit-aliases='edit ${ZSH_CUSTOM}/aliases.zsh'
 alias edit-private-aliases='edit ${ZSH_CUSTOM}/private-aliases.zsh'
 alias edit-private-functions='edit ${ZSH_CUSTOM}/private-functions.zsh'
 alias edit-functions='edit ${ZSH_CUSTOM}/functions.zsh'
