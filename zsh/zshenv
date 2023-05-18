@@ -16,6 +16,8 @@ export USER_BIN="$HOME/bin"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-15.0.1.jdk/Contents/Home"
 export M2_HOME="$USER_BIN/apache-maven-3.6.3/bin"
 export DOCKER_DIR="$HOME/docker-containers"
+export CARGO_HOME="$HOME/.config/cargo"
+export RUSTUP_HOME="$HOME/.config/rustup"
 
 # Add personal exports to __path where appropriate
 export PATH=$PATH:$USER_BIN:$JAVA_HOME:$M2_HOME
@@ -23,3 +25,4 @@ export PATH=$PATH:$USER_BIN:$JAVA_HOME:$M2_HOME
 if [[ -f ${HOME}/.private-zprofile ]]; then
     . ${HOME}/.private-zprofile
 fi
+. "/Users/jterry/.config/cargo/env"

@@ -105,6 +105,11 @@ search-aliases() {
   alias | grep "$1" --color
 }
 
+# Short-hand for search and replace leveraging ripgrep
+rg-sr() {
+  rg $1 --files-with-matches | xargs -p sed -i '' "s|${1}|${2}|g"
+}
+
 # List IPs of all running docker containers for each network they are attached to
 docker-ips() {
   docker ps --format "table {{.ID}}|{{.Names}}|{{.Status}}" | while read line; do
@@ -155,7 +160,7 @@ __lazy-autoload-nvmrc() {
     _path=${_path%/*}
   done
 
-  # Check if nvmrc exists in the final directory from above
+  # Check if nvmrc exists in the final directory from above. Implementation replicates nvm_find_nvmrc
   if [ -e "${_path}/.nvmrc" ]; then
     nvmrc_path="${_path}/.nvmrc"
   fi
