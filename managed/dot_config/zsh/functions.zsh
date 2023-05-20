@@ -147,3 +147,24 @@ __load_nvm() {
   fi
 }
 
+bw() {
+  BW_STATUS=$(command bw status | jq -r .status)
+  case "$BW_STATUS" in
+    "unauthenticated")
+      echo "Logging into BitWarden"
+      export BW_SESSION=$(command bw login --raw)
+      ;;
+    "locked")
+      echo "Unlocking Vault"
+      export BW_SESSION=$(command bw unlock --raw)
+      ;;
+    "unlocked")
+      echo "Vault is unlocked"
+      ;;
+    *)
+      echo "Unknown Login Status: $BW_STATUS"
+      return 1
+      ;;
+  esac
+  command bw $@
+}
