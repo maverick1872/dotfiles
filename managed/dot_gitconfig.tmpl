@@ -9,7 +9,7 @@
 
 [user]
     email=10217028+Maverick1872@users.noreply.github.com
-    name={{ .git.name }}
-    signingkey={{ .git.signingkey}}
+    name={{ .name }}
+    signingkey={{ default "replace-me-with-secret" .name }}
 [push]
     autoSetupRemote = true

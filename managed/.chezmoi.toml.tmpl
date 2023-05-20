@@ -1,4 +1,4 @@
-{{- $interactive := not (any (env "CI") (env "HEADLESS") (env "GITHUB_ACTIONS") (env "CODESPACES")) -}}
+{{- $headless := not (any (env "CI") (env "HEADLESS") (env "GITHUB_ACTIONS") (env "CODESPACES")) -}}
 
 {{ $name := false -}}
 {{ $isPersonalMachine := false -}}
@@ -10,11 +10,14 @@
 {{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- end -}}
 
-{{- if $interactive -}}
+{{- if $headless -}}
 {{- writeToStdout "Interactive configuration generation\n" -}}
 {{- $name = promptString  "Desired git author name" -}}
 {{- $isPersonalMachine = promptBool  "Is this a personal machine" -}}
 {{- $registries = splitList " " (promptString "Configure any GitHub Package Organizations") }}
+{{- else -}}
+{{- $name = "Jonathon Terry" -}}
+{{- $isPersonalMachine = false -}}
 {{- end -}}
 
 sourceDir = {{ .chezmoi.sourceDir | quote }}

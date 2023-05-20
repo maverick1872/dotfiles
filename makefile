@@ -26,7 +26,7 @@ osx-prereqs:
 	@brew install chezmoi bitwarden-cli
 
 linux-prereqs:
-	@sudo pacman -S -q --noconfirm git base-devel chezmoi bitwarden-cli ssh
+	@sudo pacman -S -q --noconfirm git base-devel chezmoi bitwarden-cli openssh
 	@git clone --quiet https://aur.archlinux.org/yay-bin.git
 	@# @cd yay-bin && makepkg -si --no-confirm
 

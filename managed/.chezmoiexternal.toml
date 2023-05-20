@@ -17,7 +17,7 @@
   stripComponents = 1
 [".config/nvim"]
   type = "git-repo"
-  url = "git@github.com:AstroNvim/AstroNvim.git"
+  url = "https://github.com/AstroNvim/AstroNvim.git"
   # refreshPeriod = "168h"
 #   [".config/nvim.chezmoi" clone]
 #     args = ["--depth 1"]

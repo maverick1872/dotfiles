@@ -1,4 +1,4 @@
-{{- if hasKey .github "registries" }}
+{{- if hasKey . "registries" }}
 //npm.pkg.github.com/:_authToken={{ (get (bitwardenFields "item" "GitHub") "Access Token").value }}
 
 {{- range .github.registries }}
