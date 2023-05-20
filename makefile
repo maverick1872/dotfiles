@@ -37,11 +37,13 @@ info: ## Return basic system info
 init: install ## Runs first initilization of dotfiles
 	@export BW_SESSION=$$(bw login --raw)
 	@bw sync
+	@reset
 	chezmoi init -v
 	chezmoi apply -v
 
 apply: ## Apply dotfiles
 	@bw sync
+	@reset
 	chezmoi apply -v
 
 build: Dockerfile ## Build Docker image for testing dotfiles
@@ -49,4 +51,4 @@ build: Dockerfile ## Build Docker image for testing dotfiles
 	@touch build
 
 test: build ## Test dotfiles in a container
-	docker run -it -v "${PWD}:/home/maverick/.local/share/chezmoi" dotfiles /bin/bash
+	docker run -it -v "${PWD}:/home/maverick/.local/share/chezmoi" -v "${PWD}/makefile:/home/maverick/makefile" dotfiles /bin/bash
