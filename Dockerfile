@@ -16,5 +16,5 @@ RUN groupadd -g $USER_GID $USERNAME \
     && useradd -u $USER_UID -g $USER_GID -m $USERNAME -G $SUDO_GROUP -s /bin/bash 
 
 USER $USERNAME
-WORKDIR /home/$USERNAME/.local/share/chezmoi
+WORKDIR /home/$USERNAME
 
