@@ -40,7 +40,8 @@ init: install ## Runs first initilization of dotfiles
 		bw sync && \
 		reset && \
 	  chezmoi init -v && \
-	  chezmoi apply -v
+	  chezmoi apply -v && \
+	  echo "Restart your terminal for the changes to take affect"
 
 apply: ## Apply dotfiles
 	@bw sync && \
