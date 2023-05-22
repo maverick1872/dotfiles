@@ -61,7 +61,7 @@ dco() {
   command docker compose "$@"
 }
 
-# Traverses directory structure and updates all docker images
+r Traverses directory structure and updates all docker images
 update-docker-containers() {
   for dir in $(find ${DOCKER_DIR} -maxdepth 1 -mindepth 1 -type d); do
     containerName=$(basename $dir)
@@ -170,5 +170,27 @@ __load_nvm() {
       export NVM_LOADED="true"
     fi
   fi
+}
+
+bw() {
+  BW_STATUS=$(command bw status | jq -r .status)
+  case "$BW_STATUS" in
+    "unauthenticated")
+      echo "Logging into BitWarden"
+      export BW_SESSION=$(command bw login --raw)
+      ;;
+    "locked")
+      echo "Unlocking Vault"
+      export BW_SESSION=$(command bw unlock --raw)
+      ;;
+    "unlocked")
+      echo "Vault is unlocked"
+      ;;
+    *)
+      echo "Unknown Login Status: $BW_STATUS"
+      return 1
+      ;;
+  esac
+  command bw $@
 }
 
