@@ -12,7 +12,7 @@
 
 {{- if $headless -}}
 {{- writeToStdout "Interactive configuration generation\n" -}}
-{{- $name = promptString  "Desired git author name" -}}
+{{- $name = promptString "Desired git author name" -}}
 {{- $isPersonalMachine = promptBool  "Is this a personal machine" -}}
 {{- $registries = splitList " " (promptString "Configure any GitHub Package Organizations") }}
 {{- else -}}
