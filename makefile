@@ -26,9 +26,9 @@ osx-prereqs:
 	@brew install chezmoi bitwarden-cli
 
 linux-prereqs:
-	@sudo pacman -Syuq --noconfirm
-	@sudo pacman -Sq --noconfirm git base-devel chezmoi bitwarden-cli openssh
-	@git clone --quiet https://aur.archlinux.org/yay-bin.git
+	@sudo pacman -Syuq --noconfirm # Update all currently installed packages
+	@sudo pacman -Sq --noconfirm --needed base-devel git zsh chezmoi bitwarden-cli openssh # Install bare minimum packages
+	@git clone --quiet https://aur.archlinux.org/yay-bin.git # Install yay (AUR helper)
 	@# @cd yay-bin && makepkg -si --no-confirm
 
 info: ## Return basic system info
