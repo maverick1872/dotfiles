@@ -11,7 +11,7 @@ plugins=(
   universalarchive
   zsh-syntax-highlighting
   zsh-autosuggestions
-  # history-search-multi-word
+  history-search-multi-word
 )
 
 ## Source NVM if it is installed
@@ -44,3 +44,4 @@ fi
 
 ### User configuration ###
 source $ZSH/oh-my-zsh.sh
+
