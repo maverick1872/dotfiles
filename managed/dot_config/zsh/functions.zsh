@@ -61,7 +61,7 @@ dco() {
   command docker compose "$@"
 }
 
-r Traverses directory structure and updates all docker images
+# Traverses directory structure and updates all docker images
 update-docker-containers() {
   for dir in $(find ${DOCKER_DIR} -maxdepth 1 -mindepth 1 -type d); do
     containerName=$(basename $dir)
