@@ -43,11 +43,11 @@ ifndef CODESPACES
 	@export BW_SESSION=$$(bw login --raw) && \
 		bw sync && \
 		reset && \
-	  chezmoi init -v && \
+	  chezmoi init -v -S . && \
 	  chezmoi apply -v && \
 	  echo "Restart your terminal for the changes to take affect"
 else
-	@chezmoi init -v && \
+	@chezmoi init -v -S . && \
 	  chezmoi apply -v && \
 	  echo "Restart your terminal for the changes to take affect"
 endif
