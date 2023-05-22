@@ -26,7 +26,7 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
 [data]
   name = {{ $name | quote }}
   isPersonalMachine = {{ $isPersonalMachine }}
-  {{ if ( first $registries ) -}}
+  {{ if and ($registries) ( first $registries ) -}}
     registries = {{ $registries | toToml }}
   {{ end -}}
   osID = {{ $osID | quote }}

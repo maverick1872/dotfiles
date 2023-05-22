@@ -28,7 +28,7 @@ osx-prereqs:
 .PHONY: linux-prereqs
 linux-prereqs:
 	@sudo pacman -Syuq --noconfirm # Update all currently installed packages
-	@sudo pacman -Sq --noconfirm --needed base-devel git zsh chezmoi bitwarden-cli openssh jq# Install bare minimum packages
+	@sudo pacman -Sq --noconfirm --needed base-devel git zsh chezmoi bitwarden-cli openssh jq # Install bare minimum packages
 	@git clone --quiet https://aur.archlinux.org/yay-bin.git # Install yay (AUR helper)
 	@# @cd yay-bin && makepkg -si --no-confirm
 
@@ -39,12 +39,18 @@ info: ## Return basic system info
 
 .PHONY: init
 init: install ## Runs first initilization of dotfiles
+ifndef CODESPACES
 	@export BW_SESSION=$$(bw login --raw) && \
 		bw sync && \
 		reset && \
 	  chezmoi init -v && \
 	  chezmoi apply -v && \
 	  echo "Restart your terminal for the changes to take affect"
+else
+	@chezmoi init -v && \
+	  chezmoi apply -v && \
+	  echo "Restart your terminal for the changes to take affect"
+endif
 
 .PHONY: apply
 apply: ## Apply dotfiles
@@ -58,8 +64,8 @@ build: Dockerfile ## Build Docker image for testing dotfiles
 
 .PHONY: test
 test: build ## Test interactive dotfiles in a container
-	docker run -it -v "${PWD}:/home/maverick/.local/share/chezmoi" -v "${PWD}/makefile:/home/maverick/makefile" dotfiles /bin/bash
+	docker run -it -v "${PWD}:/home/maverick/.local/share/chezmoi" -v "${PWD}/makefile:/home/maverick/makefile" dotfiles /bin/bash make init
 
 .PHONY: test-headless
 test-headless: build ## Test noninteractive dotfiles in a container
-	docker run -it -v "${PWD}:/home/maverick/.local/share/chezmoi" -v "${PWD}/makefile:/home/maverick/makefile" dotfiles /bin/bash
+	docker run -it -e CODESPACES=true -v "${PWD}:/home/maverick/.local/share/chezmoi" -v "${PWD}/makefile:/home/maverick/makefile" dotfiles /bin/bash
