@@ -4,7 +4,7 @@ export ZSH_THEME="personal"
 export RPROMPT_MODE=2
 export USER_BIN="$HOME/bin"
 
-{{- if .chezmoi.installRust }}
+{{- if .installRust }}
 export CARGO_HOME="$HOME/.config/cargo"
 export RUSTUP_HOME="$HOME/.config/rustup"
 . "/Users/jterry/.config/cargo/env"
