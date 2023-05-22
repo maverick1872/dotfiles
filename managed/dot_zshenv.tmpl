@@ -4,7 +4,12 @@ export ZSH_THEME="personal"
 export RPROMPT_MODE=2
 export USER_BIN="$HOME/bin"
 
-# Set OS specific envvars
+{{- if .chezmoi.installRust }}
+export CARGO_HOME="$HOME/.config/cargo"
+export RUSTUP_HOME="$HOME/.config/rustup"
+. "/Users/jterry/.config/cargo/env"
+{{- end }}
+
 {{- if eq .chezmoi.os "linux" }}
 export OS="linux"
 export AWESOME_CONFIG=$HOME/.config/awesome

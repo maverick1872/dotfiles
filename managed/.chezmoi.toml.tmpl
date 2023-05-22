@@ -4,6 +4,7 @@
 {{ $isPersonalMachine := false -}}
 {{ $registries := false -}}
 {{ $githubToken := false -}}
+{{ $installRust := false -}}
 
 {{- $osID := .chezmoi.os -}}
 {{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
@@ -29,4 +30,5 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     registries = {{ $registries | toToml }}
   {{ end -}}
   osID = {{ $osID | quote }}
+  installRust = {{ $installRust }}
 
