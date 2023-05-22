@@ -36,16 +36,16 @@ info: ## Return basic system info
 	@echo $(arch)
 
 init: install ## Runs first initilization of dotfiles
-	@export BW_SESSION=$$(bw login --raw)
-	@bw sync
-	@reset
-	chezmoi init -v
-	chezmoi apply -v
+	@export BW_SESSION=$$(bw login --raw) && \
+		bw sync && \
+		reset && \
+	  chezmoi init -v && \
+	  chezmoi apply -v
 
 apply: ## Apply dotfiles
-	@bw sync
-	@reset
-	chezmoi apply -v
+	@bw sync && \
+		reset && \
+		chezmoi apply -v
 
 build: Dockerfile ## Build Docker image for testing dotfiles
 	docker build -t dotfiles .
