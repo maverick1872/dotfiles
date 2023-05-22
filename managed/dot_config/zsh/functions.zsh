@@ -49,7 +49,6 @@ show-port() {
   lsof -P -n -i :"$1"
 }
 
-## Wrapper around Docker Compose Short-hand to support functionality that's not supported by default ##
 dco() {
 # Can be improved with a proper jq function? https://stackoverflow.com/questions/62665537/how-to-calculate-time-duration-from-two-date-time-values-using-jq
   if [[ $1 == "ps" ]]; then
@@ -62,9 +61,35 @@ dco() {
   command docker compose "$@"
 }
 
+# Traverses directory structure and updates all docker images
+update-docker-containers() {
+  for dir in $(find ${DOCKER_DIR} -maxdepth 1 -mindepth 1 -type d); do
+    containerName=$(basename $dir)
+    cd $dir || return
+    if [[ `docker-compose ps -q 2> /dev/null` ]]; then
+      echo "Updating container: $containerName"
+      docker-compose pull && docker-compose up --force-recreate --build -d
+      cd - > /dev/null || return
+    else
+      echo "Container is not running: $containerName"
+    fi
+    echo
+  done    
+}                                                              
+
+## Update all things shell related
+update-shell() {
+  omz update && update-zsh-customizations && update-zsh-plugins
+}
+
 # Short-hand to grep all aliases available
 search-aliases() {
   alias | grep "$1" --color
+}
+
+# Short-hand for search and replace leveraging ripgrep
+rg-sr() {
+  rg $1 --files-with-matches | xargs -p sed -i '' "s|${1}|${2}|g"
 }
 
 # List IPs of all running docker containers for each network they are attached to
@@ -112,12 +137,12 @@ __lazy-autoload-nvmrc() {
   # If NVM hasn't yet been loaded, load it so all later nvm commands work
   __load_nvm
 
-  # Traverse parent directories until an nvmrc is encountered
-  while [[ "${_path}" != "" && ! -e "${_path}/.nvmrc" ]]; do
+  # Traverse parent directories until an nvmrc is encountered or root dev directory is encountered
+  while [[ "${_path}" != "" && "${_path}" == *"/home/\w+/dev/"* && ! -e "${_path}/.nvmrc" ]]; do
     _path=${_path%/*}
   done
 
-  # Check if nvmrc exists in the final directory from above
+  # Check if nvmrc exists in the final directory from above. Implementation replicates nvm_find_nvmrc
   if [ -e "${_path}/.nvmrc" ]; then
     nvmrc_path="${_path}/.nvmrc"
   fi
@@ -147,24 +172,3 @@ __load_nvm() {
   fi
 }
 
-bw() {
-  BW_STATUS=$(command bw status | jq -r .status)
-  case "$BW_STATUS" in
-    "unauthenticated")
-      echo "Logging into BitWarden"
-      export BW_SESSION=$(command bw login --raw)
-      ;;
-    "locked")
-      echo "Unlocking Vault"
-      export BW_SESSION=$(command bw unlock --raw)
-      ;;
-    "unlocked")
-      echo "Vault is unlocked"
-      ;;
-    *)
-      echo "Unknown Login Status: $BW_STATUS"
-      return 1
-      ;;
-  esac
-  command bw $@
-}
