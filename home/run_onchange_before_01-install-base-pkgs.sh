@@ -2,8 +2,6 @@
 
 if [[ "${OS_DISTRIBUTION}" == "darwin" ]]; then
   brew bundle --no-lock --file=/dev/stdin <<EOF
-tap "homebrew/core"
-tap "homebrew/cask"
 tap "homebrew/bundle"
 tap "homebrew/services"
 tap "homebrew/cask-fonts"
@@ -32,6 +30,10 @@ EOF
   if [[ "${IS_PERSONAL}" == "true" ]]; then
     brew bundle --no-lock --file=/dev/stdin <<EOF
 brew "ffmpeg" 
+EOF
+  else
+    brew bundle --no-lock --file=/dev/stdin <<EOF
+cask "slack"
 EOF
   fi
 
