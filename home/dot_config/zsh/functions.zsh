@@ -194,3 +194,9 @@ bw() {
   command bw $@
 }
 
+chezmoi() {
+  if [[ $1 == "apply" ]]; then
+    bw sync
+  end
+  command chezmoi $@
+}
