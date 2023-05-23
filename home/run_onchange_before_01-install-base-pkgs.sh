@@ -2,9 +2,9 @@
 
 if [[ "${OS_DISTRIBUTION}" == "darwin" ]]; then
   brew bundle --no-lock --file=/dev/stdin <<EOF
-tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/core"
+tap "homebrew/cask"
+tap "homebrew/bundle"
 tap "homebrew/services"
 tap "homebrew/cask-fonts"
 
@@ -23,14 +23,20 @@ brew "git"
 brew "gh"
 brew "jq"
 brew "yq"
-brew "neovim"
-brew "ripgrep"
+brew "ripgep"
 brew "tealdeer"
 brew "wget"
 brew "nghttp2" # HTTP2 Client
+EOF
+
+  if [[ "${IS_PERSONAL}" == "true" ]]; then
+    brew bundle --no-lock --file=/dev/stdin <<EOF
 brew "ffmpeg" 
 EOF
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh 
+  fi
+
+  # Install Rust toolchain non-interactively
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   
 elif [[ "${OS_DISTRIBUTION}" == "linux-arch" ]]; then
   yay -Sq --noconfirm --needed - <<EOF

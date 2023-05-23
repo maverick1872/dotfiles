@@ -25,10 +25,11 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [scriptEnv]
   OS_DISTRIBUTION = {{ $osID | quote }}
+  IS_PERSONAL = {{ $isPersonalMachine }}
 
 [data]
   name = {{ $name | quote }}
-  isPersonalMachine = {{ $isPersonalMachine }}
+  isPersonal = {{ $isPersonalMachine }}
   osID = {{ $osID | quote }}
   rust = {{ $setupRust }}
 
