@@ -205,9 +205,6 @@ bw() {
 }
 
 chezmoi() {
-  if [[ $1 == "apply" ]]; then
-    bw sync
-  fi
-
+  bw sync
   command chezmoi $@
 }
