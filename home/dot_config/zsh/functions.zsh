@@ -172,31 +172,42 @@ __load_nvm() {
   fi
 }
 
+# Wrapper for BitWarden CLI to auto unlock vault and persist session when attempting to sync
 bw() {
-  BW_STATUS=$(command bw status | jq -r .status)
-  case "$BW_STATUS" in
-    "unauthenticated")
-      echo "Logging into BitWarden"
-      export BW_SESSION=$(command bw login --raw)
-      ;;
-    "locked")
-      echo "Unlocking Vault"
-      export BW_SESSION=$(command bw unlock --raw)
-      ;;
-    "unlocked")
-      echo "Vault is unlocked"
-      ;;
-    *)
-      echo "Unknown Login Status: $BW_STATUS"
-      return 1
-      ;;
-  esac
+  if [[ $1 == "sync" ]]; then
+    BW_STATUS=$(command bw status | jq -r .status)
+    case "$BW_STATUS" in
+      "unauthenticated")
+        echo "Logging into BitWarden"
+        TOKEN=$(command bw login --raw)
+        if [[ $? -eq 0 ]]; then
+          export BW_SESSION=${TOKEN}
+        fi
+        ;;
+      "locked")
+        echo "Unlocking Vault"
+        TOKEN=$(command bw unlock --raw)
+        if [[ $? -eq 0 ]]; then
+          export BW_SESSION=${TOKEN}
+        fi
+        ;;
+      "unlocked")
+        echo "Vault is unlocked"
+        ;;
+      *)
+        echo "Unknown Login Status: $BW_STATUS"
+        return 1
+        ;;
+    esac
+  fi
+
   command bw $@
 }
 
 chezmoi() {
   if [[ $1 == "apply" ]]; then
     bw sync
-  end
+  fi
+
   command chezmoi $@
 }
