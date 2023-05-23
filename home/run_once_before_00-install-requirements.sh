@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
 if [[ "${OS_DISTRIBUTION}" == "darwin" ]]; then
-  which -s brew
-  if [[ $? != 0 ]] ; then
-    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  fi
-
   which -s nvm
   if [[ $? != 0 ]] ; then
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)"
