@@ -1,0 +1,60 @@
+configuration {
+	modi: "run,drun,window";
+	width: 33;
+	lines: 9;
+	columns: 1;
+	font: "FontAwesome 12";
+	location: 2;
+	yoffset: 200;
+	xoffset: 0;
+	fixed-num-lines: false;
+	show-icons: true;
+	drun-icon-theme: "Newaita-Dark";
+	terminal: "kitty";
+	run-shell-command: "{terminal} -e {cmd}";
+	window-match-fields: "all";
+	drun-match-fields: "name,exec";
+	case-sensitive: false;
+	cycle: true;
+	sidebar-mode: true;
+	auto-select: false;
+	combi-modi: "window,drun";
+	matching: "regex";
+	hide-scrollbar: true;
+	fullscreen: false;
+	threads: 0;
+	window-format: "{w:0}	{n:0}	{t:0}";
+	click-to-exit: true;
+	show-match: true;
+	max-history-size: 25;
+	-hide-mode-prefix: true;
+//	display-window: "";
+//	display-run: "";
+//	display-drun: "";
+//	display-combi: "Combined";
+//	kb-primary-paste: "Control+Y";
+//	kb-secondary-paste: "Control+y";
+//	kb-clear-line: "Control+Shift+BackSpace";
+//	kb-move-front: "Control+a";
+//	kb-move-end: "Control+e";
+//	kb-move-word-back: "Alt+b";
+//	kb-move-word-forward: "Alt+f";
+//	kb-move-char-back: "Left,Control+b";
+//	kb-move-char-forward: "Right,Control+f";
+//	kb-remove-word-back: "Control+BackSpace";
+//	kb-remove-word-forward: "Alt+d";
+//	kb-remove-char-forward: "Delete,Control+d";
+//	kb-remove-char-back: "BackSpace";
+//	kb-remove-to-eol: "Control+k";
+//	kb-remove-to-sol: "Control+K";
+//	kb-accept-entry: "Control+j,Control+m,Return,KP_Enter";
+//	kb-page-prev: "Alt+v,Page_Up";
+//	kb-page-next: "Control+v,Page_Down";
+//	kb-row-first: "Alt+less,Home,KP_Home";
+//	kb-row-last: "Alt+greater,End,KP_End";
+}
+
+@theme "~/.config/rofi/themes/arc.rasi"
+// @theme "/usr/share/rofi/themes/fancy.rasi"
+// @theme "solarized"
+
