@@ -6,12 +6,6 @@ else
 	is_linux = 1
 endif
 
-.PHONY: install
-ifeq ($(host),Darwin)
-install: osx-prereqs
-else
-install: linux-prereqs
-endif
 
 .DEFAULT_GOAL := help
 
@@ -21,25 +15,13 @@ endif
 help:
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: osx-prereqs
-osx-prereqs:
-	@NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	@brew install chezmoi bitwarden-cli
-
-.PHONY: linux-prereqs
-linux-prereqs:
-	@sudo pacman -Syuq --noconfirm # Update all currently installed packages
-	@sudo pacman -Sq --noconfirm --needed base-devel git zsh chezmoi bitwarden-cli openssh jq # Install bare minimum packages
-	@git clone --quiet https://aur.archlinux.org/yay-bin.git # Install yay (AUR helper)
-	@# @cd yay-bin && makepkg -si --no-confirm
-
 .PHONY: info
 info: ## Return basic system info
 	@echo $(host)
 	@echo $(arch)
 
 .PHONY: init
-init: install ## Runs first initilization of dotfiles
+init: ## Runs first initilization of dotfiles
 ifndef CODESPACES
 	@export BW_SESSION=$$(bw login --raw) && \
 		bw sync && \

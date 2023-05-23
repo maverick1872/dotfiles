@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "darwin" -}}
+if [[ "${OS_DISTRIBUTION}" == "darwin" ]]; then
 #!/usr/bin/env zsh
 
 # ~/.macos — https://mths.be/macos
