@@ -1,5 +1,10 @@
 # Maverick1872's Dotfiles #
 
+To use these dotfiles the following command will install Chezmoi, and then apply these dotfiles.
+```sh
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply maverick1872
+```
+
 To leverage chezmoi in an interactive manner one must install the BitWarden CLI, login & unlock their vault, and then sync
 it accordingly PRIOR to running `chezmoi init`
 
