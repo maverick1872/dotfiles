@@ -1,7 +1,8 @@
-if [[ "${OS_DISTRIBUTION}" == "darwin" ]]; then
 #!/usr/bin/env zsh
 
 # ~/.macos — https://mths.be/macos
+
+if [[ "${OS_DISTRIBUTION}" == "darwin" ]]; then
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
