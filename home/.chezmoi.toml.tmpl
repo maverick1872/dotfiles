@@ -11,7 +11,7 @@
 {{ $isPersonalMachine := false -}}
 {{ $registries := false -}}
 {{ $githubToken := false -}}
-{{ $installRust := false -}}
+{{ $setupRust := false -}}
 
 ## Override pre-defined values if interactive mode is allowed
 {{- if $interactive -}}
@@ -30,7 +30,7 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
   name = {{ $name | quote }}
   isPersonalMachine = {{ $isPersonalMachine }}
   osID = {{ $osID | quote }}
-  installRust = {{ $installRust }}
+  rust = {{ $setupRust }}
 
   {{ if and ($registries) ( first $registries ) -}}
     registries = {{ $registries | toToml }}

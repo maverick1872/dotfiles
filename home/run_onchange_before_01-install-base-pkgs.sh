@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 if [[ "${OS_DISTRIBUTION}" == "darwin" ]]; then
-  echo "Installing packages with brew"
   brew bundle --no-lock --file=/dev/stdin <<EOF
 tap "homebrew/bundle"
 tap "homebrew/cask"
@@ -31,8 +30,9 @@ brew "wget"
 brew "nghttp2" # HTTP2 Client
 brew "ffmpeg" 
 EOF
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh 
+  
 elif [[ "${OS_DISTRIBUTION}" == "linux-arch" ]]; then
-  echo "Installing packages with yay"
   yay -Sq --noconfirm --needed - <<EOF
 alsa-utils
 amd-ucode
@@ -72,6 +72,7 @@ playerctld-systemd-unit
 ranger
 ripgrep
 rofi
+rustup
 sddm-theme-aerial-git
 signal-desktop
 spotify
