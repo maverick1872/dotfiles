@@ -47,7 +47,7 @@ build: Dockerfile ## Build Docker image for testing dotfiles
 
 .PHONY: test
 test: build ## Test interactive dotfiles in a container
-	docker run -it -v "${PWD}:/home/maverick/dev/dotfiles" -v "${PWD}/makefile:/home/maverick/makefile" dotfiles /bin/bash make init
+	docker run -it -v "${PWD}:/home/maverick/dev/dotfiles" -v "${PWD}/makefile:/home/maverick/makefile" dotfiles /bin/bash
 
 .PHONY: test-headless
 test-headless: build ## Test noninteractive dotfiles in a container
