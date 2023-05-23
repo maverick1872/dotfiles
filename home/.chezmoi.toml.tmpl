@@ -1,4 +1,4 @@
-{{- $interactive := not (any (env "CI") (env "HEADLESS") (env "GITHUB_ACTIONS") (env "CODESPACES")) -}}
+{{- $interactive := not (env "HEADLESS") -}}
 
 ## Set the osID such that linux distributions can be determined
 {{- $osID := .chezmoi.os -}}
@@ -23,7 +23,7 @@
 
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
-[scripts]
+[scriptEnv]
   OS_DISTRIBUTION = {{ $osID | quote }}
 
 [data]
@@ -32,6 +32,6 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
   osID = {{ $osID | quote }}
   installRust = {{ $installRust }}
 
-  {{- if and ($registries) ( first $registries ) -}}
+  {{ if and ($registries) ( first $registries ) -}}
     registries = {{ $registries | toToml }}
   {{ end -}}
