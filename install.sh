@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
 # -e: exit on error
-# -u: exit on unset variables
 # -o pipefail: return value of a pipeline is the value of the last (rightmost) command to exit with a non-zero status
-set -euo pipefail
+set -eo pipefail
+
+if [[ -z "$1" ]]; then
+	echo "argument not supplied, forcing install to be headless"
+	export HEADLESS=true
+fi
 
 if ! chezmoi="$(command -v chezmoi)"; then
 	bin_dir="${HOME}/.local/bin"
