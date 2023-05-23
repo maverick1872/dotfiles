@@ -1,8 +1,5 @@
-README.md
-
-{{- if eq .chezmoi.os "linux" }}
-{{- end }}
-
-{{- if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.os "darwin" -}}
 .config/awesome
-{{- end }}
+{{- else if eq .osID "linux-arch" -}}
+{{- else if eq .osID "linux-debian" -}}
+{{- end -}}
