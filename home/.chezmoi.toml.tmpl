@@ -24,8 +24,9 @@
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [scriptEnv]
+  INTERACTIVE = {{ $interactive | quote }}
   OS_DISTRIBUTION = {{ $osID | quote }}
-  IS_PERSONAL = {{ $isPersonalMachine }}
+  IS_PERSONAL = {{ $isPersonalMachine | quote }}
 
 [data]
   name = {{ $name | quote }}
