@@ -1,34 +1,37 @@
-{{- $headless := not (any (env "CI") (env "HEADLESS") (env "GITHUB_ACTIONS") (env "CODESPACES")) -}}
+{{- $interactive := not (any (env "CI") (env "HEADLESS") (env "GITHUB_ACTIONS") (env "CODESPACES")) -}}
 
-{{ $name := false -}}
-{{ $isPersonalMachine := false -}}
-{{ $registries := false -}}
-{{ $githubToken := false -}}
-{{ $installRust := false -}}
-
+## Set the osID such that linux distributions can be determined
 {{- $osID := .chezmoi.os -}}
 {{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
 {{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- end -}}
 
-{{- if $headless -}}
+## The follow block is all pre-defined values for a non-interactive setup
+{{ $name := "Jonathon Terry" -}}
+{{ $isPersonalMachine := false -}}
+{{ $registries := false -}}
+{{ $githubToken := false -}}
+{{ $installRust := false -}}
+
+## Override pre-defined values if interactive mode is allowed
+{{- if $interactive -}}
 {{- writeToStdout "Interactive configuration generation\n" -}}
 {{- $name = promptString "Desired git author name" -}}
 {{- $isPersonalMachine = promptBool  "Is this a personal machine" -}}
 {{- $registries = splitList " " (promptString "Configure any GitHub Package Organizations") }}
-{{- else -}}
-{{- $name = "Jonathon Terry" -}}
-{{- $isPersonalMachine = false -}}
 {{- end -}}
 
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
+[scripts]
+  OS_DISTRIBUTION = {{ $osID | quote }}
+
 [data]
   name = {{ $name | quote }}
   isPersonalMachine = {{ $isPersonalMachine }}
-  {{ if and ($registries) ( first $registries ) -}}
-    registries = {{ $registries | toToml }}
-  {{ end -}}
   osID = {{ $osID | quote }}
   installRust = {{ $installRust }}
 
+  {{- if and ($registries) ( first $registries ) -}}
+    registries = {{ $registries | toToml }}
+  {{ end -}}
