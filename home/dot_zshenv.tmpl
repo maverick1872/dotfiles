@@ -14,6 +14,7 @@ export RUSTUP_HOME="$HOME/.config/rustup"
 {{- if eq .osID "linux-arch" }}
 export OS="linux-arch"
 export AWESOME_CONFIG=$HOME/.config/awesome
+export XINITRC=$XDG_CONFIG_COME/X11/xinitrc
 {{- end }}
 
 {{- if eq .osID "darwin-amd64" }}
