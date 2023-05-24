@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-if [[ "${OS_DISTRIBUTION}" == "darwin-amd64" ]]; then
+if [[ "${OS_DISTRIBUTION}" == "darwin"* ]]; then
+  xcode-select --install
+
   which -s nvm
   if [[ $? != 0 ]] ; then
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)"
