@@ -14,6 +14,7 @@ plugins=(
   history-search-multi-word
 )
 
+
 ## Source NVM if it is installed
 # This only works if NVM is installed to the users home dir. Breaks for non-standard installs.
 if [[ -d ${HOME}/.nvm ]] && [[ -f ${HOME}/.nvm/nvm.sh ]]; then
@@ -42,6 +43,12 @@ if [[ -d ${HOME}/.nvm ]] && [[ -f ${HOME}/.nvm/nvm.sh ]]; then
     add-zsh-hook chpwd __lazy-autoload-nvmrc
 fi
 
-### User configuration ###
+### Source OMZ ###
 source $ZSH/oh-my-zsh.sh
+
+### Source remainder of ZSH files ###
+for file in "$ZDOTDIR"/*.zsh; do
+  echo "Sourcing ${file}"
+  source "$file"
+done
 
