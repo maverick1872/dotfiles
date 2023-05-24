@@ -52,3 +52,21 @@ for file in "$ZDOTDIR"/*.zsh; do
   source "$file"
 done
 
+### Machine Specific Configurations ###
+{{- if contains "darwin" .osID }}
+# Source Homebrew
+eval "$($(brew --prefix))/bin/brew shellenv"
+{{- end }}
+
+{{- if .isPersonal }}
+### Personal Configurations ###
+. "$HOME/.config/cargo/env"
+
+{{- else -}}
+### Work Configurations ###
+{{- if contains "darwin" .osID -}}
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+{{- end -}}
+{{- end }}
+

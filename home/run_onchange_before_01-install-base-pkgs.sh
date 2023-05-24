@@ -38,6 +38,9 @@ EOF
   else
     brew bundle --no-lock --file=/dev/stdin <<EOF
 cask "slack"
+cask "google-cloud-sdk"
+
+brew "java"
 EOF
   fi
 

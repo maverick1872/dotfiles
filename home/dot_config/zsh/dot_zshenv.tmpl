@@ -6,12 +6,7 @@ export RPROMPT_MODE=2
 export USER_BIN="$HOME/bin"
 export EDITOR='nvim'
 
-{{- if .isPersonal }}
-export CARGO_HOME="$HOME/.config/cargo"
-export RUSTUP_HOME="$HOME/.config/rustup"
-. "$HOME/.config/cargo/env"
-{{- end }}
-
+### Machine Specific Configurations ###
 {{- if eq .osID "linux-arch" }}
 export OS="arch"
 export AWESOME_CONFIG=$HOME/.config/awesome
@@ -20,8 +15,17 @@ export XINITRC=$HOME/.config/X11/xinitrc
 
 {{- if contains "darwin" .osID }}
 export OS="mac"
+{{- end }}
 
-# Source Homebrew
-eval "$($(brew --prefix))/bin/brew shellenv"
+{{- if .isPersonal }}
+### Personal Configurations ###
+export CARGO_HOME="$HOME/.config/cargo"
+export RUSTUP_HOME="$HOME/.config/rustup"
+
+{{- else -}}
+### Work Configurations ###
+{{- if contains "darwin" .osID -}}
+export PATH="/usr/lib/google-cloud-sdk/bin:$PATH"
+{{- end -}}
 {{- end }}
 
