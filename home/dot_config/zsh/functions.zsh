@@ -192,7 +192,6 @@ bw() {
         fi
         ;;
       "unlocked")
-        echo "Vault is unlocked"
         ;;
       *)
         echo "Unknown Login Status: $BW_STATUS"
@@ -205,6 +204,13 @@ bw() {
 }
 
 chezmoi() {
-  bw sync
+  case "$1" in
+    "diff" | "apply" | *"merge"* | "update" )
+      echo "Syncing BitWarden Vault"
+      bw sync
+      ;;
+    *)
+      ;;
+
   command chezmoi $@
 }
