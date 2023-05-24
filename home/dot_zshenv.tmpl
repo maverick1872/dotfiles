@@ -8,7 +8,7 @@ export USER_BIN="$HOME/bin"
 {{- if .isPersonal }}
 export CARGO_HOME="$HOME/.config/cargo"
 export RUSTUP_HOME="$HOME/.config/rustup"
-. "$HOME.config/cargo/env"
+. "$HOME/.config/cargo/env"
 {{- end }}
 
 {{- if eq .osID "linux-arch" }}
