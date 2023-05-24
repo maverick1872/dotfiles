@@ -31,6 +31,7 @@ alias clean-volumes='docker volume ls -q | xargs docker volume rm'
 
 # NODE & NPM
 alias update-npm='npm install -g npm'
+alias npmrm='npm rm'
 alias npmid='npm i -D'
 alias npmip='npm i -P'
 
