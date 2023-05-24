@@ -48,7 +48,6 @@ source $ZSH/oh-my-zsh.sh
 
 ### Source remainder of ZSH files ###
 for file in "$ZDOTDIR"/*.zsh; do
-  echo "Sourcing ${file}"
   source "$file"
 done
 
@@ -62,7 +61,7 @@ eval "$($(brew --prefix))/bin/brew shellenv"
 ### Personal Configurations ###
 . "$HOME/.config/cargo/env"
 
-{{- else -}}
+{{- else }}
 ### Work Configurations ###
 {{- if contains "darwin" .osID -}}
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"

@@ -1,5 +1,6 @@
 # Set OMZ source directory to the XDG_DATA_HOME equivalent in a way that also works for Mac OS
 export ZSH=$HOME/.local/share/oh-my-zsh
+export ZSH_CUSTOM=$HOME/.config/zsh/omz
 export ZSH_THEME="personal"
 export HISTFILE="${ZDOTDIR}/history"
 export RPROMPT_MODE=2
@@ -22,7 +23,7 @@ export OS="mac"
 export CARGO_HOME="$HOME/.config/cargo"
 export RUSTUP_HOME="$HOME/.config/rustup"
 
-{{- else -}}
+{{- else }}
 ### Work Configurations ###
 {{- if contains "darwin" .osID -}}
 export PATH="/usr/lib/google-cloud-sdk/bin:$PATH"
