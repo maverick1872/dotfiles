@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ "${OS_DISTRIBUTION}" == "darwin" ]]; then
+if [[ "${OS_DISTRIBUTION}" == "darwin-amd64" ]]; then
   brew bundle --no-lock --file=/dev/stdin <<EOF
 tap "homebrew/bundle"
 tap "homebrew/services"

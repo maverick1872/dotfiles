@@ -16,9 +16,11 @@ export OS="linux-arch"
 export AWESOME_CONFIG=$HOME/.config/awesome
 {{- end }}
 
-{{- if eq .osID "darwin" }}
+{{- if eq .osID "darwin-amd64" }}
 export OS="osx"
+{{- end }}
 
+{{- if eq .osID "darwin-arm64" }}
 # Source Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 {{- end }}
