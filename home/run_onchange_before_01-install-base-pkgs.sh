@@ -21,7 +21,7 @@ brew "git"
 brew "gh"
 brew "jq"
 brew "yq"
-brew "ripgep"
+brew "ripgrep"
 brew "tealdeer"
 brew "wget"
 brew "nghttp2" # HTTP2 Client
