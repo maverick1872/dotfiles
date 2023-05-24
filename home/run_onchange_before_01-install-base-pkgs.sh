@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ "${OS_DISTRIBUTION}" == "darwin-amd64" ]]; then
+  # Install Brew Bundle
   brew bundle --no-lock --file=/dev/stdin <<EOF
 tap "homebrew/bundle"
 tap "homebrew/services"
@@ -28,6 +29,9 @@ brew "nghttp2" # HTTP2 Client
 EOF
 
   if [[ "${IS_PERSONAL}" == "true" ]]; then
+    # Install Rust toolchain non-interactively
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  
     brew bundle --no-lock --file=/dev/stdin <<EOF
 brew "ffmpeg" 
 EOF
@@ -37,9 +41,6 @@ cask "slack"
 EOF
   fi
 
-  # Install Rust toolchain non-interactively
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-  
 elif [[ "${OS_DISTRIBUTION}" == "linux-arch" ]]; then
   yay -Sq --noconfirm --needed - <<EOF
 alsa-utils

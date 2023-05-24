@@ -5,10 +5,10 @@ export ZSH_THEME="personal"
 export RPROMPT_MODE=2
 export USER_BIN="$HOME/bin"
 
-{{- if .rust }}
+{{- if .isPersonal }}
 export CARGO_HOME="$HOME/.config/cargo"
 export RUSTUP_HOME="$HOME/.config/rustup"
-. "/Users/jterry/.config/cargo/env"
+. "$HOME.config/cargo/env"
 {{- end }}
 
 {{- if eq .osID "linux-arch" }}
@@ -24,8 +24,4 @@ export OS="osx"
 # Source Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 {{- end }}
-
-if [[ -f ${HOME}/.private-zprofile ]]; then
-    . ${HOME}/.private-zprofile
-fi
 
