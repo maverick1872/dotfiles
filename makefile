@@ -1,12 +1,3 @@
-host := $(shell uname -s)
-arch := $(shell uname -p)
-ifeq ($(host),Darwin)
-	is_linux = 0
-else
-	is_linux = 1
-endif
-
-
 .DEFAULT_GOAL := help
 
 # This will output the help for each task. This is denoted by the `##` following the target.
@@ -14,11 +5,6 @@ endif
 .PHONY: help
 help:
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
-
-.PHONY: info
-info: ## Return basic system info
-	@echo $(host)
-	@echo $(arch)
 
 .PHONY: init
 init: ## Runs first initilization of dotfiles
