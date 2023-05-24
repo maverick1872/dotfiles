@@ -25,7 +25,7 @@ export RUSTUP_HOME="$HOME/.config/rustup"
 
 {{- else }}
 ### Work Configurations ###
-{{- if contains "darwin" .osID -}}
+{{- if contains "darwin" .osID }}
 export PATH="/usr/lib/google-cloud-sdk/bin:$PATH"
 {{- end -}}
 {{- end }}

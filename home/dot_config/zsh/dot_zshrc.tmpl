@@ -52,9 +52,12 @@ for file in "$ZDOTDIR"/*.zsh; do
 done
 
 ### Machine Specific Configurations ###
-{{- if contains "darwin" .osID }}
+{{- if contains "darwin-arm64" .osID }}
 # Source Homebrew
-eval "$($(brew --prefix))/bin/brew shellenv"
+eval "$(/opt/homebrew/bin/brew shellenv"
+{{- else if contains "darwin-amd64" .osID }}
+# Source Homebrew
+eval "$(/usr/local/bin/brew shellenv"
 {{- end }}
 
 {{- if .isPersonal }}
@@ -63,7 +66,7 @@ eval "$($(brew --prefix))/bin/brew shellenv"
 
 {{- else }}
 ### Work Configurations ###
-{{- if contains "darwin" .osID -}}
+{{- if contains "darwin" .osID }}
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 {{- end -}}
