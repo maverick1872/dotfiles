@@ -1,0 +1,20 @@
+[".oh-my-zsh"]
+  type = "git-repo"
+  url = "https://github.com/ohmyzsh/ohmyzsh.git"
+  # refreshPeriod = "168h"
+[".config/zsh/plugins/zsh-syntax-highlighting"]
+  type = "git-repo"
+  url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+  refreshPeriod = "168h"
+[".config/zsh/plugins/zsh-autosuggestions"]
+  type = "git-repo"
+  url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+  refreshPeriod = "168h"
+[".config/zsh/plugins/history-search-multi-word"]
+  type = "git-repo"
+  url = "https://github.com/zdharma-continuum/history-search-multi-word"
+  refreshPeriod = "168h"
+[".config/nvim"]
+  type = "git-repo"
+  url = "https://github.com/AstroNvim/AstroNvim.git"
+  refreshPeriod = "168h"

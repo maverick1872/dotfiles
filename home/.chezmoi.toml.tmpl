@@ -1,0 +1,37 @@
+{{- $interactive := not (env "HEADLESS") -}}
+
+## Set the osID such that linux distributions can be determined
+{{- $osID := printf "%s-%s" .chezmoi.os .chezmoi.arch -}}
+{{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
+{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
+## The follow block is all pre-defined values for a non-interactive setup
+{{ $name := "Jonathon Terry" -}}
+{{ $isPersonalMachine := false -}}
+{{ $registries := false -}}
+{{ $githubToken := false -}}
+
+## Override pre-defined values if interactive mode is allowed
+{{- if $interactive -}}
+{{- writeToStdout "Interactive configuration generation\n" -}}
+{{- $name = promptString "Desired git author name" -}}
+{{- $isPersonalMachine = promptBool  "Is this a personal machine" -}}
+{{- $registries = splitList " " (promptString "Configure any GitHub Package Organizations") }}
+{{- end -}}
+
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+
+[scriptEnv]
+  INTERACTIVE = {{ $interactive | quote }}
+  OS_DISTRIBUTION = {{ $osID | quote }}
+  IS_PERSONAL = {{ $isPersonalMachine | quote }}
+
+[data]
+  name = {{ $name | quote }}
+  isPersonal = {{ $isPersonalMachine }}
+  osID = {{ $osID | quote }}
+
+  {{ if and ($registries) ( first $registries ) -}}
+    registries = {{ $registries | toToml }}
+  {{ end -}}

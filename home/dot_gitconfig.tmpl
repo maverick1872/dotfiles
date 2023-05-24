@@ -1,0 +1,15 @@
+[commit]
+    gpgSign=true
+
+[pull]
+    rebase=false
+
+[tag]
+    gpgSign=true
+
+[user]
+    email=10217028+Maverick1872@users.noreply.github.com
+    name={{ .name }}
+    signingkey={{ (get (bitwardenFields "item" "GitHub") "Signing Key").value }}
+[push]
+    autoSetupRemote = true

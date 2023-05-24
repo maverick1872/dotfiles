@@ -1,0 +1,13 @@
+let mapleader = " "
+
+set NERDTree
+set surround
+set clipboard+=unnamed
+set clipboard+=ideaput
+
+map <C [> <ESC>
+map <leader>e :NERDTreeFocus<CR>
+nmap <leader>j <Action>(NextTab)
+nmap <leader>k <Action>(PreviousTab)
+nmap <leader>r <Action>(IdeaVim.ReloadVimRc.reload)
+nmap <leader>q :q<CR>
