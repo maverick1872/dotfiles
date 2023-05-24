@@ -10,6 +10,6 @@
 [user]
     email=10217028+Maverick1872@users.noreply.github.com
     name={{ .name }}
-    signingkey={{ default "replace-me-with-secret" .name }}
+    signingkey={{ (get (bitwardenFields "item" "GitHub") "Signing Key").value }}
 [push]
     autoSetupRemote = true
