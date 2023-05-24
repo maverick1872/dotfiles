@@ -1,7 +1,7 @@
 {{- $interactive := not (env "HEADLESS") -}}
 
 ## Set the osID such that linux distributions can be determined
-{{- $osID := .chezmoi.os -}}
+{{- $osID := printf "%s-%s" .chezmoi.os .chezmoi.arch -}}
 {{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
 {{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- end -}}
