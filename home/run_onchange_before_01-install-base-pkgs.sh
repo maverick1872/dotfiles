@@ -48,7 +48,7 @@ elif [[ "${OS_DISTRIBUTION}" == "linux-arch" ]]; then
   yay -Sq --noconfirm --needed - <<EOF
 alsa-utils
 amd-ucode
-appimagelauncher-git
+#appimagelauncher-git
 arandr
 awesome-git
 bc
