@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 if [[ "${OS_DISTRIBUTION}" == "darwin"* ]]; then
-  xcode-select --install
+  xcode-select -p
+  if [[ $? != 0 ]] ; then
+    xcode-select --install
+  fi
 
   which -s nvm
   if [[ $? != 0 ]] ; then
