@@ -22,6 +22,9 @@
 
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
+[diff]
+  exclude = ["scripts"]
+
 [scriptEnv]
   INTERACTIVE = {{ $interactive | quote }}
   OS_DISTRIBUTION = {{ $osID | quote }}
