@@ -1,5 +1,5 @@
 {{- if hasKey . "registries" }}
-//npm.pkg.github.com/:_authToken={{ (get (bitwardenFields "item" "GitHub") "Access Token").value }}
+//npm.pkg.github.com/:_authToken={{ (get (bitwardenFields "item" "GitHub") "Packages Read").value }}
 
 {{- range .registries }}
 @{{ . }}:registry=https://npm.pkg.github.com/
