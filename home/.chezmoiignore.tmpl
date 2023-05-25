@@ -1,7 +1,7 @@
-{{- if contains "darwin" .osID }}
+{{- if contains "darwin" .osID -}}
 .config/awesome
 .config/rofi
 .config/X11
-{{- if contains "linux" .osID }}
+{{- else if contains "linux" .osID }}
 .config/iterm
-{{- end -}}
+{{- end }}
