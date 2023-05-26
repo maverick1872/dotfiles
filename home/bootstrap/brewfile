@@ -1,0 +1,23 @@
+tap "homebrew/bundle"
+tap "homebrew/services"
+tap "homebrew/cask-fonts"
+
+cask "docker"
+cask "firefox"
+cask "iterm2"
+cask "spotify"
+cask "rar"
+cask "font-source-code-pro" #subject to change
+cask "postman"
+cask "gpg-suite"
+
+brew "bitwarden-cli"
+brew "coreutils"
+brew "git"
+brew "gh"
+brew "jq"
+brew "yq"
+brew "ripgrep"
+brew "tealdeer"
+brew "wget"
+brew "nghttp2" # HTTP2 Client

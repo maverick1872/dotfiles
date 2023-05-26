@@ -2,8 +2,6 @@
 
 # ~/.macos — https://mths.be/macos
 
-if [[ "${OS_DISTRIBUTION}" == "darwin-amd64" ]]; then
-
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
@@ -525,4 +523,3 @@ defaults write com.apple.commerce AutoUpdate -bool true
 defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
 echo "Done. Note that some of these changes require a logout/restart to take effect."
-fi

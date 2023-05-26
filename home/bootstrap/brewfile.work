@@ -1,0 +1,4 @@
+cask "slack"
+cask "google-cloud-sdk"
+
+brew "java"
