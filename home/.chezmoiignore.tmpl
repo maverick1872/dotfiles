@@ -1,12 +1,9 @@
 bootstrap/
 
 {{- if contains "darwin" .osID -}}
-.chezmoiscripts/arch/
-.chezmoiscripts/debian/
 .config/awesome
 .config/rofi
 .config/X11
 {{- else if contains "linux" .osID }}
-.chezmoiscripts/mac/
 .config/iterm
 {{- end }}
