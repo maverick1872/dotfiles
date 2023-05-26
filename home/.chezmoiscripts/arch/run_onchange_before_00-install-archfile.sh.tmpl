@@ -1,3 +1,4 @@
+{{- if contains "arch" .osID }}
 #!/usr/bin/env bash
 
 ## Update all currently installed packages
@@ -5,7 +6,7 @@ sudo pacman -Syuq --noconfirm --needed
 
 ## Add bare minimum base pkgs
 ## archfile hash: {{ include "bootstrap/archfile" | sha256sum }}
-sudo pacman -Sq --noconfirm --needed - < {{ include "bootstrap/archfile" }} 
+sudo pacman -Sq --noconfirm --needed - < ./bootstrap/archfile
 
 ## Install YAY (AUR Helper)
 which yay
@@ -17,8 +18,9 @@ fi
 
 ## Install all yay pkgs
 ## yayfile hash: {{ include "bootstrap/yayfile" | sha256sum }}
-yay -Sq --noconfirm --needed - < {{ include "bootstrap/yayfile" }}
+yay -Sq --noconfirm --needed - < ./bootstrap/yayfile
 
 ## Install Rust Stable
 rustup toolchain install stable
 
+{{- end }}
