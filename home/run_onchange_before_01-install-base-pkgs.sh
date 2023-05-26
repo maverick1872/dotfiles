@@ -102,6 +102,8 @@ xorg-xinit
 zip
 zsa-wally
 EOF
+
+rustup toolchain install stable
 elif [[ "${OS_DISTRIBUTION}" == "linux-debian" ]]; then
   echo "Installing packages with apt"
   sudo apt update && sudo apt install <<EOF
