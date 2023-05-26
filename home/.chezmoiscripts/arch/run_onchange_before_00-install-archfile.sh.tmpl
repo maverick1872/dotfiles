@@ -17,7 +17,7 @@ fi
 
 ## Install all yay pkgs
 ## yayfile hash: {{ include "bootstrap/yayfile" | sha256sum }}
-yay -Sq --noconfirm --needed - < {{ include "bootstrap/yayfile" | sha256sum }}
+yay -Sq --noconfirm --needed - < {{ include "bootstrap/yayfile" }}
 
 ## Install Rust Stable
 rustup toolchain install stable
