@@ -15,7 +15,6 @@
 ## Override pre-defined values if interactive mode is allowed
 {{- if $interactive -}}
 {{- writeToStdout "Interactive configuration generation\n" -}}
-{{- $name = promptString "Desired git author name" -}}
 {{- $isPersonalMachine = promptBool  "Is this a personal machine" -}}
 {{- $registries = splitList " " (promptString "Configure any GitHub Package Organizations") }}
 {{- end -}}
