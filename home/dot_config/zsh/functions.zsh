@@ -203,7 +203,7 @@ bw() {
   command bw $@
 }
 
-chezmoi() {
+cz() {
   case "$1" in
     'diff' | 'apply' | *'merge'* | 'update' )
       echo "Syncing BitWarden Vault"
