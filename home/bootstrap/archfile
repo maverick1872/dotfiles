@@ -3,3 +3,4 @@ base-devel
 zsh
 git
 openssh
+git-delta

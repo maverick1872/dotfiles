@@ -21,3 +21,4 @@ brew "ripgrep"
 brew "tealdeer"
 brew "wget"
 brew "nghttp2" # HTTP2 Client
+brew "git-delta"
