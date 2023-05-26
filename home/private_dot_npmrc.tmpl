@@ -1,12 +1,12 @@
 {{ if .isPersonal -}}
--//registry.npmjs.org/:_authToken={{ (get (bitwardenFields "item" "NPM") "Write Token").value }}
--@maverick18722:registry=https://registry.npmjs.org/
-{{ end -}}
+//registry.npmjs.org/:_authToken={{ (get (bitwardenFields "item" "NPM") "Write Token").value }}
+@maverick18722:registry=https://registry.npmjs.org/
+{{- end }}
 
 {{ if hasKey . "registries" -}}
 //npm.pkg.github.com/:_authToken={{ (get (bitwardenFields "item" "GitHub") "Packages Read").value }}
 
-{{ range .registries -}}
+{{- range .registries }}
 @{{ . }}:registry=https://npm.pkg.github.com/
 {{- end -}}
-{{ end -}}
+{{- end }}

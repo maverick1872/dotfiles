@@ -24,6 +24,9 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
 
 [diff]
   exclude = ["scripts"]
+  pager = "delta"
+  command = "delta"
+  args = ["--side-by-side", "{{ .Destination }}", "{{ .Target }}"]
 
 [scriptEnv]
   INTERACTIVE = {{ $interactive | quote }}
