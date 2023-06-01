@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+{{- if contains "arch" .osID }}
+## Enable cronjob daemon
+sudo systemctl enable cronie
+{{- end }}
+
+## crontab hash: {{ include "bootstrap/crontab" | sha256sum }}
+## Overwrite cronjob file
+crontab {{ joinPath .chezmoi.sourceDir "bootstrap/crontab" | quote }}
+
+## If session is interactive and vault is not unlocked
+if [[ "${INTERACTIVE}" == "true" && -z "$BW_SESSION" ]]; then
+  BW_SESSION=$(bw login --raw)
+  bw sync
+  echo export BW_SESSION=${BW_SESSION}
+fi

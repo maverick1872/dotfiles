@@ -1,0 +1,1 @@
+0 */3 * * * rm ${HOME}/.cache/bw/session & unset BW_SESSION
