@@ -1,9 +1,27 @@
 bootstrap/
 
+## Mac System Ignores
 {{- if contains "darwin" .osID -}}
+.chezmoiscripts/arch/**
+.chezmoiscripts/debian/**
 .config/awesome
 .config/rofi
 .config/X11
-{{- else if contains "linux" .osID }}
-.config/iterm
 {{- end }}
+
+## Global Linux System Ignores
+{{- if contains "linux" .osID }}
+.config/iterm
+.chezmoiscripts/mac/**
+{{- end }}
+
+## Arch System Ignores
+{{- if contains "arch" .osID }}
+.chezmoiscripts/debian/**
+{{- end }}
+
+## Debian System Ignores
+{{- if contains "debian" .osID }}
+.chezmoiscripts/arch/**
+{{- end }}
+

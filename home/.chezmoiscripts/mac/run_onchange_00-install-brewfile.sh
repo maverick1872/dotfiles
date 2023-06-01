@@ -1,4 +1,3 @@
-{{- if contains "darwin" .osID -}}
 #!/usr/bin/env zsh
 
 ## Install XCode CLI Tools
@@ -36,4 +35,3 @@ brew bundle --no-lock --file={{ joinPath .chezmoi.sourceDir "bootstrap/brewfile.
 
 fi
 
-{{- end }}

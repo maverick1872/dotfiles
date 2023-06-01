@@ -1,4 +1,3 @@
-{{- if contains "arch" .osID -}}
 #!/usr/bin/env bash
 
 ## Update all currently installed packages
@@ -26,4 +25,3 @@ yay -Sq --noconfirm --needed - < {{ joinPath .chezmoi.sourceDir "bootstrap/yayfi
 ## Install Rust Stable
 rustup toolchain install stable
 
-{{- end }}
