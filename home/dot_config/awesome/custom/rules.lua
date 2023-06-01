@@ -127,8 +127,8 @@ awful.rules.rules = {
       }
     },
     properties = {
-      tag = "Games",
       screen = 3,
+      tag = screen[3].tags[3],
     }
   },
 
@@ -144,14 +144,28 @@ awful.rules.rules = {
     },
     properties = {
       screen = 3,
-      tag = "Work",
-      --fullscreen = false,
-      --maximized_vertical   = false,
-      --maximized_horizontal = false,
+      tag = screen[3].tags[3],
       floating = false,
-      --maximized = false
     },
   },
+  -- Slack Mini Window
+  -- {
+  --   rule_any = {
+  --     instance = {
+  --       "slack"
+  --     },
+  --     class = {
+  --       "Slack",
+  --     }
+  --   },
+  --   properties = {
+  --     floating = true,
+  --   },
+  --   callback = function(c)
+  --     naughty.notify({text = "IDE was started on screen 1"})
+  --     naughty.notify({text = c.type })
+  --   end
+  -- },
 
   -- Spotify
   {
