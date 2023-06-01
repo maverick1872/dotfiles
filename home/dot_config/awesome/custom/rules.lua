@@ -132,6 +132,23 @@ awful.rules.rules = {
     }
   },
 
+  -- Signal
+  {
+    rule_any = {
+      instance = {
+        "Signal"
+      },
+      class = {
+        "Signal"
+      }
+    },
+    properties = {
+      screen = 3,
+      tag = screen[3].tags[3],
+      floating = false,
+    },
+  },
+
   -- Slack
   {
     rule_any = {

@@ -33,8 +33,8 @@ return {
     },
     {
       layouts = {
-        awful.layout.suit.max,
         awful.layout.suit.tile.bottom,
+        awful.layout.suit.max,
         awful.layout.suit.tile.top,
       },
       tags = { "Browsing", " Work", " Chat" },
