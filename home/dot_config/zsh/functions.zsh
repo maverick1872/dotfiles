@@ -180,7 +180,6 @@ bw() {
   fi
 
   if [[ -z "${BW_SESSION}" ]] && [[ -f "${HOME}/.cache/bw/session" ]]; then
-    echo -e "reading session token into env\n"
     export BW_SESSION=$(cat ${HOME}/.cache/bw/session)
   fi
 
