@@ -174,6 +174,16 @@ __load_nvm() {
 
 # Wrapper for BitWarden CLI to auto unlock vault and persist session when attempting to sync
 bw() {
+
+  if [[ ! -d "${HOME}/.cache/bw" ]]; then
+    mkdir -p ${HOME}/.cache/bw
+  fi
+
+  if [[ -z "${BW_SESSION}" ]] && [[ -f "${HOME}/.cache/bw/session" ]]; then
+    echo -e "reading session token into env\n"
+    export BW_SESSION=$(cat ${HOME}/.cache/bw/session)
+  fi
+
   if [[ $1 == "sync" ]]; then
     BW_STATUS=$(command bw status | jq -r .status)
     case "$BW_STATUS" in
@@ -182,6 +192,7 @@ bw() {
         TOKEN=$(command bw login --raw)
         if [[ $? -eq 0 ]]; then
           export BW_SESSION=${TOKEN}
+          echo ${TOKEN} > ${HOME}/.cache/bw/session
         fi
         ;;
       "locked")
@@ -189,6 +200,7 @@ bw() {
         TOKEN=$(command bw unlock --raw)
         if [[ $? -eq 0 ]]; then
           export BW_SESSION=${TOKEN}
+          echo ${TOKEN} > ${HOME}/.cache/bw/session
         fi
         ;;
       "unlocked")
@@ -208,6 +220,9 @@ ch() {
     'diff' | 'apply' | *'merge'* | 'update' )
       echo "Syncing BitWarden Vault"
       bw sync
+      ;;
+    'edit')
+      command chezmoi $@ --apply
       ;;
     *)
       ;;
