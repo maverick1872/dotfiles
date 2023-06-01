@@ -1,5 +1,6 @@
 base
 base-devel
+cronie
 zsh
 git
 openssh
