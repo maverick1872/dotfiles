@@ -1,4 +1,8 @@
 return {
+  {
+    "prisma/vim-prisma",
+    ft = "prisma",
+  },
   "jose-elias-alvarez/typescript.nvim", -- add lsp plugin
   {
     "williamboman/mason-lspconfig.nvim",
