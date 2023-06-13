@@ -34,9 +34,13 @@ git_develop_branch() {
   return 1
 }
 
-acp() {
+ac() {
   git add .
   git commit -m "$*"
+}
+
+acp() {
+  ac $*
   git push
 }
 

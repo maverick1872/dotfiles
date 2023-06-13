@@ -4,7 +4,7 @@ __lazy-autoload-nvmrc() {
   local nvmrc_path
 
   # If NVM hasn't yet been loaded, load it so all later nvm commands work
-  __load_nvm
+  command __load_nvm
 
   # Traverse parent directories until an nvmrc is encountered or root dev directory is encountered
   while [[ "${_path}" != "" && "${_path}" == *"/home/\w+/dev/"* && ! -e "${_path}/.nvmrc" ]]; do
@@ -21,12 +21,12 @@ __lazy-autoload-nvmrc() {
     local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
 
     if [[ "${nvmrc_node_version}" = "N/A" ]]; then
-      nvm install
+      command nvm install
     elif [[ "${nvmrc_node_version}" != "$(nvm version)" ]]; then
-      nvm use
+      command nvm use
     fi
   elif [[ "$(nvm version)" != "$(nvm version default)" ]]; then
-    nvm use default
+    command nvm use default
   fi
 }
 
