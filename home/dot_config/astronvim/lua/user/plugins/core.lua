@@ -1,5 +1,9 @@
 return {
   {
+    "kkoomen/vim-doge",
+    build = ':call doge#install()',
+  },
+  {
     "prisma/vim-prisma",
     ft = "prisma",
   },
