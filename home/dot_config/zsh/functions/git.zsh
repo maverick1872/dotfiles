@@ -34,6 +34,12 @@ git_develop_branch() {
   return 1
 }
 
+acp() {
+  git add .
+  git commit -m "$*"
+  git push
+}
+
 clean_merged_branches() {
   git checkout -q main && git for-each-ref refs/heads/ "--format=%(refname:short)" | \
   while read branch; do
