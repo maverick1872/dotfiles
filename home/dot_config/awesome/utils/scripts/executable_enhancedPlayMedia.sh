@@ -24,7 +24,7 @@ fi
 # Pause all players prior to starting a player
 case $overallStatus in
   'Paused')
-    playerctl --player=spotify,%any play
+    playerctl play
     ;;
  'Playing')
     playerctl --player=$targetPlayer pause
