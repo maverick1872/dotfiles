@@ -73,7 +73,7 @@ source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/compl
 source $ZSH/oh-my-zsh.sh
 
 ### Source remainder of ZSH files ###
-for file in "$ZDOTDIR"/*.zsh; do
+for file in $(find ${ZDOTDIR} -type f -name '*.zsh' -not -path '*/omz/*' -print); do
   source "$file"
 done
 

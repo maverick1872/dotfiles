@@ -1,0 +1,18 @@
+# General
+alias edit='$EDITOR'
+alias list-path-dirs='sed "s/:/\n/g" <<< "$PATH"'
+alias lsdir='ls -d */'
+alias lldir='ll -d */'
+
+{{- if eq .osID "linux-arch" }}
+alias open='xdg-open'
+alias yeet='yay -Rns'
+{{- end }}
+
+{{- if eq .osID "linux-debian" }}
+alias update='sudo apt update -y && sudo apt upgrade -y'
+{{- end }}
+
+# Shorthands for editing private shell stuff 
+alias edit-private-aliases='edit ${ZDOTDIR}/private-aliases.zsh'
+alias edit-private-functions='edit ${ZDOTDIR}/private-functions.zsh'
