@@ -2,6 +2,7 @@ return {
   {
     "kkoomen/vim-doge",
     build = ':call doge#install()',
+    lazy = false
   },
   {
     "prisma/vim-prisma",
