@@ -1,8 +1,9 @@
 return {
+  "mfussenegger/nvim-dap",
   {
     "kkoomen/vim-doge",
     build = ':call doge#install()',
-    lazy = false
+    lazy = false,
   },
   {
     "prisma/vim-prisma",
@@ -14,6 +15,9 @@ return {
     opts = {
       ensure_installed = { "tsserver" }, -- automatically install lsp
     },
+  },
+  {
+    "jay-babu/mason-nvim-dap.nvim",
   },
   {
     "jay-babu/mason-null-ls.nvim",
