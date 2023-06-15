@@ -9,7 +9,7 @@ viewpr() {
 }
 
 # Open Github Repo
-viewpr() {
+viewrepo() {
   gh repo --web
 }
 

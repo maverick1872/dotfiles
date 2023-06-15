@@ -1,10 +1,11 @@
 # Traverses PWD and up to find and autoload an nvmrc if exists. Compatible with lazy loading.
-__lazy-autoload-nvmrc() {
+__autoload-nvmrc() {
   local _path=$PWD
   local nvmrc_path
 
-  # If NVM hasn't yet been loaded, load it so all later nvm commands work
-  command __load_nvm
+  if [[ "${_path}" != *"/dev/"* ]]; then
+    return
+  fi
 
   # Traverse parent directories until an nvmrc is encountered or root dev directory is encountered
   while [[ "${_path}" != "" && "${_path}" == *"/home/\w+/dev/"* && ! -e "${_path}/.nvmrc" ]]; do
@@ -21,12 +22,12 @@ __lazy-autoload-nvmrc() {
     local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
 
     if [[ "${nvmrc_node_version}" = "N/A" ]]; then
-      command nvm install
+      nvm install
     elif [[ "${nvmrc_node_version}" != "$(nvm version)" ]]; then
-      command nvm use
+      nvm use
     fi
   elif [[ "$(nvm version)" != "$(nvm version default)" ]]; then
-    command nvm use default
+    nvm use default
   fi
 }
 
@@ -40,4 +41,33 @@ __load_nvm() {
     fi
   fi
 }
+
+## Source NVM if it is installed
+# This only works if NVM is installed to the users home dir. Breaks for non-standard installs.
+if [[ -d ${HOME}/.nvm ]] && [[ -f ${HOME}/.nvm/nvm.sh ]]; then
+    export NVM_DIR="$HOME/.nvm"
+    export PATH=$PATH:NVM_DIR
+
+    # Load NVM completions
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  
+
+    # nvm lazy loader wrapper
+    function nvm() {
+      __load_nvm
+      nvm "$@"
+    }
+
+    function node() {
+      __load_nvm
+      node "$@"
+    }
+
+    function npm() {
+      __load_nvm
+      npm "$@"
+    }
+
+    autoload -U add-zsh-hook
+    add-zsh-hook chpwd __autoload-nvmrc
+fi
 
