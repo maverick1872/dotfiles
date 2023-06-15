@@ -34,7 +34,7 @@ __autoload-nvmrc() {
 # Lazily load NVM
 __load_nvm() {
   if [[ -z "${NVM_LOADED}" ]]; then
-    unset -f nvm node npm
+    unset -f nvm node npm npx
     if [[ -s "${NVM_DIR}/nvm.sh" ]]; then
       . "${NVM_DIR}/nvm.sh"
       export NVM_LOADED="true"
@@ -65,6 +65,11 @@ if [[ -d ${HOME}/.nvm ]] && [[ -f ${HOME}/.nvm/nvm.sh ]]; then
     function npm() {
       __load_nvm
       npm "$@"
+    }
+
+    function npx() {
+      __load_nvm
+      npx "$@"
     }
 
     autoload -U add-zsh-hook
