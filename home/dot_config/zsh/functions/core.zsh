@@ -1,3 +1,12 @@
+### Source: https://superuser.com/questions/902241/how-to-make-zsh-not-store-failed-command/902508#902508
+ zshaddhistory() {
+   local j=1
+   while ([[ ${${(z)1}[$j]} == *=* ]]) {
+     ((j++))
+   }
+   whence ${${(z)1}[$j]} >| /dev/null || return 1
+ }
+
 # Short-hand to grep all aliases available
 search-aliases() {
   alias | grep "$1" --color

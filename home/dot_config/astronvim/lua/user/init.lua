@@ -4,4 +4,21 @@ return {
       tsserver = function(_, opts) require("typescript").setup { server = opts } end
     }
   },
+  polish = function()
+    vim.api.nvim_create_autocmd("VimEnter", {
+      command = "cd $PWD",
+    })
+    -- Set up custom filetypes
+    -- vim.filetype.add {
+    --   extension = {
+    --     foo = "fooscript",
+    --   },
+    --   filename = {
+    --     ["Foofile"] = "fooscript",
+    --   },
+    --   pattern = {
+    --     ["~/%.config/foo/.*"] = "fooscript",
+    --   },
+    -- }
+  end,
 }
