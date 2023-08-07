@@ -4,3 +4,7 @@
 #xrandr \
 #  --output DisplayPort-2 --off \
 #  --output DisplayPort-3 --off
+
+xrandr --output DisplayPort-2 --primary
+xrandr --output DisplayPort-3 --rotate left --left-of DisplayPort-2
+xrandr --output DisplayPort-4 --rotate right --right-of DisplayPort-2
