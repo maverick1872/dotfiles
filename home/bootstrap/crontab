@@ -1,1 +1,1 @@
-0 */3 * * * rm ${HOME}/.cache/bw/session & unset BW_SESSION
+0 */3 * * * if [ -e ${HOME}/.cache/bw/session ]; then rm ${HOME}/.cache/bw/session & unset BW_SESSION; fi

@@ -5,7 +5,18 @@
      ((j++))
    }
    whence ${${(z)1}[$j]} >| /dev/null || return 1
- }
+}
+
+# Fuzzy Command Wrapper
+fuzzily() {
+  local seperator='--'
+  local seperator_index=${@[(ie)$seperator]}
+  local fuzzy_prompt=(${@:1:(($seperator_index - 1))})
+  local fuzzy_cmd=${@[(($seperator_index + 1))]}
+
+  fzf --prompt="$fuzzy_prompt" --border --height=~25% --reverse --exit-0 
+}
+
 
 # Short-hand to grep all aliases available
 search-aliases() {
