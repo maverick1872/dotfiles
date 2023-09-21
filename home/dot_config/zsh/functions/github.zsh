@@ -18,11 +18,25 @@ gcopr() {
 
 # View Github PR
 viewpr() {
-  gh pr view "$1" --web
+  selection=($(
+    export GH_FORCE_TTY=100%;
+    gh search prs --state=open --author=@me --sort=updated | tail +4 \
+    | fzf --prompt='Filter PRs: ' \
+      --border \
+      --height '~50%' \
+      --reverse \
+      --ansi \
+      --header-lines 1 \
+      --preview 'gh pr -R {1} view {2}' \
+      --preview-window 'down'
+  ))
+  if [[ $selection ]]; then
+    gh pr -R ${selection[1]} view -w ${selection[2]}
+  fi
 }
 
 # Open Github Repo
 viewrepo() {
-  gh repo --web
+  gh repo view -w
 }
 
