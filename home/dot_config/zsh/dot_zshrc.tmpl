@@ -30,7 +30,9 @@ FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 {{ if .isPersonal -}}
 ### Personal Configurations ###
-source "$CARGO_HOME/env"
+if [[ -f "$CARGO_HOME/env" ]]; then
+  source "$CARGO_HOME/env"
+fi
 
 {{- else }}
 ### Work Configurations ###
