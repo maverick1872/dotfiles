@@ -35,7 +35,7 @@ git_develop_branch() {
 }
 
 ac() {
-  git add .
+  git add $(git rev-parse --show-toplevel)
   git commit -m "$*"
 }
 
@@ -43,6 +43,21 @@ acp() {
   ac $*
   git push
 }
+
+uc() {
+  git add -u
+  git commit -m "$*"
+}
+
+ucp() {
+  uc $*
+  git push
+}
+
+# unalias gcb
+# gcb() {
+#   git switch -c $1 || git switch $1
+# }
 
 clean_merged_branches() {
   git checkout -q main && git for-each-ref refs/heads/ "--format=%(refname:short)" | \
