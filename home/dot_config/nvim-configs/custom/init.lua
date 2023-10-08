@@ -20,9 +20,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup('plugins', {
   performance = {
     rtp = {
-      disabled_plugins = {
-        'netrwPlugin',
-      },
+      disabled_plugins = { 'netrwPlugin' },
     },
   },
 })
@@ -31,6 +29,6 @@ require 'autocmds'
 require 'keymaps'
 
 -- Set colorscheme
-vim.cmd 'colorscheme poimandres'
+vim.cmd 'colorscheme astrodark'
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
