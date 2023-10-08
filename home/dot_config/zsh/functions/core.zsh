@@ -31,7 +31,7 @@ show-port() {
 }
 
 
-compdef '_path_files -/ -W ~/.vim-configs' swim
+compdef '_path_files -/ -W ~/.config/nvim-configs' swim
 function swim {
   if [ $# -eq 0 ]
   then
