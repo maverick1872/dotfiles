@@ -21,7 +21,7 @@ export OS="mac"
 {{- if .isPersonal }}
 ### Personal Configurations ###
 if [[ `command -v rustup` ]]; then
-  export CARGO_HOME="$HOME/.config/cargo"
+  export CARGO_HOME="$HOME/cargo"
 fi
 export RUSTUP_HOME="$HOME/.config/rustup"
 
