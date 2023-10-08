@@ -28,9 +28,9 @@ eval "$(/usr/local/bin/brew shellenv)"
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 {{- end }}
 
-{{- if .isPersonal }}
+{{ if .isPersonal -}}
 ### Personal Configurations ###
-## . "$HOME/.config/cargo/env"
+source "$CARGO_HOME/env"
 
 {{- else }}
 ### Work Configurations ###
