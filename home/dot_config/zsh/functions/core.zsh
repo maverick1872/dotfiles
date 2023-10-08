@@ -5,18 +5,7 @@
      ((j++))
    }
    whence ${${(z)1}[$j]} >| /dev/null || return 1
-}
-
-# Fuzzy Command Wrapper
-fuzzily() {
-  local seperator='--'
-  local seperator_index=${@[(ie)$seperator]}
-  local fuzzy_prompt=(${@:1:(($seperator_index - 1))})
-  local fuzzy_cmd=${@[(($seperator_index + 1))]}
-
-  fzf --prompt="$fuzzy_prompt" --border --height=~25% --reverse --exit-0 
-}
-
+ }
 
 # Short-hand to grep all aliases available
 search-aliases() {
@@ -39,4 +28,20 @@ swap() {
 # Find process running on specified port
 show-port() {
   lsof -P -n -i :"$1"
+}
+
+
+compdef '_path_files -/ -W ~/.vim-configs' swim
+function swim {
+  if [ $# -eq 0 ]
+  then
+    zmodload zsh/stat
+    active=$(stat +link "$HOME/.config/nvim")
+    echo "Swimming with ${${active}:t}"
+    echo "$HOME/.config/nvim -> $active"
+    zmodload -u zsh/stat
+  else
+    echo "Swimming with $1"
+    ln -snfv ~/.config/nvim-configs/$1 ~/.config/nvim
+  fi
 }
