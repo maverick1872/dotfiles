@@ -2,20 +2,8 @@ return {
   bashls = {},
   clangd = {},
   marksman = {},
-  efm = {
-    init_options = {
-      documentFormatting = true,
-      documentRangeFormatting = true,
-      hover = true,
-      documentSymbol = true,
-      codeAction = true,
-      completion = true,
-    },
-  },
   dockerls = {},
   eslint = {},
-  html = {},
-  jdtls = {},
   jsonls = {},
   lua_ls = {
     settings = {
@@ -33,18 +21,14 @@ return {
     },
   },
   prismals = {},
-  pyright = {},
   rust_analyzer = {},
   sqlls = {},
-  svelte = {},
   terraformls = {},
-  texlab = {},
   tsserver = {},
-  volar = {},
   yamlls = {
     settings = {
       yaml = {
-        keyOrdering = false,
+        keyOrdering = true,
       },
     },
   },

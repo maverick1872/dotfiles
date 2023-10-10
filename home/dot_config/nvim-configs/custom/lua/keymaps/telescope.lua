@@ -2,7 +2,6 @@ local map = require('utils').map
 local is_available = require('utils').is_available
 
 if is_available 'telescope.nvim' then
-  map('n', '<leader>s', 'Search')
   map('n', '<leader>sk', require('telescope.builtin').keymaps, 'Search keybindings')
   map('n', '<leader>sw', require('telescope.builtin').live_grep, 'Find words')
   -- map('n', "<leader>sW",
