@@ -1,3 +1,9 @@
+# Set XDG Spec Dirs explicitly
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
+
 # Set OMZ source directory to the XDG_DATA_HOME equivalent in a way that also works for Mac OS
 export ZSH=$HOME/.local/share/oh-my-zsh
 export ZSH_CUSTOM=$HOME/.config/zsh/omz
