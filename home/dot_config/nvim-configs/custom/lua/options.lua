@@ -26,6 +26,8 @@ local options = {
   relativenumber = true,
   scrolloff = 10,
   sidescrolloff = 10,
+  splitright = true,
+  splitbelow = true,
 }
 
 for k, v in pairs(options) do
