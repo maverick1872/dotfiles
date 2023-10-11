@@ -4,9 +4,6 @@ ch() {
       echo "Syncing BitWarden Vault"
       bw sync
       ;;
-    'edit')
-      command chezmoi $@ --apply
-      ;;
     *)
       ;;
   esac

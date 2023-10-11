@@ -31,48 +31,6 @@ __autoload-nvmrc() {
   fi
 }
 
-# Lazily load NVM
-__load_nvm() {
-  if [[ -z "${NVM_LOADED}" ]]; then
-    unset -f nvm node npm npx
-    if [[ -s "${NVM_DIR}/nvm.sh" ]]; then
-      . "${NVM_DIR}/nvm.sh"
-      export NVM_LOADED="true"
-    fi
-  fi
-}
-
-## Source NVM if it is installed
-# This only works if NVM is installed to the users home dir. Breaks for non-standard installs.
-if [[ -d ${HOME}/.nvm ]] && [[ -f ${HOME}/.nvm/nvm.sh ]]; then
-    export NVM_DIR="$HOME/.nvm"
-    export PATH=$PATH:NVM_DIR
-
-    # Load NVM completions
-    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  
-
-    # nvm lazy loader wrapper
-    function nvm() {
-      __load_nvm
-      nvm "$@"
-    }
-
-    function node() {
-      __load_nvm
-      node "$@"
-    }
-
-    function npm() {
-      __load_nvm
-      npm "$@"
-    }
-
-    function npx() {
-      __load_nvm
-      npx "$@"
-    }
-
-    autoload -U add-zsh-hook
-    add-zsh-hook chpwd __autoload-nvmrc
-fi
+# autoload -U add-zsh-hook
+# add-zsh-hook chpwd __autoload-nvmrc
 
