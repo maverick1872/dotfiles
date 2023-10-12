@@ -31,5 +31,7 @@ require 'keymaps'
 -- Set colorscheme
 vim.cmd 'colorscheme astrodark'
 
+vim.cmd 'if argc() == 1 && isdirectory(argv(0)) | cd `=argv(0)` | endif'
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
