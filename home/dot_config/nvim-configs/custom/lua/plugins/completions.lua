@@ -5,6 +5,7 @@ return {
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
     require("luasnip/loaders/from_vscode").lazy_load()
+
     --   local has_words_before = function()
     --     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     --     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
@@ -19,7 +20,7 @@ return {
       mapping = {
         ['<CR>'] = cmp.mapping.confirm { select = false }, -- Accept explictly selected item.
         ['<Space>'] = cmp.mapping.confirm { select = false }, -- Accept explictly selected item.
-        ['<Esc>'] = cmp.mapping.abort(), -- Close completions and restore line
+        -- ['<Esc>'] = cmp.mapping.abort(), -- Close completions and restore line
         ['<Left>'] = cmp.mapping.close(), -- Close completions and restore line
         ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
         ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
@@ -53,6 +54,7 @@ return {
         format = function(entry, vim_item)
           -- vim_item.kind = string.format('%s', icons[vim_item.kind])
           vim_item.menu = ({
+            nvim_lsp = '[lsp]',
             luasnip = '[snip]',
             buffer = '[nearby]',
             path = '[path]',

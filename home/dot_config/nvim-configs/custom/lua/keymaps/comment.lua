@@ -8,7 +8,7 @@ if is_available 'Comment.nvim' then
   end, 'Toggle comment line')
   map('v', '<leader>/', function()
     vim.api.nvim_feedkeys('esc', 'nx', false)
-    require('Comment.api').toggle.linewise(vim.fn.visualmode())
+    require('Comment.api').toggle.blockwise(vim.fn.visualmode())
   end, 'Toggle comment for selection')
 
 

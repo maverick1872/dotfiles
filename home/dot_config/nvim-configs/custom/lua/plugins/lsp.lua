@@ -54,7 +54,7 @@ return {
     ------ Setup LSP Configurations ------ 
     mason_lspconfig.setup_handlers {
       function(ls)
-        lspconfig[ls].setup(require('configs.lsp')[ls])
+        lspconfig[ls].setup(require('plugins.configs.lsp')[ls])
       end,
     }
 
