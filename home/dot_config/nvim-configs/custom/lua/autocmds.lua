@@ -13,7 +13,7 @@ autoCmd('TextYankPost', {
   pattern = '*',
 })
 
--- Moves the help window to the far right 
+-- Moves the help window to the far right
 autoCmd('FileType', {
   pattern = 'help',
   command = 'wincmd L',
@@ -23,6 +23,14 @@ autoCmd('FileType', {
 autoCmd('BufWritePost', {
   pattern = expand '~' .. '/.local/share/chezmoi/*',
   callback = function()
-     vim.cmd 'silent !chezmoi apply --source-path "<afile>:p"'
-  end
+    vim.cmd 'silent !chezmoi apply --source-path "<afile>:p"'
+  end,
+})
+
+autoCmd('User', {
+  pattern = 'TelescopePreviewerLoaded',
+  callback = function(args)
+    print 'Telescope previewer was loaded'
+    vim.opt_local.number = true
+  end,
 })
