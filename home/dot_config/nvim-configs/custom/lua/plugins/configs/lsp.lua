@@ -1,10 +1,6 @@
+-- Add on-attach, capabilities, filetypes here as well under each lsp
+
 return {
-  bashls = {},
-  clangd = {},
-  marksman = {},
-  dockerls = {},
-  eslint = {},
-  jsonls = {},
   lua_ls = {
     settings = {
       Lua = {
@@ -20,11 +16,14 @@ return {
       },
     },
   },
-  prismals = {},
-  rust_analyzer = {},
-  sqlls = {},
-  terraformls = {},
-  tsserver = {},
+  tsserver = {
+    -- on_attach = function (client)
+    --   client.resovled.capabilities.document_formatting = false
+    -- end,
+    settings = {
+      documentformatting = false, -- This can also be applied during on_attach
+    }
+  },
   yamlls = {
     settings = {
       yaml = {

@@ -3,62 +3,75 @@ return {
   dependencies = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
+    "jay-babu/mason-null-ls.nvim",
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    'towolf/vim-helm',
+    -- 'mason-tool-installer' should be replaced when automatic installation of 
+    -- all tools is included in the core 'williamboman/mason.nvim' plugin. 
+    -- Ref issue #103
   },
   config = function()
     local lspconfig = require 'lspconfig'
-    require('mason').setup {}
+    require('mason').setup {
+      ui = {
+          icons = {
+              package_installed = "✓",
+              package_pending = "➜",
+              package_uninstalled = "✗"
+          }
+      }
+    }
 
     ------ Setup Mason Tool Installer ------
     require('mason-tool-installer').setup {
-      auto_update = true,
-      run_on_start = true,
-      start_delay = 2000, -- 3 second delay
-      debounce_hours = 168, -- at least 5 hours between attempts to install/update
-
+      -- auto_update = true,
+      -- run_on_start = false,
+      -- start_delay = 2000, -- 3 second delay
+      -- debounce_hours = 168, -- at least 5 hours between attempts to install/update
       -- https://mason-registry.dev/registry/list
       ensure_installed = {
-        -- 'clang-format',
-        -- 'prettier',
-        -- 'prettierd',
-        -- 'shfmt',
-        'stylua',
-        -- 'yamlfmt',
-      },
-    }
-
-    ------ Setup Mason LSPConfig ------
-    local mason_lspconfig = require 'mason-lspconfig'
-    mason_lspconfig.setup {
-      automatic_installation = true,
-
-      ensure_installed = {
-        -- 'bashls',
-        -- 'clangd',
-        -- 'dockerls',
-        -- 'eslint',
-        -- 'jsonls',
+        --- Language Servers ---
+        'clangd',
+        'jsonls',
+        'marksman',
+        'prismals',
+        'rust_analyzer',
+        'sqlls',
+        'volar',
+        'yamlls',
+        'terraformls',
+        'bashls',
         'lua_ls',
-        -- 'marksman',
-        -- 'prismals',
-        -- 'rust_analyzer',
-        -- 'sqlls',
-        -- 'terraformls',
-        -- 'tsserver',
-        -- 'volar',
-        -- 'yamlls',
+        'dockerls',
+        'tsserver',
+        --- Formatters ---
+        'clang-format',
+        'eslint_d',
+        'eslint',
+        'prettier',
+        'prettierd',
+        'shfmt',
+        'stylua',
+        'yamlfmt',
       },
     }
 
-    ------ Setup LSP Configurations ------ 
+    -- ------ Setup Mason LSPConfig ------
+    local mason_lspconfig = require 'mason-lspconfig'
+    mason_lspconfig.setup()
+
+    ------ Automatic Server Setup ------ 
     mason_lspconfig.setup_handlers {
-      function(ls)
-        lspconfig[ls].setup(require('plugins.configs.lsp')[ls])
+      function(server)
+        local serverConfig = require('plugins.configs.lsp')[server]
+        if serverConfig == nil then
+          lspconfig[server].setup({})
+        else
+          lspconfig[server].setup(serverConfig)
+        end
       end,
     }
 
-    ------ Setup Mason Null-ls ------
+    ------ Automatic Configuration of Null-ls sources ------
     require('mason-null-ls').setup { handlers = {} }
   end,
 }
