@@ -1,8 +1,26 @@
 local lspFormatGroup = vim.api.nvim_create_augroup('LspFormatting', {})
+local notify = require('utils').notify
+
+local lspFormat = function(bufnr)
+  local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+  local available_sources = require('null-ls.sources').get_available
+  local attachedSources = available_sources(ft, require('null-ls.methods').internal.FORMATTING)
+  local nullLsHasFiletype = #attachedSources > 0
+
+  vim.lsp.buf.format {
+    bufnr = bufnr,
+    filter = function(client)
+      if nullLsHasFiletype then
+        return client.name == 'null-ls'
+      else
+        return true
+      end
+    end,
+  }
+end
 
 return {
   'jose-elias-alvarez/null-ls.nvim',
-  -- event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     'williamboman/mason.nvim',
     'jay-babu/mason-null-ls.nvim',
@@ -19,7 +37,7 @@ return {
             group = lspFormatGroup,
             buffer = bufnr,
             callback = function()
-              vim.lsp.buf.format()
+              lspFormat(bufnr)
             end,
           })
         end
