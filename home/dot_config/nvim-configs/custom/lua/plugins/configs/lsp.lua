@@ -16,14 +16,14 @@ return {
       },
     },
   },
-  tsserver = {
-    -- on_attach = function (client)
-    --   client.resovled.capabilities.document_formatting = false
-    -- end,
-    settings = {
-      documentformatting = false, -- This can also be applied during on_attach
-    }
-  },
+  -- tsserver = {
+  --   -- on_attach = function (client)
+  --   --   client.resovled.capabilities.document_formatting = false
+  --   -- end,
+  --   settings = {
+  --     documentformatting = false, -- This can also be applied during on_attach
+  --   }
+  -- },
   yamlls = {
     settings = {
       yaml = {
