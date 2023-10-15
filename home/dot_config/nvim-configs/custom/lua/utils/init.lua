@@ -169,7 +169,11 @@ end
 ---@param opts? table The nvim-notify options to use (:help notify-options)
 function M.notify(msg, type, opts)
   vim.schedule(function()
-    vim.notify(msg, type, M.extend_tbl({ title = 'Neovim' }, opts))
+    if M.is_available 'nvim-notify' then
+      require('notify').notify(msg, type, M.extend_tbl({ title = 'Neovim' }, opts))
+    else
+      vim.notify(msg, type, M.extend_tbl({ title = 'Neovim' }, opts))
+    end
   end)
 end
 

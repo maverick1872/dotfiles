@@ -60,12 +60,12 @@ if is_available 'telescope.nvim' then
   -- map.n["<leader>fk"] = { function() require("telescope.builtin").keymaps() end, desc = "Find keymaps" }
   -- map.n["<leader>sm"] = { function() require("telescope.builtin").man_pages() end, desc = "Find man" }
   if is_available 'nvim-notify' then
-    map.n['<leader>sn'] = {
+    map('n', '<leader>sn',
       function()
         require('telescope').extensions.notify.notify()
       end,
-      desc = 'Find notifications',
-    }
+      'Find notifications'
+    )
   end
   -- map.n["<leader>so"] = { function() require("telescope.builtin").oldfiles() end, desc = "Find history" }
   -- map.n["<leader>sr"] = { function() require("telescope.builtin").registers() end, desc = "Find registers" }
