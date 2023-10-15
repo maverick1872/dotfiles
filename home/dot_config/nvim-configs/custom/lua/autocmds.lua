@@ -1,6 +1,7 @@
 local autoGrp = vim.api.nvim_create_augroup
 local autoCmd = vim.api.nvim_create_autocmd
 local expand = vim.fn.expand
+local notify = require('utils').notify
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -29,8 +30,25 @@ autoCmd('BufWritePost', {
 
 autoCmd('User', {
   pattern = 'TelescopePreviewerLoaded',
-  callback = function(args)
-    print 'Telescope previewer was loaded'
+  callback = function()
     vim.opt_local.number = true
   end,
 })
+
+autoCmd('User', {
+  pattern = 'MasonToolsStartingInstall',
+  callback = function()
+    notify 'Installing tools via MasonToolsInstaller'
+  end,
+})
+
+autoCmd('User', {
+  pattern = 'MasonToolsUpdateCompleted',
+  callback = function(e)
+    -- TODO: This doesn't work; let's revisit
+    if not next(e.data) == nil then
+      notify(vim.inspect(e.data))
+    end
+  end,
+})
+
