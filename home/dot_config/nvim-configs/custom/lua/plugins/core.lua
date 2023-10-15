@@ -6,6 +6,26 @@ return {
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+
+  -- Auto highlighting text under cursor by LSP, Treesitter, or Regex
+  'rrethy/vim-illuminate',
+
+  -- Autopair
+  {
+    'altermo/ultimate-autopair.nvim',
+    event = { 'InsertEnter', 'CmdlineEnter' },
+    branch = 'v0.6', --recomended as each new version will have breaking changes
+    opts = {
+      --Config goes here
+    },
+  },
+
+  -- Treesitter informed code comments
+  { 'numToStr/Comment.nvim', opts = {} },
+
+  -- Indentation guides
+  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
+
   -- Aesthetic Notifications
   {
     'rcarriga/nvim-notify',
@@ -14,6 +34,8 @@ return {
       timeout = 2500,
     }
   },
+
+  -- Code Outline Utility
   {
     'stevearc/aerial.nvim',
     opts = {},
@@ -23,8 +45,4 @@ return {
       'nvim-tree/nvim-web-devicons',
     },
   },
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
-  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
-  -- { 'rebelot/heirline.nvim' },
 }
