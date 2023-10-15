@@ -1,5 +1,4 @@
 local lspFormatGroup = vim.api.nvim_create_augroup('LspFormatting', {})
-local notify = require('utils').notify
 
 local lspFormat = function(bufnr)
   local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
@@ -21,6 +20,7 @@ end
 
 return {
   'jose-elias-alvarez/null-ls.nvim',
+  event = 'VeryLazy',
   dependencies = {
     'williamboman/mason.nvim',
     'jay-babu/mason-null-ls.nvim',
