@@ -35,6 +35,7 @@ local bubbles_theme = {
 
 return {
   'nvim-lualine/lualine.nvim',
+  priority = 500,
   opts = {
     options = {
       theme = bubbles_theme,
