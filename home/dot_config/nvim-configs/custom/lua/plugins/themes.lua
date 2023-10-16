@@ -1,41 +1,22 @@
 return {
   {
     'olivercederborg/poimandres.nvim',
-    lazy = false,
-    priority = 1000,
-    -- config = function()
-    --   require('poimandres').setup {
-    --     -- leave this setup function empty for default config
-    --     -- or refer to the configuration section
-    --     -- for configuration options
-    --   }
-    -- end,
-
-    -- optionally set the colorscheme within lazy config
-    -- init = function()
-    --   vim.cmd("colorscheme poimandres")
-    -- end
+    event = 'VeryLazy',
   },
   {
     'navarasu/onedark.nvim',
-    opts = {
-      style = 'warmer',
-    },
-    lazy = false,
-    priority = 1000, -- Ensure it loads first
+    event = 'VeryLazy',
   },
   {
     'AlexvZyl/nordic.nvim',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require('nordic').load()
-    end,
+    event = 'VeryLazy',
   },
   {
     'AstroNvim/astrotheme',
+    lazy = false,
+    priority = 1000, -- ensure default colorscheme is loaded first
     opts = {
-      palette = "astrodark",
+      palette = 'astrodark',
     },
   },
 }
