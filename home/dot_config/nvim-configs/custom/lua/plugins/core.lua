@@ -1,30 +1,48 @@
 -- Defines plugins that require minimal to no configuraiton
 return {
   -- Git related plugins
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
+  {
+    'tpope/vim-fugitive',
+    event = 'VeryLazy',
+  },
+  {
+    'tpope/vim-rhubarb',
+    event = 'VeryLazy',
+  },
 
   -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
+  {
+    'tpope/vim-sleuth',
+    event = 'VeryLazy',
+  },
 
   -- Auto highlighting text under cursor by LSP, Treesitter, or Regex
-  'rrethy/vim-illuminate',
+  {
+    'rrethy/vim-illuminate',
+    event = 'VeryLazy',
+  },
 
   -- Autopair
   {
     'altermo/ultimate-autopair.nvim',
     event = { 'InsertEnter', 'CmdlineEnter' },
     branch = 'v0.6', --recomended as each new version will have breaking changes
-    opts = {
-      --Config goes here
-    },
   },
 
   -- Treesitter informed code comments
-  { 'numToStr/Comment.nvim', opts = {} },
+  {
+    'numToStr/Comment.nvim',
+    event = 'VeryLazy',
+    opts = {}
+  },
 
   -- Indentation guides
-  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    event = 'VeryLazy',
+    main = 'ibl',
+    opts = {},
+  },
 
   -- Aesthetic Notifications
   {
@@ -32,12 +50,13 @@ return {
     opts = {
       render = 'compact',
       timeout = 2500,
-    }
+    },
   },
 
   -- Code Outline Utility
   {
     'stevearc/aerial.nvim',
+    event = 'VeryLazy',
     opts = {},
     -- Optional dependencies
     dependencies = {
