@@ -1,7 +1,7 @@
 -- vim.o.cmdheight=0
 return {
   'folke/noice.nvim',
-  event = 'VeryLazy',
+  enabled = false,
   config = function()
     -- vim.o.cmdheight = 0
     require('noice').setup {
