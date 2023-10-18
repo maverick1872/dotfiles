@@ -33,13 +33,14 @@ return {
   {
     'numToStr/Comment.nvim',
     event = 'VeryLazy',
-    opts = {}
+    opts = {},
   },
 
   -- Indentation guides
   {
     'lukas-reineke/indent-blankline.nvim',
     event = 'VeryLazy',
+    version = '^3.x.x',
     main = 'ibl',
     opts = {},
   },
