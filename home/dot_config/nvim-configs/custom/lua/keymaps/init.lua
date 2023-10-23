@@ -2,8 +2,10 @@ local map = require('utils').map
 
 map({ 'n', 'v' }, '<Space>', '<Nop>')
 
--- Map easy exit from insert mode
-map('i', 'jk', '<ESC>')
+-- Map easy exit from insert/visul mode
+map({ 'i', 'v' }, 'jk', '<ESC>')
+map({ 'i', 'v' }, 'kj', '<ESC>')
+
 map('n', '<leader>q', ':conf qall<cr>', 'Quit all (confirm)')
 map('n', '<bs>', "<c-^>'”zz", 'Toggle current/previous buffer', { silent = true, noremap = true })
 map('n', 'j', "v:count == 0 ? 'gj' : 'j'", 'Move cursor down', { expr = true })
@@ -49,10 +51,6 @@ map('n', '<leader>c', require('utils.buffer').close, 'Close buffer')
 map('n', '<leader>C', require('utils.buffer').close, 'Force close buffer')
 map('n', '<S-h>', ':bnext<CR>', 'Next buffer')
 map('n', '<S-h>', ':bprevious<CR>', 'Previous buffer')
-
-
-
-
 
 -- map('n', ']b', require('utils.buffer').nav, 'Next buffer')
 -- map('n', '[b', require('utils.buffer').nav, 'Previous buffer')
