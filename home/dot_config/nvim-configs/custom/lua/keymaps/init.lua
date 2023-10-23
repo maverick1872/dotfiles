@@ -3,8 +3,7 @@ local map = require('utils').map
 map({ 'n', 'v' }, '<Space>', '<Nop>')
 
 -- Map easy exit from insert/visul mode
-map({ 'i', 'v' }, 'jk', '<ESC>')
-map({ 'i', 'v' }, 'kj', '<ESC>')
+map({ 'i', 'v' }, 'df', '<ESC>')
 
 map('n', '<leader>q', ':conf qall<cr>', 'Quit all (confirm)')
 map('n', '<bs>', "<c-^>'”zz", 'Toggle current/previous buffer', { silent = true, noremap = true })
