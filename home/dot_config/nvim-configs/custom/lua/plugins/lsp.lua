@@ -43,6 +43,7 @@ return {
         --- Formatters ---
         'eslint_d', -- Daemonized Eslint
         'prettierd', -- Daemonized Prettier
+        'rustfmt', -- Rust
         'shfmt', -- Shell (sh/bash/mksh)
         'stylua', -- Lua
         'yamlfmt', -- Yaml
@@ -56,6 +57,7 @@ return {
     ------ Automatic Server Setup ------
     mason_lspconfig.setup_handlers {
       function(server)
+        require('utils').notify('setting up lsp server: ' .. server, 'debug')
         local serverConfig = require('plugins.configs.lsp')[server]
         if serverConfig == nil then
           lspconfig[server].setup {}
