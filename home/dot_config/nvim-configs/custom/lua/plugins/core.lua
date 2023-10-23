@@ -42,7 +42,11 @@ return {
     event = 'VeryLazy',
     version = '^3.x.x',
     main = 'ibl',
-    opts = {},
+    opts = {
+      exclude = {
+        filetypes = { 'dashboard' },
+      },
+    },
   },
 
   -- Aesthetic Notifications
@@ -64,5 +68,57 @@ return {
       'nvim-treesitter/nvim-treesitter',
       'nvim-tree/nvim-web-devicons',
     },
+  },
+
+  -- Bufferline
+  {
+    'akinsho/bufferline.nvim',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    opts = {
+      options = {
+        mode = 'buffers',
+        separator_style = 'slant',
+        themable = false,
+        show_duplicate_prefix = true,
+      },
+    },
+  },
+
+  -- Start Dashboard
+  {
+    'nvimdev/dashboard-nvim',
+    event = 'VimEnter',
+    opts = {
+      theme = 'hyper',
+      config = {
+        week_header = {
+          enable = true,
+        },
+        shortcut = {
+          { desc = '󰊳 Update', group = '@property', action = 'Lazy update', key = 'u' },
+          {
+            icon = ' ',
+            icon_hl = '@variable',
+            desc = 'Files',
+            group = 'Label',
+            action = 'Telescope find_files',
+            key = 'f',
+          },
+          {
+            desc = ' Apps',
+            group = 'DiagnosticHint',
+            action = 'Telescope app',
+            key = 'a',
+          },
+          {
+            desc = ' dotfiles',
+            group = 'Number',
+            action = 'Telescope dotfiles',
+            key = 'd',
+          },
+        },
+      },
+    },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
 }
