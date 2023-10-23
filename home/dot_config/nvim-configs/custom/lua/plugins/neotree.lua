@@ -6,13 +6,12 @@ return {
     'MunifTanjim/nui.nvim',
     'nvim-lua/plenary.nvim',
   },
-  keys = {
-    { '<Leader>e', ':Neotree float<CR>' },
-  },
-  cmd = 'Neotree',
+  -- keys = {
+  --   { '<Leader>e', ':Neotree float<CR>' },
+  -- },
+  -- cmd = 'Neotree',
   --   init = function()
   --     vim.g.neo_tree_remove_legacy_commands = true
   --   end,
-
   opts = require 'plugins.configs.neotree',
 }
