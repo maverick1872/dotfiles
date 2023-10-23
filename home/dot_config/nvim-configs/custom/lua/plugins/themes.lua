@@ -1,14 +1,17 @@
 return {
   {
     'olivercederborg/poimandres.nvim',
+    enabled = false,
     event = 'VeryLazy',
   },
   {
     'navarasu/onedark.nvim',
+    enabled = false,
     event = 'VeryLazy',
   },
   {
     'AlexvZyl/nordic.nvim',
+    enabled = false,
     event = 'VeryLazy',
   },
   {
