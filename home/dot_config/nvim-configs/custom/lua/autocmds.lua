@@ -1,5 +1,5 @@
-local autoGrp = vim.api.nvim_create_augroup
 local autoCmd = vim.api.nvim_create_autocmd
+local autoGrp = vim.api.nvim_create_augroup
 local expand = vim.fn.expand
 local notify = require('utils').notify
 
@@ -52,3 +52,6 @@ autoCmd('User', {
   end,
 })
 
+autoCmd('LspAttach', {
+  callback = require 'keymaps.lsp',
+})
