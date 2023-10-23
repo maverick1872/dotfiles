@@ -1,6 +1,6 @@
 return {
   'rebelot/heirline.nvim',
-  enabled = 'false',
+  enabled = false,
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },
