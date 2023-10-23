@@ -19,8 +19,8 @@ map('n', '\\', '<cmd>split<cr>', 'Horizontal Split')
 
 -- Plugin Manager
 map('n', '<leader>pi', require('lazy').install, 'Plugins Install')
-map('n', '<leader>ps', require('lazy').home, 'Plugins Status')
 map('n', '<leader>pS', require('lazy').sync, 'Plugins Sync')
+map('n', '<leader>ps', require('lazy').home, 'Plugins Status')
 map('n', '<leader>pu', require('lazy').update, 'Plugins Update')
 map('n', '<leader>pU', require('lazy').check, 'Plugins Check Updates')
 
@@ -48,7 +48,7 @@ map('v', 'p', '"_dP', 'Replace selected text with yank register')
 -- Manage Buffers
 map('n', '<leader>c', require('utils.buffer').close, 'Close buffer')
 map('n', '<leader>C', require('utils.buffer').close, 'Force close buffer')
-map('n', '<S-h>', ':bnext<CR>', 'Next buffer')
+map('n', '<S-l>', ':bnext<CR>', 'Next buffer')
 map('n', '<S-h>', ':bprevious<CR>', 'Previous buffer')
 
 -- map('n', ']b', require('utils.buffer').nav, 'Next buffer')
