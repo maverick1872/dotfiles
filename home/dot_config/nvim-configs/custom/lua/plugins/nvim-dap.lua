@@ -1,6 +1,6 @@
 return {
   'mfussenegger/nvim-dap',
-  enabled = false,
+  cond = false,
   event = 'VeryLazy',
   dependencies = {
     -- Creates a beautiful debugger UI
