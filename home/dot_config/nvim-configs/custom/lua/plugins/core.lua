@@ -33,7 +33,9 @@ return {
   {
     'numToStr/Comment.nvim',
     event = 'VeryLazy',
-    opts = {},
+    opts = {
+      mappings = false,
+    },
   },
 
   -- Indentation guides
