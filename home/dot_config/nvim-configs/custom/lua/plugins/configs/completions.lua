@@ -47,27 +47,25 @@ return function()
       end, { 'i', 's' }),
     },
     formatting = {
-      fields = { 'kind', 'abbr', 'menu' },
+      fields = { 'menu', 'abbr', 'kind' },
       format = function(entry, vim_item)
+        -- TODO: potentially lift out to a standalone settings file
         -- vim_item.kind = string.format('%s', icons[vim_item.kind])
         vim_item.menu = ({
-          nvim_lsp = '[lsp]',
-          luasnip = '[snip]',
-          buffer = '[nearby]',
-          path = '[path]',
+          nvim_lsp = '',
+          luasnip = '',
+          buffer = '',
+          path = '',
         })[entry.source.name]
 
         return vim_item
       end,
     },
     sources = {
-      -- {
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
-      -- c
       -- { name = 'buffer' },
       { name = 'path' },
-      -- },
     },
     experimental = {
       ghost_text = true,

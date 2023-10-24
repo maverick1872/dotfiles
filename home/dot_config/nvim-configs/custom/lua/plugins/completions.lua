@@ -1,8 +1,7 @@
 return {
   'hrsh7th/nvim-cmp',
-  event = 'VeryLazy',
-  config = require 'plugins.configs.completions',
-  -- possible additions would be:
+  event = 'InsertEnter',
+  -- TODO: possible additions would be:
   -- cmp-npm
   -- search nvim-cmp repo for aditional sources
   dependencies = {
@@ -14,4 +13,5 @@ return {
     'L3MON4D3/LuaSnip',
     'rafamadriz/friendly-snippets',
   },
+  config = require 'plugins.configs.completions',
 }
