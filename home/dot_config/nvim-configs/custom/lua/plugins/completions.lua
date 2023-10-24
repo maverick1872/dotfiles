@@ -12,6 +12,8 @@ return {
     'hrsh7th/cmp-git',
     'L3MON4D3/LuaSnip',
     'rafamadriz/friendly-snippets',
+    'zbirenbaum/copilot.lua', -- OSS Copilot rewrite in Lua
+    'zbirenbaum/copilot-cmp', -- Copilot CMP source
   },
   config = require 'plugins.configs.completions',
 }

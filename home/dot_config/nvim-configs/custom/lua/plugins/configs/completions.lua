@@ -1,12 +1,21 @@
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, 'buftype') == 'prompt' then
+    return false
+  end
+  local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match '^%s*$' == nil
+end
+
 return function()
   local cmp = require 'cmp'
   local luasnip = require 'luasnip'
   require('luasnip/loaders/from_vscode').lazy_load()
-
-  --   local has_words_before = function()
-  --     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  --     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
-  --   end
+  -- Setup Copilot
+  require('copilot').setup {
+    filetypes = { ['*'] = true },
+    -- suggestion = { enabled = false },
+    -- panel = { enabled = false },
+  }
 
   cmp.setup {
     snippet = {
@@ -24,20 +33,20 @@ return function()
       ['<Right>'] = cmp.mapping.confirm { select = false }, -- Accept explictly selected item.
       ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
       ['<Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
+        if cmp.visible() and has_words_before() then
           cmp.select_next_item()
         elseif luasnip.expandable() then
           luasnip.expand()
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
-          -- elseif check_backspace() then -- Source: lazynvim
+        -- elseif check_backspace() then -- Source: lazynvim
         else
           fallback()
         end
       end, { 'i', 's' }),
 
       ['<S-Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
+        if cmp.visible() and has_words_before() then
           cmp.select_prev_item()
         elseif luasnip.jumpable(-1) then
           luasnip.jump(-1)
@@ -52,6 +61,7 @@ return function()
         -- TODO: potentially lift out to a standalone settings file
         -- vim_item.kind = string.format('%s', icons[vim_item.kind])
         vim_item.menu = ({
+          copilot = '',
           nvim_lsp = '',
           luasnip = '',
           buffer = '',
@@ -62,6 +72,7 @@ return function()
       end,
     },
     sources = {
+      { name = 'copilot' },
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       -- { name = 'buffer' },
