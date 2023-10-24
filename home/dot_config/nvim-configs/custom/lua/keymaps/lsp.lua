@@ -1,10 +1,15 @@
 local is_available = require('utils').is_available
 local map = require('utils').map
+local notify = require('utils').notify
+
+map('n', '<leader>ll', function()
+  vim.cmd 'ListLspCapabilities'
+end, 'Buffer Clients Information')
 
 -- Mason Package Manager
 if is_available 'mason.nvim' then
   map('n', '<leader>pm', '<cmd>Mason<cr>', 'Mason Installer')
-  map('n', '<leader>pM', '<cmd>MasonUpdateAll<cr>', 'Mason Update')
+  map('n', '<leader>pM', '<cmd>MasonToolsUpdate<cr>', 'Mason Tools Update')
 end
 
 if is_available 'mason-lspconfig.nvim' then
@@ -38,7 +43,19 @@ local lspFormatGroup = vim.api.nvim_create_augroup('LspFormatting', {})
 return function(args)
   local bufnr = args.buf
   local client = vim.lsp.get_client_by_id(args.data.client_id)
+  local clientConfig = client.config
   local opts = { buffer = bufnr }
+
+  notify(client.name .. ' config: ' .. vim.inspect(clientConfig), 'debug')
+  if clientConfig.capabilities then
+    local capabilities = {}
+    for type, val in pairs(clientConfig.capabilities) do
+      for k, _ in pairs(val) do
+        table.insert(capabilities, k)
+      end
+      notify(client.name .. ' ' .. type .. ': ' .. vim.inspect(capabilities), 'debug')
+    end
+  end
 
   if client.supports_method 'textDocument/implementation' then
     map('n', 'gi', vim.lsp.buf.implementation, 'Go to implementation', opts)
