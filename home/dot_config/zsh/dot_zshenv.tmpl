@@ -39,10 +39,5 @@ export PATH="/usr/lib/google-cloud-sdk/bin:$PATH"
 {{- end -}}
 {{- end }}
 
-## If Schniz/fnm is available configure environment accordingly
-if [[ `command -v fnm` ]]; then
-  eval "$(fnm env --use-on-cd)"
-fi
-
 source ${ZDOTDIR}/.private-zshenv
 

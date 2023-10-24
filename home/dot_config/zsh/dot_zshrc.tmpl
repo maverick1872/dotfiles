@@ -42,6 +42,11 @@ source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/compl
 {{- end -}}
 {{- end }}
 
+## Source FNM (Fast Node Manager)
+if [[ `command -v fnm` ]]; then
+  eval "$(fnm env --use-on-cd)"
+fi
+
 ### Source OMZ ###
 source $ZSH/oh-my-zsh.sh
 
