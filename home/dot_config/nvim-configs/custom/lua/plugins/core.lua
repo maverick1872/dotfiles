@@ -1,10 +1,12 @@
 -- Defines plugins that require minimal to no configuraiton
 return {
-  -- Git related plugins
+  -- Git wrapper
   {
     'tpope/vim-fugitive',
     event = 'VeryLazy',
   },
+
+  -- GitHub integration (open)
   {
     'tpope/vim-rhubarb',
     event = 'VeryLazy',
@@ -123,12 +125,6 @@ return {
       },
     },
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-  },
-
-  -- Convenience utilities to open source code in browser
-  {
-    'Almo7aya/openingh.nvim',
-    event = 'BufEnter',
   },
 
   -- Documentation Generator
