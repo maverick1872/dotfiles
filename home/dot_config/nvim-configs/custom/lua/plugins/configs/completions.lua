@@ -10,12 +10,8 @@ return function()
   local cmp = require 'cmp'
   local luasnip = require 'luasnip'
   require('luasnip/loaders/from_vscode').lazy_load()
-  -- Setup Copilot
-  require('copilot').setup {
-    filetypes = { ['*'] = true },
-    -- suggestion = { enabled = false },
-    -- panel = { enabled = false },
-  }
+  require('copilot').setup {}
+  require('copilot_cmp').setup()
 
   cmp.setup {
     snippet = {
