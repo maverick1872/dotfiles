@@ -63,6 +63,7 @@ return {
   -- Code Outline Utility
   {
     'stevearc/aerial.nvim',
+    cond = false,
     event = 'VeryLazy',
     opts = {},
     -- Optional dependencies
@@ -122,5 +123,17 @@ return {
       },
     },
     dependencies = { 'nvim-tree/nvim-web-devicons' },
+  },
+
+  -- Convenience utilities to open source code in browser
+  {
+    'Almo7aya/openingh.nvim',
+    event = 'BufEnter',
+  },
+
+  -- Documentation Generator
+  {
+    'kkoomen/vim-doge',
+    event = 'BufEnter',
   },
 }
