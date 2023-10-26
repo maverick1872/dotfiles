@@ -1,3 +1,4 @@
+# Sets location for where all ZSH configuration should live
 ZDOTDIR=$HOME/.config/zsh
 . $ZDOTDIR/.zshenv
 
