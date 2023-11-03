@@ -22,25 +22,26 @@ plugins=(
 # Source Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-{{- else if contains "darwin-amd64" .osID }}
+{{- end }}
+
+{{- if contains "darwin-amd64" .osID }}
 # Source Homebrew
 eval "$(/usr/local/bin/brew shellenv)"
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 {{- end }}
 
-{{ if not .isPersonal -}}
+{{ if and (not .isPersonal) (contains "darwin" .osID) -}}
 ### Work Configurations ###
-{{- if contains "darwin" .osID }}
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-{{- end -}}
 {{- end }}
 
 ### Source OMZ ###
 source $ZSH/oh-my-zsh.sh
+## source $ZDOTDIR/core/completion.zsh
 
-### Load all custom plugins ###
+# Load all plugins
 for file in $(find ${ZDOTDIR}/plugins -type f -name '*.zsh' -print); do
   source "$file"
 done
-
+ 
