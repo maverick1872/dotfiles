@@ -1,21 +1,8 @@
 # Set umask so "others" have no access
 umask 027
 
-# Autosuggest -- requires in order: zsh-syntax-highlighting zsh-autosuggestions
-AUTOSUGGESTION="true"
-ENHANCED_COMPLETION="true"
+alias custom-zsh="NO_OMZ=1 zsh"
 
-# Which plugins would you like to load
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-plugins=(
-  git
-  extract
-  universalarchive
-  zsh-syntax-highlighting
-  zsh-autosuggestions
-  history-search-multi-word
-)
 
 ### Machine Specific Configurations ###
 {{- if contains "darwin-arm64" .osID }}
@@ -36,9 +23,34 @@ source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 {{- end }}
 
-### Source OMZ ###
-source $ZSH/oh-my-zsh.sh
-## source $ZDOTDIR/core/completion.zsh
+### Source OMZ or Custom Completions ###
+if [[ -z $NO_OMZ ]]; then
+  # Autosuggest -- requires in order: zsh-syntax-highlighting zsh-autosuggestions
+  AUTOSUGGESTION="true"
+  ENHANCED_COMPLETION="true"
+
+  # Which plugins would you like to load
+  # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+  # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+  plugins=(
+    git
+    extract
+    universalarchive
+    zsh-syntax-highlighting
+    zsh-autosuggestions
+    history-search-multi-word
+  )
+
+  source $ZSH/oh-my-zsh.sh
+else
+  ## Consider moving the following order dependent setup to a a standalone file e.g. init.zsh or similar
+  # load completion system
+  source $ZDOTDIR/core/completion.zsh
+
+  # add all themes to fpath and load the chosen theme if applicable
+  FPATH="${ZDOTDIR}/omz/themes/:${FPATH}"
+  autoload -Uz ${ZTHEME:=robbyrussell}.zsh-theme; ${ZTHEME:=robbyrussell}.zsh-theme
+fi
 
 # Load all plugins
 for file in $(find ${ZDOTDIR}/plugins -type f -name '*.zsh' -print); do
