@@ -11,10 +11,14 @@
 # | General |
 # +---------+
 
-# source ./gambit.zsh
+# Completions are cached in this directory,
+# if it doesn't exist create it
+if [[ ! -d "$ZCACHEDIR/completions" ]]; then
+  mkdir -p "$ZCACHEDIR/completions"
+fi
 
-# Load more completions
-fpath=($ZDOTDIR/plugins/zsh-completions/src $fpath)
+# Add completions to fpath
+fpath=("$ZCACHEDIR/completions" $fpath)
 
 # Should be called before compinit
 zmodload zsh/complist
