@@ -16,7 +16,3 @@ export XINITRC=$HOME/.config/X11/xinitrc
 export OS="mac"
 {{- end }}
 
-{{- if not .isPersonal }}
-export PATH="/usr/lib/google-cloud-sdk/bin:$PATH"
-{{- end }}
-
