@@ -1,4 +1,28 @@
+# Set XDG Spec Dirs explicitly
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
+
 # Sets location for where all ZSH configuration should live
-ZDOTDIR=$HOME/.config/zsh
+export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+
+# Set custom ZSH directories
+export ZCACHEDIR=$XDG_CACHE_HOME/zsh
+export ZSH_CACHE_DIR=$ZCACHEDIR
+export ZSTATEDIR=$XDG_STATE_HOME/zsh
+
+# Define where Oh My ZSH should live
+export ZSH=$XDG_DATA_HOME/oh-my-zsh
+# Define where Oh My ZSH overrides should live
+export ZSH_CUSTOM=$ZDOTDIR/omz
+
+# Configure ZSH History settings
+export HISTFILE="${ZSTATEDIR}/history"
+export HISTSIZE=10000                   # Maximum events for internal history
+export SAVEHIST=10000                   # Maximum events in history file
+setopt HIST_SAVE_NO_DUPS       		      # Do not write a duplicate event to the history file.
+
+# Source ZSH Dotfiles
 . $ZDOTDIR/.zshenv
 

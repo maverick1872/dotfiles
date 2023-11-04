@@ -1,19 +1,11 @@
-# Set XDG Spec Dirs explicitly
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_STATE_HOME=$HOME/.local/state
-
-# Set OMZ source directory to the XDG_DATA_HOME equivalent in a way that also works for Mac OS
-export ZSH=$HOME/.local/share/oh-my-zsh
-export ZSH_CUSTOM=$HOME/.config/zsh/omz
 export ZSH_THEME="personal"
-export HISTFILE="${ZDOTDIR}/history"
 export RPROMPT_MODE=2
 export USER_BIN="$HOME/bin"
-export EDITOR='nvim'
+export MANPAGER="nvim +Man!"
+export MANWIDTH=999
+export EDITOR="nvim"
+export VISUAL="nvim"
 
-### Machine Specific Configurations ###
 {{- if eq .osID "linux-arch" }}
 export OS="arch"
 export AWESOME_CONFIG=$HOME/.config/awesome
@@ -24,18 +16,7 @@ export XINITRC=$HOME/.config/X11/xinitrc
 export OS="mac"
 {{- end }}
 
-{{- if .isPersonal }}
-### Personal Configurations ###
-export CARGO_HOME="$HOME/.cargo"
-if [[ -d $CARGO_HOME/bin ]]; then
-  export PATH="$CARGO_HOME/bin:$PATH"
-fi
-export RUSTUP_HOME="$HOME/.config/rustup"
-
-{{- else }}
-### Work Configurations ###
-{{- if contains "darwin" .osID }}
+{{- if not .isPersonal }}
 export PATH="/usr/lib/google-cloud-sdk/bin:$PATH"
-{{- end -}}
 {{- end }}
 
