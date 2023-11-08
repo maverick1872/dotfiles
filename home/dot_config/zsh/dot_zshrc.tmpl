@@ -1,57 +1,16 @@
 # Set umask so "others" have no access
 umask 027
 
-# Autosuggest -- requires in order: zsh-syntax-highlighting zsh-autosuggestions
-AUTOSUGGESTION="true"
-ENHANCED_COMPLETION="true"
+# Load ZSH initialization
+source $ZDOTDIR/core/init.zsh
 
-# Which plugins would you like to load
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-plugins=(
-  git
-  extract
-  universalarchive
-  zsh-syntax-highlighting
-  zsh-autosuggestions
-  history-search-multi-word
-)
-
-### Machine Specific Configurations ###
-{{- if contains "darwin-arm64" .osID }}
-# Source Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
-FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-{{- else if contains "darwin-amd64" .osID }}
-# Source Homebrew
-eval "$(/usr/local/bin/brew shellenv)"
-FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-{{- end }}
-
-{{ if .isPersonal -}}
-### Personal Configurations ###
-if [[ -f "$CARGO_HOME/env" ]]; then
-  source "$CARGO_HOME/env"
-fi
-
-{{- else }}
-### Work Configurations ###
 {{- if contains "darwin" .osID }}
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-{{- end -}}
+# Source Homebrew
+{{- if contains "amd64" .osID }}
+eval "$(/usr/local/bin/brew shellenv)"
+{{- else }}
+eval "$(/opt/homebrew/bin/brew shellenv)"
 {{- end }}
-
-## Source FNM (Fast Node Manager)
-if [[ `command -v fnm` ]]; then
-  eval "$(fnm env --use-on-cd)"
-fi
-
-### Source OMZ ###
-source $ZSH/oh-my-zsh.sh
-
-### Source remainder of ZSH files ###
-for file in $(find ${ZDOTDIR} -type f -name '*.zsh' -not -path '*/omz/*' -print); do
-  source "$file"
-done
+FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+{{- end }}
 

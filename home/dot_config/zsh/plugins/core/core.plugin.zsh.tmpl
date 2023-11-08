@@ -45,3 +45,25 @@ function swim {
     ln -snfv ~/.config/nvim-configs/$1 ~/.config/nvim
   fi
 }
+
+# General
+alias reload-shell='source $ZDOTDIR/.zshrc'
+alias edit='$EDITOR'
+alias list-path-dirs='sed "s/:/\n/g" <<< "$PATH"'
+alias lsdir='ls -d */'
+alias lldir='ll -d */'
+
+{{- if contains "darwin-arm64" .osID }}
+alias gen-ssh-key='ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"'
+{{- end }}
+
+{{- if eq .osID "linux-arch" }}
+alias open='xdg-open'
+alias yeet='yay -Rns'
+alias pacman='sudo pacman'
+alias gen-ssh-key='ssh-keygen -t ed25519 -C "$(whoami)@$(hostnamectl hostname)"'
+{{- end }}
+
+{{- if eq .osID "linux-debian" }}
+alias update='sudo apt update -y && sudo apt upgrade -y'
+{{- end }}

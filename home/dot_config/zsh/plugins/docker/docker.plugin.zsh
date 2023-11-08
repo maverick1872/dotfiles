@@ -1,3 +1,7 @@
+alias clean-images='docker images -aq | xargs docker rmi'
+alias clean-containers='docker ps -aq | xargs docker rm'
+alias clean-volumes='docker volume ls -q | xargs docker volume rm'
+
 dco() {
 # Can be improved with a proper jq function? https://stackoverflow.com/questions/62665537/how-to-calculate-time-duration-from-two-date-time-values-using-jq
   if [[ $1 == "ps" ]]; then
@@ -23,8 +27,8 @@ update-docker-containers() {
       echo "Container is not running: $containerName"
     fi
     echo
-  done    
-}                                                              
+  done
+}
 
 # List IPs of all running docker containers for each network they are attached to
 docker-ips() {
@@ -39,4 +43,5 @@ docker-ips() {
   done
   echo $output | column -t -s '|'
 }
+
 

@@ -1,4 +1,18 @@
+# Set XDG Spec Dirs explicitly
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
+
 # Sets location for where all ZSH configuration should live
-ZDOTDIR=$HOME/.config/zsh
-. $ZDOTDIR/.zshenv
+export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+
+# Set useful ZSH directories
+export ZSH_CACHE_DIR=$XDG_CACHE_HOME/zsh
+export ZSH_STATE_DIR=$XDG_STATE_HOME/zsh
+
+# Source .zshenv from custom configuration dir if it exists
+if [[ -f $ZDOTDIR/.zshenv ]]; then
+	source $ZDOTDIR/.zshenv
+fi
 
