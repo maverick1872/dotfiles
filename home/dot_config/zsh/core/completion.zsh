@@ -13,12 +13,12 @@
 
 # Completions are cached in this directory,
 # if it doesn't exist create it
-if [[ ! -d "$ZCACHEDIR/completions" ]]; then
-  mkdir -p "$ZCACHEDIR/completions"
+if [[ ! -d "$ZSH_CACHE_DIR/completions" ]]; then
+  mkdir -p "$ZSH_CACHE_DIR/completions"
 fi
 
 # Add completions to fpath
-fpath=("$ZCACHEDIR/completions" $fpath)
+fpath=("$ZSH_CACHE_DIR/completions" $fpath)
 
 # Should be called before compinit
 zmodload zsh/complist
@@ -64,7 +64,7 @@ zstyle ':completion:*' completer _extensions _complete _approximate
 
 # Use cache for commands using cache
 zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path "$ZCACHEDIR/.zcompcache"
+zstyle ':completion:*' cache-path "$ZSH_CACHE_DIR/.zcompcache"
 # Complete the alias when _expand_alias is used as a function
 zstyle ':completion:*' complete true
 
