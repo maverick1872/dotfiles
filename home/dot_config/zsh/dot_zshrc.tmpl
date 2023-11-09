@@ -1,6 +1,23 @@
 # Set umask so "others" have no access
 umask 027
 
+# Define Plugins to load (loaded in order specified)
+plugins=(
+  bitwarden
+  brew
+  chezmoi
+  core
+  docker
+  fnm
+  gcloud
+  github
+  node
+  rust
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+  history-search-multi-word
+)
+
 # Load ZSH initialization
 source $ZDOTDIR/core/init.zsh
 
