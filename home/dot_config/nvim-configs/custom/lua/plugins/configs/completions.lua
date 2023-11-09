@@ -9,6 +9,8 @@ end
 return function()
   local cmp = require 'cmp'
   local luasnip = require 'luasnip'
+  local notify = require('utils').notify
+  notify(os.getenv 'SYSTEM_NODE_PATH', 'debug')
   require('luasnip/loaders/from_vscode').lazy_load()
   require('copilot').setup {
     copilot_node_command = os.getenv 'SYSTEM_NODE_PATH',
