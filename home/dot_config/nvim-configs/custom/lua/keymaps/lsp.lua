@@ -76,6 +76,7 @@ return function(args)
   if client.supports_method 'textDocument/signatureHelp' then
     map('n', '<C-k>', vim.lsp.buf.signature_help, 'Signature help', opts)
   end
+
   -- map('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
   -- map('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
   -- map('n', '<space>wl', function()

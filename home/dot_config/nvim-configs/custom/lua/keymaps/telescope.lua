@@ -2,20 +2,20 @@ local map = require('utils').map
 local is_available = require('utils').is_available
 
 if is_available 'telescope.nvim' then
+  map('n', '<leader>ss', require('telescope.builtin').resume, 'Resume previous search')
   map('n', '<leader>sk', require('telescope.builtin').keymaps, 'Search keybindings')
   map('n', '<leader>sw', require('telescope.builtin').live_grep, 'Find words')
   map('n', '<leader>sf', require('telescope.builtin').find_files, 'Find files')
-  map('n', '<leader>s<CR>', require('telescope.builtin').resume, 'Resume previous search')
+  map('n', '<leader>s/', require('telescope.builtin').current_buffer_fuzzy_find, 'Find words in current buffer')
+  if is_available 'nvim-notify' then
+    map('n', '<leader>sn', function()
+      require('telescope').extensions.notify.notify()
+    end, 'Find notifications')
+  end
+
   -- map.n["<leader>s'"] = { function() require("telescope.builtin").marks() end, desc = "Find marks" }
-  -- map.n["<leader>s/"] =
-  --   { function() require("telescope.builtin").current_buffer_fuzzy_find() end, desc = "Find words in current buffer" }
   -- map.n["<leader>sh"] = { function() require("telescope.builtin").help_tags() end, desc = "Find help" }
   -- map.n["<leader>sm"] = { function() require("telescope.builtin").man_pages() end, desc = "Find man" }
-  -- if is_available 'nvim-notify' then
-  --   map('n', '<leader>sn', function()
-  --     require('telescope').extensions.notify.notify()
-  --   end, 'Find notifications')
-  -- end
   -- map.n["<leader>st"] =
   --   { function() require("telescope.builtin").colorscheme { enable_preview = true } end, desc = "Find themes" }
 
