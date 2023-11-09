@@ -12,10 +12,16 @@ search-aliases() {
   alias | grep "$1" --color
 }
 
-# Short-hand for search and replace leveraging ripgrep
+# Search and replace leveraging ripgrep
+{{- if contains "linux" .osID }}
 rg-sr() {
-  rg $1 --files-with-matches | xargs -p sed -i '' "s|${1}|${2}|g"
+  rg $1 --hidden --files-with-matches | xargs -p sed -Eie "s|${1}|${2}|g"
 }
+{{- else }}
+rg-sr() {
+  rg $1 --hidden --files-with-matches | xargs -p sed -Eie '' "s|${1}|${2}|g"
+}
+{{- end }}
 
 # Creates a temp file name and leverages it to swap to files "in place"
 swap() {
@@ -53,7 +59,7 @@ alias list-path-dirs='sed "s/:/\n/g" <<< "$PATH"'
 alias lsdir='ls -d */'
 alias lldir='ll -d */'
 
-{{- if contains "darwin-arm64" .osID }}
+{{- if contains "darwin" .osID }}
 alias gen-ssh-key='ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"'
 {{- end }}
 
