@@ -4,9 +4,10 @@ source $ZDOTDIR/core/env.zsh
 # Load all options
 source $ZDOTDIR/core/options.zsh
 
-# Define Plugins to load
+# Define Plugins to load (loaded in order specified)
 plugins=(
   bitwarden
+  brew
   chezmoi
   core
   docker

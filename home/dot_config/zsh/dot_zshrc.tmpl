@@ -4,13 +4,3 @@ umask 027
 # Load ZSH initialization
 source $ZDOTDIR/core/init.zsh
 
-{{- if contains "darwin" .osID }}
-# Source Homebrew
-{{- if contains "amd64" .osID }}
-eval "$(/usr/local/bin/brew shellenv)"
-{{- else }}
-eval "$(/opt/homebrew/bin/brew shellenv)"
-{{- end }}
-FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-{{- end }}
-
