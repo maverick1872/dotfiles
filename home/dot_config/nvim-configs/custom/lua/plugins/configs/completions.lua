@@ -11,7 +11,7 @@ return function()
   local luasnip = require 'luasnip'
   require('luasnip/loaders/from_vscode').lazy_load()
   require('copilot').setup {
-    copilot_node_command = '/usr/bin/node',
+    copilot_node_command = os.getenv 'SYSTEM_NODE_PATH',
   }
   require('copilot_cmp').setup()
 

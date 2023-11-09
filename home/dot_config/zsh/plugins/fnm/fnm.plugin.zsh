@@ -3,6 +3,9 @@ if (( ! $+commands[fnm] )); then
   return
 fi
 
+# Maintain a reference to the system node path so that we can use it as necessary
+export SYSTEM_NODE_PATH=$(which node)
+
 eval "$(fnm env --use-on-cd)"
 
 # If the completion file doesn't exist yet, we need to autoload it and
