@@ -52,6 +52,12 @@ function swim {
   fi
 }
 
+_debug() {
+	if [[ -n $ZSH_DEBUG ]]; then
+		echo "[ZSH] $1"
+	fi
+}
+
 # General
 alias reload-shell='source $ZDOTDIR/.zshrc'
 alias edit='$EDITOR'

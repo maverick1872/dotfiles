@@ -1,5 +1,5 @@
 if (( ! $+commands[brew] )); then
-  echo '[ZSH] Brew is not installed'
+  _debug 'Brew is not installed'
   return
 fi
 
