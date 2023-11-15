@@ -53,15 +53,19 @@ function swim {
 }
 
 _debug() {
-	if [[ -n $ZSH_DEBUG ]]; then
-		echo "[ZSH] $1"
-	fi
+  if [[ -n $ZSH_DEBUG ]]; then
+	  echo "[ZSH] $1"
+  fi
+}
+
+list-path-dirs() {
+  local output=$(sed "s/:/\n/g" <<< $PATH)
+  awk '{print NR, "\t", $0}' <<< $output
 }
 
 # General
 alias reload-shell='source $ZDOTDIR/.zshrc'
 alias edit='$EDITOR'
-alias list-path-dirs='sed "s/:/\n/g" <<< "$PATH"'
 alias lsdir='ls -d */'
 alias lldir='ll -d */'
 
