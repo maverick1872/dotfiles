@@ -31,6 +31,10 @@ local options = {
   foldlevel = 20,
   foldmethod = 'expr',
   foldexpr = 'nvim_treesitter#foldexpr()',
+  foldtext = 'getline(v:foldstart)." ... ".trim(getline(v:foldend))',
+  fillchars = 'fold: ',
+  foldnestmax = 3,
+  foldminlines = 1,
 }
 
 for k, v in pairs(options) do
