@@ -28,6 +28,9 @@ local options = {
   sidescrolloff = 10,
   splitright = true,
   splitbelow = true,
+  foldlevel = 20,
+  foldmethod = 'expr',
+  foldexpr = 'nvim_treesitter#foldexpr()',
 }
 
 for k, v in pairs(options) do
