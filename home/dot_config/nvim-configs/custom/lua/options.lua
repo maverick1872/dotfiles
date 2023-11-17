@@ -28,13 +28,14 @@ local options = {
   sidescrolloff = 10,
   splitright = true,
   splitbelow = true,
-  foldlevel = 20,
+  -- foldlevel = 20,
+  foldlevelstart = 4,
+  -- foldnestmax = 3,
+  foldminlines = 1,
   foldmethod = 'expr',
   foldexpr = 'nvim_treesitter#foldexpr()',
   foldtext = [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').' ... '.trim(getline(v:foldend)) ]],
   fillchars = 'fold: ',
-  foldnestmax = 3,
-  foldminlines = 1,
 }
 
 for k, v in pairs(options) do
