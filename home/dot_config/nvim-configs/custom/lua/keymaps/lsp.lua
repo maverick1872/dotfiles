@@ -89,7 +89,11 @@ return function(args)
   end
 
   if client.supports_method 'textDocument/codeAction' then
-    map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'Code Action', opts)
+    map({ 'n', 'v' }, '<leader>la', vim.lsp.buf.code_action, 'Available Code Actions', opts)
+  end
+
+  if client.supports_method 'textDocument/diagnostics' then
+    map({ 'n', 'v' }, '<leader>ld', vim.diagnostic.open_float, 'Show Diagnostics', opts)
   end
 
   if client.supports_method 'textDocument/references' then

@@ -1,9 +1,14 @@
+local map = require('utils').map
+
 -- Adds git related signs to the gutter, as well as utilities for managing changes
 return {
   'lewis6991/gitsigns.nvim',
   event = 'VeryLazy',
+  branch = 'main',
   opts = {
     -- See `:help gitsigns.txt`
+    -- The following is experimental and subject to change
+    _signs_staged_enable = true,
     signs = {
       add = { text = '│' },
       change = { text = '│' },
@@ -21,11 +26,16 @@ return {
     },
     current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
     on_attach = function(bufnr)
-      vim.keymap.set('n', '<leader>gp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
+      local gs = package.loaded.gitsigns
+      map('n', '<leader>gp', gs.preview_hunk, 'Preview hunk')
+      map('n', '<leader>gs', gs.stage_hunk, 'Stage hunk')
+      map('n', '<leader>gu', gs.undo_stage_hunk, 'Unstage hunk')
+      map('n', '<leader>gr', gs.reset_hunk, 'Reset hunk')
+      map('n', '<leader>gS', gs.stage_buffer, 'Stage buffer')
+      map('n', '<leader>gR', gs.reset_buffer, 'Reset buffer')
 
       -- don't override the built-in and fugitive keymaps
-      local gs = package.loaded.gitsigns
-      vim.keymap.set({ 'n', 'v' }, ']c', function()
+      map({ 'n', 'v' }, ']c', function()
         if vim.wo.diff then
           return ']c'
         end
@@ -33,8 +43,8 @@ return {
           gs.next_hunk()
         end)
         return '<Ignore>'
-      end, { expr = true, buffer = bufnr, desc = 'Jump to next hunk' })
-      vim.keymap.set({ 'n', 'v' }, '[c', function()
+      end, 'Jump to next hunk', { expr = true, buffer = bufnr })
+      map({ 'n', 'v' }, '[c', function()
         if vim.wo.diff then
           return '[c'
         end
@@ -42,7 +52,7 @@ return {
           gs.prev_hunk()
         end)
         return '<Ignore>'
-      end, { expr = true, buffer = bufnr, desc = 'Jump to previous hunk' })
+      end, 'Jump to previous hunk', { expr = true, buffer = bufnr })
     end,
   },
 }

@@ -10,13 +10,18 @@ return {
     local wk = require 'which-key'
     wk.setup(opts)
     wk.register(opts.defaults)
-    wk.register {
-      ['<leader>b'] = { name = 'Buffers', _ = 'which_key_ignore' },
-      ['<leader>l'] = { name = 'LSP', _ = 'which_key_ignore' },
-      ['<leader>p'] = { name = 'Packages', _ = 'which_key_ignore' },
-      ['<leader>g'] = { name = 'Git', _ = 'which_key_ignore' },
-      ['<leader>s'] = { name = 'Search', _ = 'which_key_ignore' },
-    }
+    -- Register Normal mode labels
+    wk.register({
+      ['<leader>b'] = 'Buffers',
+      ['<leader>l'] = 'LSP',
+      ['<leader>p'] = 'Packages',
+      ['<leader>g'] = 'Git',
+      ['<leader>s'] = 'Search',
+    }, { mode = 'n' })
+    -- Register Visual mode labels
+    wk.register({
+      ['<leader>l'] = 'LSP',
+    }, { mode = 'v' })
   end,
   opts = {
     -- your configuration comes here
