@@ -1,0 +1,12 @@
+#compdef delta
+
+_arguments \
+  '-s[Side-by-side view]' \
+  '-n[Display line numbers]' \
+  '-w[Width of the under/over line decorations]' \
+  '-h[Show help message]' \
+  '-V[Show version information]' \
+  '--tabs[Number of spaces to be used in place of tab characters]' \
+  '--dark[Use colors appropriate for a dark teminal color theme]' \
+  '--light[Use colors appropriate for a light terminal color theme]' \
+  '1:filename:_files' '2:filename:_files'
