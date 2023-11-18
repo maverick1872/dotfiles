@@ -13,7 +13,9 @@ if [[ -z $NO_OMZ ]]; then
   # Which plugins would you like to load
   # Standard plugins can be found in ${ZSH}/plugins/*
   # Custom plugins may be added to ${ZSH_CUSTOM}/plugins/*
-  plugins+=(git)
+  plugins+=(
+    git-custom
+  )
 
   source $ZSH/oh-my-zsh.sh
   # Add alias to load zsh without OMZ

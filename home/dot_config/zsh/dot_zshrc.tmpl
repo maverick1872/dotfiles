@@ -1,6 +1,14 @@
 # Set umask so "others" have no access
 umask 027
 
+if [[ ! -d $ZSH_CACHE_DIR ]]; then
+	mkdir -p $ZSH_CACHE_DIR
+fi
+
+if [[ ! -d $ZSH_STATE_DIR ]]; then
+	mkdir -p $ZSH_STATE_DIR
+fi
+
 # Define Plugins to load (loaded in order specified)
 plugins=(
   core
