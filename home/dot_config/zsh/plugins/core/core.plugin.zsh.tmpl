@@ -36,7 +36,6 @@ show-port() {
   lsof -P -n -i :"$1"
 }
 
-
 compdef '_path_files -/ -W ~/.config/nvim-configs' swim
 function swim {
   if [ $# -eq 0 ]
@@ -64,10 +63,50 @@ list-path-dirs() {
 }
 
 # General
+alias rm!='rm -rf'
 alias reload-shell='source $ZDOTDIR/.zshrc'
 alias edit='$EDITOR'
 alias lsdir='ls -d */'
 alias lldir='ll -d */'
+
+# GPG Key Management
+alias gen-gpg-key='gpg --full-generate-key --expert'
+
+# Function to export GPG keys using FZF with enriched file names
+export-gpg() {
+  local key_list
+  key_list=$(gpg --list-keys --with-colons | awk -F: '/^pub:/ {print $5}')
+
+  if [[ -z "$key_list" ]]; then
+    echo "No GPG keys found. Aborting."
+    return 1
+  fi
+
+  local selected_key
+  selected_key=$(echo "$key_list" | fzf --prompt="Select GPG key: ")
+
+  if [[ -z "$selected_key" ]]; then
+    echo "No key selected. Aborting."
+    return 1
+  fi
+
+  local export_directory="$GNUPGHOME/exports"
+  [[ ! -d "$export_directory" ]] && mkdir -p "$export_directory"
+
+  local export_date=$(date +"%Y-%m-%d")
+  local main_private_key_filename="${export_directory}/${selected_key}_${export_date}.private.key"
+  local main_public_key_filename="${export_directory}/${selected_key}_${export_date}.public.asc"
+  local subkey_private_key_filename="${export_directory}/${selected_key}_subkeys_${export_date}.private.key"
+
+  # Export the main public key
+  gpg --export "$selected_key" > "$main_public_key_filename"
+
+  # Export the main & subkey private keys
+  gpg --export-secret-keys "$selected_key" > "$main_private_key_filename"
+  gpg --export-secret-subkeys "$selected_key" > "$subkey_private_key_filename"
+
+  echo "Private & public keys exported to $export_directory"
+}
 
 {{- if contains "darwin" .osID }}
 alias gen-ssh-key='ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"'
