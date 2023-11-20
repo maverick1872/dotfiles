@@ -1,10 +1,10 @@
 # If .cargo/bin/ does not exist, we don't need to do anything
-if [[ ! -d $HOME/.cargo/bin ]]; then
+if [[ ! -d $XDG_CONFIG_HOME/cargo/bin ]]; then
   return
 fi
 
-export CARGO_HOME="$HOME/.cargo"
-export RUSTUP_HOME="$HOME/.config/rustup"
+export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
+export RUSTUP_HOME="$XDG_CONFIG_HOME/rustup"
 
 # The following will preprend to PATH the cargo bin directory
 if [[ -f "$CARGO_HOME/env" ]]; then
