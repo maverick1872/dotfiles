@@ -6,6 +6,11 @@ source $ZDOTDIR/core/options.zsh
 
 # Load OMZ if not disabled
 if [[ -z $NO_OMZ ]]; then
+  # Define where Oh My ZSH is installed
+  export ZSH=$XDG_DATA_HOME/oh-my-zsh
+  # Define where Oh My ZSH overrides live
+  export ZSH_CUSTOM=$ZDOTDIR
+
   # Autosuggest -- requires in order: zsh-syntax-highlighting zsh-autosuggestions
   AUTOSUGGESTION="true"
   ENHANCED_COMPLETION="true"
