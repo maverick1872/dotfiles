@@ -1,3 +1,4 @@
+compdef _chezmoi ch
 ch() {
   case "$1" in
     'diff' | 'apply' | *'merge'* | 'update' | 'status' )
