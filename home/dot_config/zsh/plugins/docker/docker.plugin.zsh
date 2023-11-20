@@ -5,9 +5,10 @@ alias clean-volumes='docker volume ls -q | xargs docker volume rm'
 dco() {
 # Can be improved with a proper jq function? https://stackoverflow.com/questions/62665537/how-to-calculate-time-duration-from-two-date-time-values-using-jq
   if [[ $1 == "ps" ]]; then
-    command docker compose ps --format json | \
-	    jq -r '[{"Name": "Container Name", "Service": "Service Name", "Status": "Status", "Created": "Created"}, .[]] | .[] | [.Name, .Service, .Status, (.Created | if type=="number" then (.|strflocaltime("%Y-%m-%dT%H:%M:%S")) else . end)] | @tsv' | \
-      column -ts $'\t'
+    local header="NAME\tSERVICE\tSTATUS\tCREATED"
+    local containerDeets=$(command docker compose ps --format json)
+    local formattedDeets=$(echo $containerDeets | jq -r '[.Name, .Service, .Status, (.CreatedAt | if type=="number" then (.|strflocaltime("%Y-%m-%dT%H:%M:%S")) else . end)] | @tsv')
+    print $header'\n'$formattedDeets | column -ts $'\t'
     return
   fi;
 
