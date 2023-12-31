@@ -20,7 +20,7 @@ bootstrap/
 .chezmoiscripts/debian/**
 {{- end }}
 
-{{- if contains "debian" .osID }}
+{{- if (or (contains "debian" .osID) (contains "ubuntu" .osID)) }}
 ## Debian System Ignores
 .chezmoiscripts/arch/**
 {{- end }}
