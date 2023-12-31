@@ -20,6 +20,7 @@ brew "jq"
 brew "yq"
 brew "ripgrep"
 brew "tealdeer"
+brew "neovim"
 brew "wget"
 brew "nghttp2" # HTTP2 Client
 brew "git-delta"

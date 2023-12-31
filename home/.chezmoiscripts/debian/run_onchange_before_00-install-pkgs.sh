@@ -3,5 +3,5 @@
 sudo apt update && sudo apt install <<EOF
 ripgrep
 tealdeer
+neovim
 EOF
-
