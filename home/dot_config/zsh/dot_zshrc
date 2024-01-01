@@ -19,6 +19,7 @@ plugins=(
   docker
   fnm
   gcloud
+  git
   github
   node
   ripgrep

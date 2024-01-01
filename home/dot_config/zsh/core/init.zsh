@@ -15,25 +15,19 @@ if [[ -z $NO_OMZ ]]; then
   AUTOSUGGESTION="true"
   ENHANCED_COMPLETION="true"
 
-  # Which plugins would you like to load
-  # Standard plugins can be found in ${ZSH}/plugins/*
-  # Custom plugins may be added to ${ZSH_CUSTOM}/plugins/*
-  plugins+=(
-    git-custom
-  )
+  # Which OMZ plugins would you like to load
+  # plugins+=()
 
   source $ZSH/oh-my-zsh.sh
   # Add alias to load zsh without OMZ
   alias custom-zsh="NO_OMZ=1 zsh"
 else
-  plugins+=(git-custom)
-  
   # Load Completion Configuration
   source $ZDOTDIR/core/completion.zsh
 
   # Add all themes to fpath and load the chosen theme if applicable
   FPATH="${ZDOTDIR}/themes/:${FPATH}"
-  autoload -Uz ${ZTHEME:=robbyrussell}.zsh-theme; ${ZTHEME:=robbyrussell}.zsh-theme
+  autoload -Uz ${ZTHEME:=default}.zsh-theme; ${ZTHEME:=default}.zsh-theme
 
   # Load all plugins
   for plugin ($plugins); do
