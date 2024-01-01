@@ -1,0 +1,12 @@
+# --max-columns=150
+# --max-columns-preview
+
+# Search hidden files/directories by default
+--hidden
+
+# Ignore files that are hidden that we do not want included
+# --glob !.git
+
+# --no-ignore
+# Leverage global ignore file
+# --ignore-file /home/maverick/.config/ripgrep/ignore
