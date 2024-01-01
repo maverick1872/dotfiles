@@ -55,10 +55,17 @@ ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE="$yellowb<"
 ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE="$redb<>"
 
 function build_prompt {
+  local promptString=""
+
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    promptString+="${yellow}[SSH@%m]${reset} "
+  fi
+
   git_root=$(git rev-parse --show-toplevel 2> /dev/null)
 
   if [[ ! -n $git_root ]]; then
-    echo "$current_dir_output%1(j. $jobs_bg.)"
+    promptString+="$current_dir_output%1(j. $jobs_bg.)"
+    echo $promptString
     return
   fi
 
@@ -68,14 +75,16 @@ function build_prompt {
   repo_name="$magentab$repo_parts[2]$reset"
 
   if [[ $git_root = $PWD ]]; then
-    echo "$repo_org$repo_name%1(j. $jobs_bg.)"
+    promptString+="$repo_org$repo_name%1(j. $jobs_bg.)"
+    echo $promptString
     return
   fi
 
   internal_repo_path=$(echo $PWD | sed 's|'"$git_root"'/||')
   repo_dir="$blueb$internal_repo_path$reset"
 
-  echo "$repo_org$repo_name/$repo_dir%1(j. $jobs_bg.)"
+  promptString+="$repo_org$repo_name/$repo_dir%1(j. $jobs_bg.)"
+  echo $promptString
 }
 
 function git_status_info {
