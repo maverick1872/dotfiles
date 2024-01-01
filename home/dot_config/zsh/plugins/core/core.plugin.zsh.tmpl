@@ -12,16 +12,6 @@ search-aliases() {
   alias | grep "$1" --color
 }
 
-# Search and replace leveraging ripgrep
-{{- if contains "linux" .osID }}
-rg-sr() {
-  rg $1 --hidden --files-with-matches | xargs -p sed -Eie "s|${1}|${2}|g"
-}
-{{- else }}
-rg-sr() {
-  rg $1 --hidden --files-with-matches | xargs -p sed -Eie '' "s|${1}|${2}|g"
-}
-{{- end }}
 
 # Creates a temp file name and leverages it to swap to files "in place"
 swap() {

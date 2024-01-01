@@ -1,0 +1,18 @@
+## If rg is not installed, don't load this plugin
+if (( ! $+commands[rg] )); then
+  return
+fi
+
+export RIPGREP_CONFIG="$HOME/.config/ripgrep"
+export RIPGREP_CONFIG_PATH="${RIPGREP_CONFIG}/config"
+
+# Search and replace leveraging ripgrep
+{{- if contains "linux" .osID }}
+rg-sr() {
+  rg $1 --hidden --files-with-matches | xargs -p sed -Eie "s|${1}|${2}|g"
+}
+{{- else }}
+rg-sr() {
+  rg $1 --hidden --files-with-matches | xargs -p sed -Eie '' "s|${1}|${2}|g"
+}
+{{- end }}

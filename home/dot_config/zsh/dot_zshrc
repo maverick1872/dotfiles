@@ -21,6 +21,7 @@ plugins=(
   gcloud
   github
   node
+  ripgrep
   rust
   zsh-syntax-highlighting
   zsh-autosuggestions
