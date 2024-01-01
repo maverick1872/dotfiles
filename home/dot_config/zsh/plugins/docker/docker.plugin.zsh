@@ -1,31 +1,19 @@
 alias clean-images='docker images -aq | xargs docker rmi'
 alias clean-containers='docker ps -aq | xargs docker rm'
 alias clean-volumes='docker volume ls -q | xargs docker volume rm'
-make_completion_wrapper() {
-  eval "_$1 () {
-    COMP_LINE=\${COMP_LINE/$1/$2}
-    COMP_POINT=\$((\$COMP_POINT + ${#2} - ${#1}))
-    _$(cut -d" " -f1 <<< $2)
-  }
-  complete -F _$1 $1
-  "
-}
 
-compdefas () {
-  if (($+_comps[$1])); then
-    compdef $_comps[$1] ${^@[2,-1]}=$1
-  fi
-}
-
-# make_completion_wrapper dco "docker compose"
-compdef _docker dco=docker-compose
 dco() {
 # Can be improved with a proper jq function? https://stackoverflow.com/questions/62665537/how-to-calculate-time-duration-from-two-date-time-values-using-jq
   if [[ $1 == "ps" ]]; then
-    local header="NAME\tSERVICE\tSTATUS\tCREATED"
+    local header="NAME\tSERVICE\tSTATUS\tCREATED\tPORTS"
     local containerDeets=$(command docker compose ps --format json)
-    # local formattedDeets=$(echo $containerDeets | jq -r '[.Name, .Service, .Status, .Ports, (.CreatedAt | if type=="number" then (.|strflocaltime("%Y-%m-%dT%H:%M:%S")) else . end)] | @tsv')
-    local formattedDeets=$(echo $containerDeets | jq -r '[.Name, .Service, .Status, .Ports] | @tsv')
+    local formattedDeets=$(echo $containerDeets | jq -r '[
+      .Name,
+      .Service,
+      .Status,
+      (.CreatedAt | if type=="number" then (.|strflocaltime("%Y-%m-%dT%H:%M:%S")) else . end),
+      (.Publishers | map(.PublishedPort) | unique | .[])
+    ] | @tsv')
     print $header'\n'$formattedDeets | column -ts $'\t'
     return
   fi;
