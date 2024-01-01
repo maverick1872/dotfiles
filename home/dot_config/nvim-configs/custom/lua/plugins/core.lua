@@ -132,4 +132,10 @@ return {
     'kkoomen/vim-doge',
     event = 'BufEnter',
   },
+
+  -- Scratch files
+  {
+    'LintaoAmons/scratch.nvim',
+    event = 'VeryLazy',
+  },
 }

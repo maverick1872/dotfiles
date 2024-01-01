@@ -11,13 +11,16 @@ return {
     wk.setup(opts)
     wk.register(opts.defaults)
     -- Register Normal mode labels
+
     wk.register({
       ['<leader>b'] = 'Buffers',
       ['<leader>l'] = 'LSP',
       ['<leader>p'] = 'Packages',
       ['<leader>g'] = 'Git',
       ['<leader>s'] = 'Search',
+      ['<leader>t'] = 'Temp (scratch) Files',
     }, { mode = 'n' })
+
     -- Register Visual mode labels
     wk.register({
       ['<leader>l'] = 'LSP',
