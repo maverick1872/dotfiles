@@ -20,9 +20,9 @@ update-docker-containers() {
   for dir in $(find ${DOCKER_DIR} -maxdepth 1 -mindepth 1 -type d); do
     containerName=$(basename $dir)
     cd $dir || return
-    if [[ `docker-compose ps -q 2> /dev/null` ]]; then
+    if [[ `docker compose ps -q 2> /dev/null` ]]; then
       echo "Updating container: $containerName"
-      docker-compose pull && docker-compose up --force-recreate --build -d
+      docker compose pull && docker compose up --force-recreate --build -d
       cd - > /dev/null || return
     else
       echo "Container is not running: $containerName"
@@ -45,4 +45,12 @@ docker-ips() {
   echo $output | column -t -s '|'
 }
 
+docker-volumes() {
+  volumes=$(docker volume ls  --format '{{.Name}}')
 
+  for volume in $volumes
+  do
+    echo $volume
+    docker ps -a --filter volume="$volume"  --format '{{.Names}}' | sed 's/^/  /'
+  done
+}
