@@ -32,6 +32,22 @@ git_develop_branch() {
   return 1
 }
 
+gc() { ## Git Commit
+  local flags=()
+  local non_flags=()
+
+  # Separate options (strings starting with '-') from any other argument
+  for arg in "$*"; do
+    if [[ $arg == -* ]]; then
+      flags+=("$arg")
+    else
+      non_flags+=("$arg")
+    fi
+  done
+
+  git commit ${flags[@]} -m "${non_flags[@]}"
+}
+
 ac() {
   local flags=()
   local non_flags=()
@@ -136,7 +152,6 @@ alias gbss='git bisect start'
 
 # Git Commit
 alias gcmsg='git commit --message'
-alias gc='git commit --verbose'
 alias 'gc!'='git commit --verbose --amend'
 alias gca='git commit --verbose --all'
 alias 'gca!'='git commit --verbose --all --amend'
