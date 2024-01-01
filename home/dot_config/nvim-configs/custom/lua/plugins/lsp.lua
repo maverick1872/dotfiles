@@ -39,6 +39,7 @@ return {
         'lua_ls', -- Lua
         'dockerls', -- Docker
         'tsserver', -- Typescript/Javascript
+        'helm-ls', -- Helm
 
         --- Formatters ---
         'eslint_d', -- Daemonized Eslint

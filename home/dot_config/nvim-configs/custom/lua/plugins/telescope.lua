@@ -4,6 +4,24 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
   },
+  opts = {
+    -- pickers = {
+    --   find_files = {
+    --     -- hidden = true,
+    --     -- no_ignore = true,
+    --     find_command = {
+    --       'rg',
+    --       --   '--files',
+    --       --   -- '--hidden',
+    --     },
+    --     -- file_ignore_patterns = {
+    --     --   '^.git/*',
+    --     --   '^node_modules/*',
+    --     --   'dist/*',
+    --     -- },
+    --   },
+    -- },
+  },
   -- keys = {
   --   -- disable the keymap to grep files
   --   { "<leader>/",  false },
