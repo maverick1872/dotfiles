@@ -22,8 +22,18 @@ if [[ -z $NO_OMZ ]]; then
   # Add alias to load zsh without OMZ
   alias custom-zsh="NO_OMZ=1 zsh"
 else
-  # Load Completion Configuration
+  has_plugin() {
+    local name=$1
+    builtin test -f $ZDOTDIR/plugins/$name/$name.plugin.zsh
+  }
+
+  has_completion() {
+    local name=$1
+    builtin test -f $ZDOTDIR/plugins/$name/_$name
+  }
+
   source $ZDOTDIR/core/completion.zsh
+  # Load Completion Configuration
 
   # Add all themes to fpath and load the chosen theme if applicable
   FPATH="${ZDOTDIR}/themes/:${FPATH}"
@@ -31,6 +41,13 @@ else
 
   # Load all plugins
   for plugin ($plugins); do
-    source "${ZDOTDIR}/plugins/$plugin/$plugin.plugin.zsh"
+    if has_plugin "$plugin"; then
+      source "${ZDOTDIR}/plugins/$plugin/$plugin.plugin.zsh"
+    fi
+    # Add all defined plugins to fpath. This must be done
+    # before running compinit.
+    # if has_completion "$plugin"; then
+    #   fpath=("$ZSH/plugins/$plugin" $fpath)
+    # fi
   done
 fi
