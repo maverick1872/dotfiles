@@ -14,7 +14,9 @@ brew bundle --no-lock --file={{ joinPath .chezmoi.sourceDir "bootstrap/brewfile"
 if [[ "${IS_PERSONAL}" == "true" ]]; then
 
 ## Install Rust toolchain non-interactively
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+if [[ -d $HOME/.config/cargo/bin ]]; then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+fi
 
 ## Install Personal Brewfile
 ## brewfile hash: {{ include "bootstrap/brewfile.personal" | sha256sum }}
