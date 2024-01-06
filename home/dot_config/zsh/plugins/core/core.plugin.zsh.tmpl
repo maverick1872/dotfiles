@@ -109,6 +109,6 @@ alias pacman='sudo pacman'
 alias gen-ssh-key='ssh-keygen -t ed25519 -C "$(whoami)@$(hostnamectl hostname)"'
 {{- end }}
 
-{{- if eq .osID "linux-debian" }}
+{{- if or (contains "debian" .osID) (contains "ubuntu" .osID) }}
 alias update='sudo apt update -y && sudo apt upgrade -y'
 {{- end }}
