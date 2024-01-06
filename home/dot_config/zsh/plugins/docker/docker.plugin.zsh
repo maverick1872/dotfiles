@@ -12,7 +12,7 @@ dco() {
       .Service,
       .Status,
       (.CreatedAt | if type=="number" then (.|strflocaltime("%Y-%m-%dT%H:%M:%S")) else . end),
-      (if .Publishers then (.Publishers | map(.PublishedPort) | unique | .[]) else "none" end)
+      (if .Publishers then (.Publishers | map(.PublishedPort) | unique | .[]) else "----" end)
 		] | @tsv')
     print $header'\n'$formattedDeets | column -ts $'\t'
     return
