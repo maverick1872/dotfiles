@@ -3,7 +3,7 @@ alias clean-containers='docker ps -aq | xargs docker rm'
 alias clean-volumes='docker volume ls -q | xargs docker volume rm'
 
 dco() {
-# Can be improved with a proper jq function? https://stackoverflow.com/questions/62665537/how-to-calculate-time-duration-from-two-date-time-values-using-jq
+  # Can be improved with a proper jq function? https://stackoverflow.com/questions/62665537/how-to-calculate-time-duration-from-two-date-time-values-using-jq
   if [[ $1 == "ps" ]]; then
     local header="NAME\tSERVICE\tSTATUS\tCREATED\tPORTS"
     local containerDeets=$(command docker compose ps --format json)
@@ -13,8 +13,10 @@ dco() {
       .Status,
       (.CreatedAt | if type=="number" then (.|strflocaltime("%Y-%m-%dT%H:%M:%S")) else . end),
       (if .Publishers then (.Publishers | map(.PublishedPort) | unique | .[]) else "----" end)
-		] | @tsv')
-    print $header'\n'$formattedDeets | column -ts $'\t'
+    ] | @tsv')
+    if [[ -n $formattedDeets ]]; then
+      print $header'\n'$formattedDeets | column -ts $'\t'
+    fi
     return
   fi;
 
@@ -23,18 +25,20 @@ dco() {
 
 # Traverses directory structure and updates all docker images
 update-docker-containers() {
+  strict_mode
   for dir in $(find ${DOCKER_DIR} -maxdepth 1 -mindepth 1 -type d); do
     containerName=$(basename $dir)
     cd $dir || return
     if [[ `docker compose ps -q 2> /dev/null` ]]; then
       echo "Updating container: $containerName"
-      docker compose pull && docker compose up --force-recreate --build -d
+      docker compose pull && docker compose up --force-recreate -d
       cd - > /dev/null || return
     else
       echo "Container is not running: $containerName"
     fi
     echo
   done
+  strict_mode off
 }
 
 # List IPs of all running docker containers for each network they are attached to
