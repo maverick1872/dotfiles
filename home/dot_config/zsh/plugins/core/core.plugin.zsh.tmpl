@@ -117,7 +117,7 @@ alias gen-ssh-key='ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)"'
 {{- if eq .osID "linux-arch" }}
 alias open='xdg-open'
 alias yeet='yay -Rns'
-alias pacman='sudo pacman'
+alias update='sudo yay -Syu --devel'
 alias gen-ssh-key='ssh-keygen -t ed25519 -C "$(whoami)@$(hostnamectl hostname)"'
 {{- end }}
 
