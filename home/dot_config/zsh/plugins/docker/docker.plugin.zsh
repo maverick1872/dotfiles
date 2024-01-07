@@ -3,56 +3,42 @@ alias clean-containers='docker ps -aq | xargs docker rm'
 alias clean-volumes='docker volume ls -q | xargs docker volume rm'
 
 dco() {
-  # Can be improved with a proper jq function? https://stackoverflow.com/questions/62665537/how-to-calculate-time-duration-from-two-date-time-values-using-jq
   if [[ $1 == "ps" ]]; then
-    local header="NAME\tSERVICE\tSTATUS\tCREATED\tPORTS"
-    local containerDeets=$(command docker compose ps --format json)
-    local formattedDeets=$(echo $containerDeets | jq -r '[
-      .Name,
-      .Service,
-      .Status,
-      (.CreatedAt | if type=="number" then (.|strflocaltime("%Y-%m-%dT%H:%M:%S")) else . end),
-      (if .Publishers then (.Publishers | map(.PublishedPort) | unique | .[]) else "----" end)
-    ] | @tsv')
-    if [[ -n $formattedDeets ]]; then
-      print $header'\n'$formattedDeets | column -ts $'\t'
-    fi
+    strict_mode
+    local header="Name|Status|Created At|Ports|Networks"
+    local container_info=$(docker compose ps -q | xargs docker inspect --format "{{index .Config.Labels \"com.docker.compose.service\"}}|\
+{{.State.Status}}|\
+{{slice .Created 0 19}}|\
+{{range .NetworkSettings.Ports}}{{.HostIp}}:{{.HostPort}}->{{.ContainerPort}}{{end}}|\
+{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}")
+    strict_mode off
+
+    print $header'\n'$container_info | column -ts '|'
     return
-  fi;
+  elif [[ $1 == "down" ]]; then
+    command docker compose "$@" --remove-orphans
+    return
+  fi
 
   command docker compose "$@"
 }
 
 # Traverses directory structure and updates all docker images
-update-docker-containers() {
+update-containers() {
   strict_mode
-  for dir in $(find ${DOCKER_DIR} -maxdepth 1 -mindepth 1 -type d); do
-    containerName=$(basename $dir)
-    cd $dir || return
+  for dir in $(find ${DOCKER_CONTAINERS_DIR} -maxdepth 1 -mindepth 1 -type d); do
+    composeSpec=$(basename $dir)
+    pushd $dir 
     if [[ `docker compose ps -q 2> /dev/null` ]]; then
-      echo "Updating container: $containerName"
-      docker compose pull && docker compose up --force-recreate -d
-      cd - > /dev/null || return
+      echo "Updating containers for spec: $composeSpec"
+      docker compose pull -q && docker compose up --no-recreate -d
     else
-      echo "Container is not running: $containerName"
+      echo "Updating images for spec: $composeSpec"
+      docker compose pull -q
     fi
-    echo
+    popd
   done
   strict_mode off
-}
-
-# List IPs of all running docker containers for each network they are attached to
-docker-ips() {
-  docker ps --format "table {{.ID}}|{{.Names}}|{{.Status}}" | while read line; do
-    if $(echo $line | grep -q 'CONTAINER ID'); then
-      output="${line}|IP ADDRESSES\n"
-    else
-      CID=$(echo $line | awk -F '|' '{print $1}')
-      IP=$(docker inspect $CID | jq -r ".[0].NetworkSettings.Networks | to_entries[] | \"\(.key): \(.value.IPAddress)\"")
-      output+="${line}|${IP}\n"
-    fi
-  done
-  echo $output | column -t -s '|'
 }
 
 docker-volumes() {
