@@ -2,6 +2,22 @@ alias clean-images='docker images -aq | xargs docker rmi'
 alias clean-containers='docker ps -aq | xargs docker rm'
 alias clean-volumes='docker volume ls -q | xargs docker volume rm'
 
+make_completion_wrapper() {
+  eval "_$1 () {
+    COMP_LINE=\${COMP_LINE/$1/$2}
+    COMP_POINT=\$((\$COMP_POINT + ${#2} - ${#1}))
+    _$(cut -d" " -f1 <<< $2)
+  }
+  complete -F _$1 $1
+  "
+}
+
+compdefas () {
+  if (($+_comps[$1])); then
+    compdef $_comps[$1] ${^@[2,-1]}=$1
+  fi
+}
+
 dco() {
   if [[ $1 == "ps" ]]; then
     strict_mode
@@ -17,6 +33,9 @@ dco() {
     return
   elif [[ $1 == "down" ]]; then
     command docker compose "$@" --remove-orphans
+    return
+  elif [[ $1 == "up" ]]; then
+    command docker compose "$@" -d
     return
   fi
 
