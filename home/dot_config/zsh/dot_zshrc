@@ -24,6 +24,7 @@ plugins=(
   node
   ripgrep
   rust
+  tmux
   zsh-syntax-highlighting
   zsh-autosuggestions
   history-search-multi-word
