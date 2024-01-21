@@ -23,15 +23,11 @@
   gpgSign=true
 
 [pull]
-  rebase=false
+  rebase=true
 
 [tag]
   gpgSign=true
 
-[user]
-  email=10217028+Maverick1872@users.noreply.github.com
-  name={{ .name }}
-  
 [push]
   autoSetupRemote = true
 
