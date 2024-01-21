@@ -36,6 +36,14 @@ swap() {
   mv -f -- "$tmp_name" "$2"
 }
 
+archive() {
+  local archive_name="${1%/}.tar"
+  print 'Creating tarball'
+  tar -cf "${archive_name}" "$1"
+  print "Compressing tarball into '${archive_name}.xz'"
+  xz -9 --force "${archive_name}"
+}
+
 # Find process running on specified port
 show-port() {
   lsof -P -n -i :"$1"
