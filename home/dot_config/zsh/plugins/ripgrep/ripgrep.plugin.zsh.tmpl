@@ -1,5 +1,6 @@
 ## If rg is not installed, don't load this plugin
 if (( ! $+commands[rg] )); then
+  _debug 'Ripgrep is not installed'
   return
 fi
 

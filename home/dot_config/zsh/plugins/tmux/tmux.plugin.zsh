@@ -1,5 +1,5 @@
 if ! (( $+commands[tmux] )); then
-  print "zsh tmux plugin: tmux not found. Please install tmux before using this plugin." >&2
+  _debug 'Tmux is not installed'
   return 1
 fi
 

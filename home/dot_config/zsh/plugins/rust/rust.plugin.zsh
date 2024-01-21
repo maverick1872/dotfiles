@@ -1,5 +1,6 @@
 # If .cargo/bin/ does not exist, we don't need to do anything
 if [[ ! -d $XDG_CONFIG_HOME/cargo/bin ]]; then
+  _debug 'Cargo is not installed'
   return
 fi
 

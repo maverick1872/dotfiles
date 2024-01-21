@@ -51,8 +51,7 @@ show-port() {
 
 compdef '_path_files -/ -W ~/.config/nvim-configs' swim
 function swim {
-  if [ $# -eq 0 ]
-  then
+  if [ $# -eq 0 ]; then
     zmodload zsh/stat
     active=$(stat +link "$HOME/.config/nvim")
     echo "Swimming with ${${active}:t}"
@@ -77,10 +76,16 @@ list-path-dirs() {
 
 # General
 alias rm!='rm -rf'
-alias reload-shell='source $ZDOTDIR/.zshrc'
 alias edit='$EDITOR'
 alias lsdir='ls -d */'
 alias lldir='ll -d */'
+
+reload-shell() {
+  if [[ $1 == "debug" ]]; then
+    ZSH_DEBUG=true
+  fi
+  source $ZDOTDIR/.zshrc
+}
 
 # GPG Key Management
 alias gen-gpg-key='gpg --full-generate-key --expert'
