@@ -29,6 +29,24 @@ autoCmd('BufWritePost', {
   end,
 })
 
+-- Display diagnostics as virtual text only if not in insert mode
+autoCmd('InsertEnter', {
+  pattern = '*',
+  callback = function()
+    vim.diagnostic.config {
+      virtual_text = false,
+    }
+  end,
+})
+autoCmd('InsertLeave', {
+  pattern = '*',
+  callback = function()
+    vim.diagnostic.config {
+      virtual_text = true,
+    }
+  end,
+})
+
 autoCmd('User', {
   pattern = 'TelescopePreviewerLoaded',
   callback = function()
