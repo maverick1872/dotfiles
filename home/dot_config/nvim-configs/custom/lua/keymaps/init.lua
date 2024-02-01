@@ -21,7 +21,7 @@ map('n', '<leader>ps', require('lazy').home, 'Plugins Status')
 map('n', '<leader>pu', require('lazy').update, 'Plugins Update')
 map('n', '<leader>pU', require('lazy').check, 'Plugins Check Updates')
 
--- Windows
+-- Windows/Splits
 map('n', '<C-h>', '<C-w>h', 'Move to window to the left')
 map('n', '<C-l>', '<C-w>l', 'Move to window to the right')
 map('n', '<C-k>', '<C-w>k', 'Move to window to the up')

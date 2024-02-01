@@ -6,6 +6,13 @@ map('n', '<leader>ll', function()
   vim.cmd 'ListLspCapabilities'
 end, 'Buffer Clients Information')
 
+-- Distraction Free
+map('n', '<leader>lp', function()
+  vim.diagnostic.config {
+    virtual_text = not vim.diagnostic.config.virtual_text,
+  }
+end, 'Distraction free mode')
+
 -- Mason Package Manager
 if is_available 'mason.nvim' then
   map('n', '<leader>pm', '<cmd>Mason<cr>', 'Mason Installer')
