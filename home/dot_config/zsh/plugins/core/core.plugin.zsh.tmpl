@@ -75,10 +75,12 @@ list-path-dirs() {
 }
 
 # General
+alias l='ls -lh'
+alias la='ls -lhA'
+alias ld='ls -lhd */'
+alias lad='ls -lhd */ .*/'
 alias rm!='rm -rf'
 alias edit='$EDITOR'
-alias lsdir='ls -d */'
-alias lldir='ll -d */'
 
 reload-shell() {
   if [[ $1 == "debug" ]]; then
