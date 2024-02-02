@@ -49,20 +49,6 @@ show-port() {
   lsof -P -n -i :"$1"
 }
 
-compdef '_path_files -/ -W ~/.config/nvim-configs' swim
-function swim {
-  if [ $# -eq 0 ]; then
-    zmodload zsh/stat
-    active=$(stat +link "$HOME/.config/nvim")
-    echo "Swimming with ${${active}:t}"
-    echo "$HOME/.config/nvim -> $active"
-    zmodload -u zsh/stat
-  else
-    echo "Swimming with $1"
-    ln -snfv ~/.config/nvim-configs/$1 ~/.config/nvim
-  fi
-}
-
 _debug() {
   if [[ -n $ZSH_DEBUG ]]; then
 	  echo "[ZSH] $1"
