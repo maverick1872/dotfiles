@@ -22,10 +22,11 @@ map('n', '<leader>pu', require('lazy').update, 'Plugins Update')
 map('n', '<leader>pU', require('lazy').check, 'Plugins Check Updates')
 
 -- Windows/Splits
-map('n', '<C-h>', '<C-w>h', 'Move to window to the left')
-map('n', '<C-l>', '<C-w>l', 'Move to window to the right')
-map('n', '<C-k>', '<C-w>k', 'Move to window to the up')
-map('n', '<C-h>', '<C-w>j', 'Move to window to the down')
+map('n', '<C-h>', '<C-w>h', 'Go to window to the left')
+map('n', '<C-j>', '<C-w>j', 'Go to window below')
+map('n', '<C-k>', '<C-w>k', 'Go to window above')
+map('n', '<C-l>', '<C-w>l', 'Go to window to the right')
+map('n', '<C-q>', '<C-w>q', 'Close window')
 
 -- Better visual block indenting
 map('v', '<', '<gv')
@@ -43,8 +44,8 @@ map('v', '<A-k>', ":m '<-2<CR>gv=gv", 'Move visual selection down line')
 map('v', 'p', '"_dP', 'Replace selected text with yank register')
 
 -- Manage Buffers
-map('n', '<leader>c', require('utils.buffer').close, 'Close buffer')
-map('n', '<leader>C', require('utils.buffer').close, 'Force close buffer')
+map('n', '<leader>c', ':bd<CR>', 'Close buffer')
+map('n', '<leader>C', ':silent %bd|e#|bd#<CR>', 'Close other buffers')
 map('n', '<S-l>', ':bnext<CR>', 'Next buffer')
 map('n', '<S-h>', ':bprevious<CR>', 'Previous buffer')
 

@@ -77,11 +77,11 @@ return function(args)
   end
 
   if client.supports_method 'textDocument/hover' then
-    map('n', 'K', vim.lsp.buf.hover, 'Hover LSP', opts)
+    map('n', 's', vim.lsp.buf.hover, 'Hover LSP', opts)
   end
 
   if client.supports_method 'textDocument/signatureHelp' then
-    map('n', '<C-k>', vim.lsp.buf.signature_help, 'Signature help', opts)
+    map('n', 'gs', vim.lsp.buf.signature_help, 'Signature help', opts)
   end
 
   -- map('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
@@ -108,7 +108,7 @@ return function(args)
   end
 
   if client.supports_method 'textDocument/formatting' then
-    map('n', '<space>f', function()
+    map('n', '<space>lf', function()
       lspFormat(bufnr)
     end, 'Format file', opts)
     vim.api.nvim_clear_autocmds {
