@@ -49,31 +49,6 @@ map('n', '<leader>C', ':silent %bd|e#|bd#<CR>', 'Close other buffers')
 map('n', '<S-l>', ':bnext<CR>', 'Next buffer')
 map('n', '<S-h>', ':bprevious<CR>', 'Previous buffer')
 
--- map('n', ']b', require('utils.buffer').nav, 'Next buffer')
--- map('n', '[b', require('utils.buffer').nav, 'Previous buffer')
--- map('n', '<leader>bc', require('utils.buffer').close_all, 'Close all buffers except current')
--- map('n', '<leader>bC', require('utils.buffer').close_all, 'Close all buffers')
--- map('n', '<leader>bl', require('utils.buffer').close_left, 'Close all buffers to the left')
--- map('n', '<leader>bp', require('utils.buffer').prev, 'Previous buffer')
--- map('n', '<leader>br', require('utils.buffer').close_right, 'Close all buffers to the right')
---
--- map('n', '<leader>bs', 'Sort Buffers')
--- map('n', '<leader>bse', function()
---   require('utils.buffer').sort 'extension'
--- end, 'By extension')
--- map('n', '<leader>bsr', function()
---   require('utils.buffer').sort 'unique_path'
--- end, 'By relative path')
--- map('n', '<leader>bsp', function()
---   require('utils.buffer').sort 'full_path'
--- end, 'By full path')
--- map('n', '<leader>bsi', function()
---   require('utils.buffer').sort 'bufnr'
--- end, 'By buffer number')
--- map('n', '<leader>bsm', function()
---   require('utils.buffer').sort 'modified'
--- end, 'By modification')
-
 -- Remap for dealing with word wrap
 -- map('n', 'k', "v:count == 0 ? 'gk' : 'k'")
 -- map('n', 'j', "v:count == 0 ? 'gj' : 'j'")
