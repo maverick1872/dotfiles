@@ -13,9 +13,9 @@ if is_available 'telescope.nvim' then
   end
 
   if is_available 'scratch.nvim' then
-    map('n', '<leader>ts', function()
+    map('n', '<leader>st', function()
       vim.cmd 'ScratchOpen'
-    end, 'Search scratch files')
+    end, 'Search temp files')
   end
 
   -- map.n["<leader>s'"] = { function() require("telescope.builtin").marks() end, desc = "Find marks" }
