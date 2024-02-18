@@ -33,5 +33,10 @@ vim.cmd 'colorscheme astrodark'
 
 vim.cmd 'if argc() == 1 && isdirectory(argv(0)) | cd `=argv(0)` | endif'
 
+local is_available = require('utils').is_available
+if is_available 'nvim-notify' then
+  vim.notify = require 'notify'
+end
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -163,7 +163,7 @@ function M.get_hlgroup(name, fallback)
   return fallback or {}
 end
 
---- Serve a notification with a title of AstroNvim
+--- Serve a notification with a title predefined title
 ---@param msg string The notification body
 ---@param type? number The type of the notification (:help vim.log.levels)
 ---@param opts? table The nvim-notify options to use (:help notify-options)
