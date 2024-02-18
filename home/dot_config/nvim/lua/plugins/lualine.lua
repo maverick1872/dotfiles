@@ -71,7 +71,17 @@ return {
           right_padding = 2,
         },
       },
-      lualine_b = { { 'filename', path = 1 } },
+      lualine_b = {
+        {
+          'filename',
+          path = 1,
+          on_click = function()
+            local path = vim.fn.expand '%:.'
+            vim.fn.setreg('+', path)
+            vim.notify('Copied path: ' .. path)
+          end,
+        },
+      },
       lualine_c = { '%=', lsp },
       lualine_x = {},
       lualine_y = { 'diff', 'branch', 'filetype' },
