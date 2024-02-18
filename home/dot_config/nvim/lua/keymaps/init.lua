@@ -49,6 +49,10 @@ map('n', '<leader>C', ':silent %bd|e#|bd#<CR>', 'Close other buffers')
 map('n', '<S-l>', ':bnext<CR>', 'Next buffer')
 map('n', '<S-h>', ':bprevious<CR>', 'Previous buffer')
 
+-- Changes
+map('n', '<leader>gn', '[c', 'Next change', { remap = true })
+map('n', '<leader>gp', ']c', 'Previous change', { remap = true })
+
 -- Remap for dealing with word wrap
 -- map('n', 'k', "v:count == 0 ? 'gk' : 'k'")
 -- map('n', 'j', "v:count == 0 ? 'gj' : 'j'")

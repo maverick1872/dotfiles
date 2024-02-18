@@ -27,11 +27,12 @@ return {
     current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
-      map('n', '<leader>gp', gs.preview_hunk, 'Preview hunk')
+      map('n', '<leader>gP', gs.preview_hunk, 'Preview hunk')
       map('n', '<leader>gs', gs.stage_hunk, 'Stage hunk')
       map('n', '<leader>gu', gs.undo_stage_hunk, 'Unstage hunk')
       map('n', '<leader>gr', gs.reset_hunk, 'Reset hunk')
       map('n', '<leader>gS', gs.stage_buffer, 'Stage buffer')
+      map('n', '<leader>gU', gs.undo_stage_hunk, 'Unstage buffer')
       map('n', '<leader>gR', gs.reset_buffer, 'Reset buffer')
 
       -- don't override the built-in and fugitive keymaps
