@@ -21,7 +21,7 @@ function M.extend_tbl(default, opts)
 end
 
 function M.get_highlight(name)
-    return vim.api.nvim_get_hl(0, { name = name, link = false })
+  return vim.api.nvim_get_hl(0, { name = name, link = false })
 end
 
 -- --- Partially reload AstroNvim user settings. Includes core vim options, mappings, and highlights. This is an experimental feature and may lead to instabilities until restart.
