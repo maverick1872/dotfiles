@@ -4,6 +4,6 @@
   },
   "use_telescope": true,
   "filetypes": ["ts", "json", "sh", "js"],
-  "scratch_file_dir": "/home/maverick/.cache/nvim/scratches",
+  "scratch_file_dir": "${XDG_CACHE_HOME}/scratches",
   "window_cmd": "edit"
 }

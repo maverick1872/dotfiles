@@ -23,4 +23,12 @@ return {
       },
     },
   },
+  jsonls = {
+    settings = {
+      format = {
+        enable = true,
+      },
+      validate = { enable = true },
+    },
+  },
 }
