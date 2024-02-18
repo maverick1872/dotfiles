@@ -32,7 +32,8 @@ git_develop_branch() {
   return 1
 }
 
-gc() { ## Git Commit
+## Git commit with message
+gc() {
   local flags=()
   local non_flags=()
 
@@ -48,45 +49,31 @@ gc() { ## Git Commit
   git commit ${flags[@]} -m "${non_flags[@]}"
 }
 
+## Commit staged files and push
+gcp() {
+  gc $*
+  git push
+}
+
+## Commit all
 ac() {
-  local flags=()
-  local non_flags=()
-
-  # Separate options (strings starting with '-') from any other argument
-  for arg in "$*"; do
-    if [[ $arg == -* ]]; then
-      flags+=("$arg")
-    else
-      non_flags+=("$arg")
-    fi
-  done
-
   git add $(git rev-parse --show-toplevel)
-  git commit ${flags[@]} -m "${non_flags[@]}"
+  gc $*
 }
 
+## Commit all and push
 acp() {
   ac $*
   git push
 }
 
+## Commit tracked files
 uc() {
-  local flags=()
-  local non_flags=()
-
-  # Separate options (strings starting with '-') from any other argument
-  for arg in "$*"; do
-    if [[ $arg == -* ]]; then
-      flags+=("$arg")
-    else
-      non_flags+=("$arg")
-    fi
-  done
-
   git add -u
-  git commit ${flags[@]} -m "${non_flags[@]}"
+  gc $*
 }
 
+## Commit tracked files and push
 ucp() {
   uc $*
   git push
@@ -173,9 +160,9 @@ alias gcd='git checkout $(git_develop_branch)'
 alias gcm='git checkout $(git_main_branch)'
 
 # Cherry Pick
-alias gcp='git cherry-pick'
-alias gcpa='git cherry-pick --abort'
-alias gcpc='git cherry-pick --continue'
+alias gchp='git cherry-pick'
+alias gchpa='git cherry-pick --abort'
+alias gchpc='git cherry-pick --continue'
 
 # Git Diff
 alias gd='git diff'
