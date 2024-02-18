@@ -13,6 +13,11 @@ map('n', '<leader>lp', function()
   }
 end, 'Distraction free mode')
 
+-- Treesitter
+if is_available 'nvim-treesitter' then
+  map('n', '<leader>pt', '<cmd>TSUpdate<cr>', 'Treesitter Update')
+end
+
 -- Mason Package Manager
 if is_available 'mason.nvim' then
   map('n', '<leader>pm', '<cmd>Mason<cr>', 'Mason Installer')
