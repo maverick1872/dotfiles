@@ -44,7 +44,6 @@ return {
         --- Formatters ---
         'eslint_d', -- Daemonized Eslint
         'prettierd', -- Daemonized Prettier
-        'rustfmt', -- Rust
         'shfmt', -- Shell (sh/bash/mksh)
         'stylua', -- Lua
         'yamlfmt', -- Yaml
