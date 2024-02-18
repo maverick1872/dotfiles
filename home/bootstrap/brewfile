@@ -9,6 +9,7 @@ cask "spotify"
 cask "rar"
 cask "font-sauce-code-pro-nerd-font" #subject to change
 cask "postman"
+cask "karabiner-elements"
 
 brew "bitwarden-cli"
 brew "coreutils"
