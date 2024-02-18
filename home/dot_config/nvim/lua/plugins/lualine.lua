@@ -10,6 +10,7 @@ local colors = {
   red = '#ff5189',
   violet = '#d183e8',
   grey = '#303030',
+  ltgrey = '#505050',
   -- astrodark = '#1b1f27',
   -- astrodark = nil,
   astrodark = '#121317',
@@ -33,6 +34,26 @@ local bubbles_theme = {
   },
 }
 
+local lsp = {
+  function()
+    local msg = 'No Active Lsp'
+    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    local clients = vim.lsp.get_active_clients()
+    if next(clients) == nil then
+      return msg
+    end
+    for _, client in ipairs(clients) do
+      local filetypes = client.config.filetypes
+      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+        return client.name
+      end
+    end
+    return msg
+  end,
+  icon = ' LSP:',
+  color = { fg = colors.ltgrey, gui = 'bold' },
+}
+
 return {
   'nvim-lualine/lualine.nvim',
   priority = 500,
@@ -50,10 +71,10 @@ return {
           right_padding = 2,
         },
       },
-      lualine_b = { 'filename', 'branch', 'diff' },
-      lualine_c = {},
+      lualine_b = { { 'filename', path = 1 } },
+      lualine_c = { '%=', lsp },
       lualine_x = {},
-      lualine_y = { 'filetype', 'location' },
+      lualine_y = { 'diff', 'branch', 'filetype' },
       lualine_z = {
         {
           'os.date("%I:%M", os.time())',
