@@ -24,4 +24,5 @@ brew "nghttp2" # HTTP2 Client
 brew "git-delta"
 brew "fzf"
 brew "fnm"
+brew "zoxide"
 
