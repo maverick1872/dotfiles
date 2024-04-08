@@ -29,6 +29,7 @@ plugins=(
   zsh-syntax-highlighting
   zsh-autosuggestions
   history-search-multi-word
+  work
 )
 
 # Load ZSH initialization
