@@ -1,6 +1,7 @@
 # Set umask so "others" have no access
 umask 027
 
+zstyle ':omz:alpha:lib:git' async-prompt no # Disable async git prompt. See: ohmyzsh/ohmyzsh/issues/12267
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir -p $ZSH_CACHE_DIR
 fi
