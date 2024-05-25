@@ -7,7 +7,7 @@ python=python3.10
 {{- end }}
 
 {{- if hasKey . "registries" }}
-//npm.pkg.github.com/:_authToken={{ (get (bitwardenFields "item" "GitHub") "Packages Read").value }}
+//npm.pkg.github.com/:_authToken={{ (get (bitwardenFields "item" "GitHub") "Packages Read Token").value }}
 
 {{- range .registries }}
 @{{ . }}:registry=https://npm.pkg.github.com/
