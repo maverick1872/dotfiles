@@ -38,7 +38,7 @@ local lspFormat = function(bufnr)
   local available_sources = require('null-ls.sources').get_available
   local attachedSources = available_sources(ft, require('null-ls.methods').internal.FORMATTING)
   local nullLsHasFiletype = #attachedSources > 0
-
+  notify('Formatting sources attached: ' .. vim.inspect(attachedSources), 'debug')
   vim.lsp.buf.format {
     bufnr = bufnr,
     filter = function(client)
@@ -124,6 +124,9 @@ return function(args)
       group = lspFormatGroup,
       buffer = bufnr,
       callback = function()
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+          return
+        end
         lspFormat(bufnr)
       end,
     })

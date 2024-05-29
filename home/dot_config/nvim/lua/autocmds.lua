@@ -101,3 +101,22 @@ userCmd('ListLspCapabilities', function()
     end
   end
 end, {})
+
+userCmd('FormatDisable', function(args)
+  if args.bang then
+    -- FormatDisable! will disable formatting just for all buffer
+    vim.g.disable_autoformat = true
+  else
+    vim.b.disable_autoformat = true
+  end
+end, {
+  desc = 'Disable autoformat',
+  bang = true,
+})
+
+userCmd('FormatEnable', function()
+  vim.b.disable_autoformat = false
+  vim.g.disable_autoformat = false
+end, {
+  desc = 'Re-enable autoformat',
+})
