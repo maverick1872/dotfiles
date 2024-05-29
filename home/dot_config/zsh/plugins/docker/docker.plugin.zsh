@@ -69,3 +69,8 @@ docker-volumes() {
     docker ps -a --filter volume="$volume"  --format '{{.Names}}' | sed 's/^/  /'
   done
 }
+
+function recreate_docker_volume() {
+  docker volume rm $1
+  docker volume create $1
+}
