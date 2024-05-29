@@ -32,28 +32,7 @@ return {
       map('n', '<leader>gu', gs.undo_stage_hunk, 'Unstage hunk')
       map('n', '<leader>gr', gs.reset_hunk, 'Reset hunk')
       map('n', '<leader>gS', gs.stage_buffer, 'Stage buffer')
-      map('n', '<leader>gU', gs.undo_stage_hunk, 'Unstage buffer')
-      map('n', '<leader>gR', gs.reset_buffer, 'Reset buffer')
-
-      -- don't override the built-in and fugitive keymaps
-      map({ 'n', 'v' }, ']c', function()
-        if vim.wo.diff then
-          return ']c'
-        end
-        vim.schedule(function()
-          gs.next_hunk()
-        end)
-        return '<Ignore>'
-      end, 'Jump to next hunk', { expr = true, buffer = bufnr })
-      map({ 'n', 'v' }, '[c', function()
-        if vim.wo.diff then
-          return '[c'
-        end
-        vim.schedule(function()
-          gs.prev_hunk()
-        end)
-        return '<Ignore>'
-      end, 'Jump to previous hunk', { expr = true, buffer = bufnr })
+      map('n', '<leader>gU', gs.undo_stage_buffer, 'Unstage buffer')
     end,
   },
 }

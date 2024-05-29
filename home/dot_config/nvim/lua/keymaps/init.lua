@@ -50,8 +50,26 @@ map('n', '<S-l>', ':bnext<CR>', 'Next buffer')
 map('n', '<S-h>', ':bprevious<CR>', 'Previous buffer')
 
 -- Changes
-map('n', '<leader>gn', '[c', 'Next change', { remap = true })
-map('n', '<leader>gp', ']c', 'Previous change', { remap = true })
+map('n', '<leader>gn', ']c', 'Next change', { remap = true })
+map('n', '<leader>gp', '[c', 'Previous change', { remap = true })
+map({ 'n', 'v' }, ']c', function()
+  if vim.wo.diff then
+    return ']c'
+  end
+  vim.schedule(function()
+    gs.next_hunk()
+  end)
+  return '<Ignore>'
+end, 'Jump to next hunk', { expr = true })
+map({ 'n', 'v' }, '[c', function()
+  if vim.wo.diff then
+    return '[c'
+  end
+  vim.schedule(function()
+    gs.prev_hunk()
+  end)
+  return '<Ignore>'
+end, 'Jump to previous hunk', { expr = true })
 
 -- Remap for dealing with word wrap
 -- map('n', 'k', "v:count == 0 ? 'gk' : 'k'")
