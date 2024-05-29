@@ -61,10 +61,13 @@ list-path-dirs() {
 }
 
 # General
+{{- if contains "darwin" .osID }}
+alias ls='gls --color'
+{{- end }}
 alias l='ls -lh --group-directories-first -v'
 alias la='ls -lhA --group-directories-first -v'
 alias ld='ls -lhd --group-directories-first -v */'
-alias lad='ls -lhd --group-directories-first -v */ .*/'
+alias lda='ls -lhd --group-directories-first -v */ .*/'
 alias rm!='rm -rf'
 alias edit='$EDITOR'
 
