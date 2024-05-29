@@ -84,7 +84,19 @@ return {
       },
       lualine_c = { '%=', lsp },
       lualine_x = {},
-      lualine_y = { 'diff', 'branch', 'filetype' },
+      lualine_y = {
+        'diff',
+        {
+          'branch',
+          on_click = function()
+            local branch = vim.fn.system "git branch --show-current 2> /dev/null | tr -d '\n'"
+            local trimmedBranch = branch:gsub('\n', '')
+            vim.fn.setreg('+', trimmedBranch)
+            vim.notify('Copied branch: ' .. trimmedBranch)
+          end,
+        },
+        'filetype',
+      },
       lualine_z = {
         {
           'os.date("%I:%M", os.time())',
