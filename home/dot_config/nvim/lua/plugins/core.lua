@@ -58,7 +58,7 @@ return {
     'rcarriga/nvim-notify',
     opts = {
       render = 'compact',
-      timeout = 2500,
+      timeout = 1500,
     },
   },
 
@@ -78,6 +78,7 @@ return {
   -- Bufferline
   {
     'akinsho/bufferline.nvim',
+    enabled = false,
     dependencies = 'nvim-tree/nvim-web-devicons',
     opts = {
       options = {

@@ -8,7 +8,9 @@ local colors = {
   black = '#080808',
   white = '#c6c6c6',
   red = '#ff5189',
+  -- violet = '#4f3257',
   violet = '#d183e8',
+  dark_violet = '#4f3257',
   grey = '#303030',
   ltgrey = '#505050',
   -- astrodark = '#1b1f27',
@@ -37,8 +39,8 @@ local bubbles_theme = {
 local lsp = {
   function()
     local msg = 'No Active Lsp'
-    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-    local clients = vim.lsp.get_active_clients()
+    local buf_ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
+    local clients = vim.lsp.get_clients()
     if next(clients) == nil then
       return msg
     end
@@ -62,6 +64,10 @@ return {
       theme = bubbles_theme,
       component_separators = '|',
       section_separators = { left = '', right = '' },
+      disabled_filetypes = {
+        'dashboard',
+        tabline = {},
+      },
     },
     sections = {
       lualine_a = {
@@ -106,14 +112,69 @@ return {
       },
     },
     inactive_sections = {
-      lualine_a = { 'filename' },
+      lualine_a = {
+        {
+          'filename',
+          path = 1,
+          on_click = function()
+            local path = vim.fn.expand '%:.'
+            vim.fn.setreg('+', path)
+            vim.notify('Copied path: ' .. path)
+          end,
+        },
+      },
       lualine_b = {},
       lualine_c = {},
       lualine_x = {},
       lualine_y = {},
-      lualine_z = { 'location' },
+      lualine_z = {},
     },
-    tabline = {},
+    winbar = {
+      lualine_a = {
+        {
+          'buffers',
+          show_filename_only = true,
+          show_modified_status = true,
+          buffers_color = {
+            active = { fg = colors.white, bg = colors.dark_violet, gui = 'bold' },
+            inactive = { fg = colors.white, bg = colors.astrodark, gui = 'bold' },
+          },
+          separator = { left = '', right = '' },
+          right_padding = 2,
+          symbols = { alternate_file = '' },
+        },
+      },
+    },
+    inactive_winbar = {
+      lualine_a = {
+        {
+          'buffers',
+          show_filename_only = true,
+          show_modified_status = true,
+          buffers_color = {
+            active = { fg = colors.ltgrey, bg = colors.astrodark },
+            inactive = { fg = colors.ltgrey, bg = colors.astrodark },
+          },
+          separator = { left = '', right = '' },
+          right_padding = 2,
+          symbols = { alternate_file = '' },
+        },
+      },
+    },
+    tabline = {
+      -- lualine_a = {
+      --   {
+      --     'tabs',
+      --     color = { fg = colors.white, bg = colors.astrodark },
+      --     cond = function()
+      --       return #vim.fn.gettabinfo() > 1
+      --     end,
+      --     separator = { left = '', right = '' },
+      --     right_padding = 2,
+      --     -- symbols = { alternate_file = '' },
+      --   },
+      -- },
+    },
     extensions = {},
   },
 }
