@@ -58,7 +58,8 @@ return {
     'rcarriga/nvim-notify',
     opts = {
       render = 'compact',
-      timeout = 1500,
+      stages = 'slide',
+      timeout = 2250,
     },
   },
 
@@ -138,6 +139,15 @@ return {
   {
     'LintaoAmons/scratch.nvim',
     event = 'VeryLazy',
+    opts = {
+      -- scratch_file_dir = '${XDG_CACHE_HOME}/scratches',
+      use_telescope = true,
+      window_cmd = 'edit',
+      filetypes = { 'ts', 'json', 'sh', 'js' },
+      filetype_details = {
+        json = {},
+      },
+    },
   },
 
   -- Better Marks UX

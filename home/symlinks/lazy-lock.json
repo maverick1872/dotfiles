@@ -30,7 +30,7 @@
   "nvim-ts-autotag": { "branch": "main", "commit": "531f48334c422222aebc888fd36e7d109cb354cd" },
   "nvim-web-devicons": { "branch": "master", "commit": "b77921fdc44833c994fdb389d658ccbce5490c16" },
   "plenary.nvim": { "branch": "master", "commit": "a3e3bc82a3f95c5ed0d7201546d5d2c19b20d683" },
-  "scratch.nvim": { "branch": "main", "commit": "aacb6a5d4fb755e70546b5186643f5953ee68908" },
+  "scratch.nvim": { "branch": "main", "commit": "21d0fb48e0232b8a0237ca5e85264f85edb7a78f" },
   "telescope.nvim": { "branch": "master", "commit": "90143d31f20e65179308198940f5c5caf4ecdbdf" },
   "ultimate-autopair.nvim": { "branch": "v0.6", "commit": "f7c0ebca6a11316b19c0e1d31b42761c7f3ce1f4" },
   "vim-doge": { "branch": "master", "commit": "188351964c8b2540a69c1d2648b3c6e7877a016f" },
