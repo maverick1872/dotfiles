@@ -17,30 +17,25 @@ local vars = require("custom/variables")
 -- Initialize theme
 beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/" .. vars.theme .. "theme.lua")
 
-require('notifications')
-require('clients')
-require('screen')
+require("notifications")
+require("clients")
+require("screen")
 
 -- Set Global Keybindings
 require("keybinds")
 
 -- Set Rules
-require('custom/rules')
+require("custom/rules")
 
 -- Set Signals
-require('custom/signals')
+require("custom/signals")
 
 -- Auto-started applications
 awful.spawn.with_shell("~/.config/awesome/autorun.sh")
 
 -- Reduce memory consumption
-collectgarbage("setpause", 110)
-collectgarbage("setstepmul", 1000)
-gears.timer({
-  timeout = 5,
-  autostart = true,
-  call_now = true,
-  callback = function()
-    collectgarbage("collect")
-  end,
-})
+collectgarbage("incremental", 150, 600, 0)
+gears.timer.start_new(60, function()
+	collectgarbage("collect")
+	return true
+end)
