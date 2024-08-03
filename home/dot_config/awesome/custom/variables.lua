@@ -18,11 +18,10 @@ return {
 	screens = {
 		{
 			layouts = {
-				awful.layout.suit.tile.bottom,
+				awful.layout.suit.tile,
 				awful.layout.suit.max,
-				awful.layout.suit.tile.top,
 			},
-			tags = { "Personal", " Work", " Random", " Games" },
+			tags = { "Personal", "Work", "Random", "Games" },
 		},
 		{
 			layouts = {
@@ -30,15 +29,15 @@ return {
 				awful.layout.suit.tile.bottom,
 				awful.layout.suit.tile.top,
 			},
-			tags = { "Browsing", " Work", " Spotify" },
+			tags = { "Browsing", "Work", "Chat" },
 		},
 		{
 			layouts = {
-				awful.layout.suit.tile.bottom,
 				awful.layout.suit.max,
+				awful.layout.suit.tile.bottom,
 				awful.layout.suit.tile.top,
 			},
-			tags = { "Browsing", " Work", " Chat" },
+			tags = { "Browsing", "Work", "Spotify" },
 		},
 	},
 	defaultPrograms = {
