@@ -1,7 +1,6 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
 local utils = require("utils")
-local vars = require("custom/variables")
 
 awful.rules.rules = {
 	-- All clients will match this rule.
@@ -40,7 +39,6 @@ awful.rules.rules = {
 				"Wpa_gui",
 				"veromix",
 				"xtightvncviewer",
-				"gnome-calculator",
 			},
 
 			-- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -52,7 +50,6 @@ awful.rules.rules = {
 				"History for Selection",
 				"splash",
 				"Polls/Quizzes",
-				"Calculator",
 			},
 			role = {
 				"AlarmWindow", -- Thunderbird's calendar.
@@ -80,9 +77,11 @@ awful.rules.rules = {
 			},
 		},
 		properties = {
+			floating = true,
 			titlebars_enabled = false,
+			placement = awful.placement.centered,
 			callback = function(c)
-				utils.notify({ text = "Hiding titlebar" .. c.name })
+				utils.notify("Hiding titlebar for " .. c.name)
 				awful.titlebar.hide(c)
 			end,
 		},
@@ -118,8 +117,7 @@ awful.rules.rules = {
 			},
 		},
 		properties = {
-			tag = "Games",
-			screen = 2,
+			screen = 3,
 		},
 	},
 
@@ -134,8 +132,8 @@ awful.rules.rules = {
 			},
 		},
 		properties = {
-			screen = 3,
-			tag = vars.screen[3].tags[3],
+			screen = 2,
+			tag = "Chat",
 		},
 	},
 
@@ -150,8 +148,8 @@ awful.rules.rules = {
 			},
 		},
 		properties = {
-			screen = 3,
-			tag = vars.screens[3].tags[3],
+			screen = 2,
+			tag = "Chat",
 			floating = false,
 		},
 	},
@@ -167,28 +165,29 @@ awful.rules.rules = {
 			},
 		},
 		properties = {
-			screen = 3,
-			tag = vars.screens[3].tags[3],
+			screen = 2,
+			tag = "Chat",
 			floating = false,
 		},
 	},
+
 	-- Slack Mini Window
 	-- {
-	--   rule_any = {
-	--     instance = {
-	--       "slack"
-	--     },
-	--     class = {
-	--       "Slack",
-	--     }
-	--   },
-	--   properties = {
-	--     floating = true,
-	--   },
-	--   callback = function(c)
-	--     utils.notify({text = "IDE was started on screen 1"})
-	--     utils.notify({text = c.type })
-	--   end
+	-- 	rule_any = {
+	-- 		instance = {
+	-- 			"slack",
+	-- 		},
+	-- 		class = {
+	-- 			"Slack",
+	-- 		},
+	-- 	},
+	-- 	properties = {
+	-- 		floating = true,
+	-- 	},
+	-- 	callback = function(c)
+	-- 		utils.notify("Making slack miniwindow floating")
+	-- 		utils.notify(c.type)
+	-- 	end,
 	-- },
 
 	-- Spotify
@@ -202,10 +201,11 @@ awful.rules.rules = {
 			},
 		},
 		properties = {
-			screen = 2,
-			-- tag = "Spotify",
-			tag = vars.screens[2].tags[3],
+			screen = 3,
+			tag = "Spotify",
 			floating = false,
 		},
 	},
 }
+
+-- vim: expandtab:shiftwidth=2:tabstop=2:softtabstop=2:textwidth=80
