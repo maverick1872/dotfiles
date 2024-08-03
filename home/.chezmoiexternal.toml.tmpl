@@ -1,7 +1,6 @@
 [".local/share/oh-my-zsh"]
   type = "git-repo"
   url = "https://github.com/ohmyzsh/ohmyzsh.git"
-  # refreshPeriod = "168h"
 [".config/zsh/plugins/zsh-syntax-highlighting"]
   type = "git-repo"
   url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
@@ -14,6 +13,8 @@
   type = "git-repo"
   url = "https://github.com/zdharma-continuum/history-search-multi-word"
   refreshPeriod = "168h"
+{{- if contains "arch" .osID }}
 [".config/awesome/external-widgets"]
   type = "git-repo"
   url = "https://github.com/streetturtle/awesome-wm-widgets"
+{{- end }}
