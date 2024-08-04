@@ -4,5 +4,7 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
   },
-  opts = {},
+  opts = {
+    file_ignore_patterns = { '.git/' },
+  },
 }
