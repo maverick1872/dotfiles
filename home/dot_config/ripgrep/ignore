@@ -1,6 +1,2 @@
 ## Dont ignore env files that may be ignored by a gitignore
 
-# .git/
-node_modules/
-dist/
-.idea/

@@ -3,10 +3,13 @@
 
 # Search hidden files/directories by default
 --hidden
+--smart-case
 
-# Ignore files that are hidden that we do not want included
-# --glob !.git
+# Excludes
+--glob=!.git/*
+--glob=!node_modules/*
+--glob=!dist/*
+--glob=!package-lock.json
+--glob=!.idea/*
+--glob=!.vscode/*
 
-# --no-ignore
-# Leverage global ignore file
-# --ignore-file /home/maverick/.config/ripgrep/ignore

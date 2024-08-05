@@ -61,22 +61,22 @@ return function()
         -- TODO: potentially lift out to a standalone settings file
         -- vim_item.kind = string.format('%s', icons[vim_item.kind])
         vim_item.menu = ({
-          copilot = '',
           nvim_lsp = '',
           luasnip = '',
           buffer = '',
           path = '',
+          copilot = '',
         })[entry.source.name]
 
         return vim_item
       end,
     },
     sources = {
-      { name = 'copilot' },
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       -- { name = 'buffer' },
       { name = 'path' },
+      { name = 'copilot' },
     },
     experimental = {
       ghost_text = true,
