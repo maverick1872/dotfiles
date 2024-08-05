@@ -12,7 +12,7 @@ function module.apply_to_config(config)
 		bottom = 0,
 	}
 	config.default_workspace = "~"
-	config.use_fancy_tab_bar = false
+	config.use_fancy_tab_bar = true
 	config.inactive_pane_hsb = {
 		brightness = 0.8,
 	}

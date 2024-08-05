@@ -12,4 +12,12 @@ keys.apply_to_config(config)
 -- Quirk: this relies on the keys being applied first
 keytables.apply_to_config(config)
 
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+	local title = string.format(" %s  %s ~ %s  ", "❯", utils.get_current_working_dir(tab))
+
+	return {
+		{ Text = title },
+	}
+end)
+
 return config

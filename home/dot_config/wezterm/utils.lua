@@ -42,4 +42,11 @@ function module.basename(s)
 	return string.gsub(s, "(.*[/\\])(.*)", "%2")
 end
 
+function module.get_current_working_dir(tab)
+	local current_dir = tab.active_pane.current_working_dir
+	local HOME_DIR = string.format("file://%s", os.getenv("HOME"))
+
+	return current_dir == HOME_DIR and "." or string.gsub(current_dir, "(.*[/\\])(.*)", "%2")
+end
+
 return module
