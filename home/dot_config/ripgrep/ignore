@@ -1,2 +1,8 @@
-## Dont ignore env files that may be ignored by a gitignore
+# Files that should be ignored in rg results
+.git/
+dist/
+package-lock.json
+.idea/
+.vscode/
 
+# vim: set ft=gitignore:

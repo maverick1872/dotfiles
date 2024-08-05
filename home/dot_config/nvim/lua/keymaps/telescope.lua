@@ -1,11 +1,27 @@
 local map = require('utils').map
 local is_available = require('utils').is_available
 if is_available 'telescope.nvim' then
-  map('n', '<leader>ss', require('telescope.builtin').resume, 'Resume previous search')
-  map('n', '<leader>sk', require('telescope.builtin').keymaps, 'Search keybindings')
-  map('n', '<leader>sw', require('telescope.builtin').live_grep, 'Search words')
-  map('n', '<leader>sf', require('telescope.builtin').find_files, 'Search files')
-  map('n', '<leader>s/', require('telescope.builtin').current_buffer_fuzzy_find, 'Search for words in current buffer')
+  local builtins = require 'telescope.builtin'
+  map('n', '<leader>ss', builtins.resume, 'Resume previous search')
+  map('n', '<leader>sk', builtins.keymaps, 'Search keybindings')
+  map('n', '<leader>sw', builtins.live_grep, 'Search words')
+  map('n', '<leader>sf', builtins.find_files, 'Search files')
+  map('n', '<leader>s/', builtins.current_buffer_fuzzy_find, 'Search for words in current buffer')
+
+  map('n', '<leader>suf', function()
+    builtins.find_files {
+      hidden = true,
+      no_ignore = true,
+    }
+  end, 'Search files')
+
+  map('n', '<leader>suw', function()
+    builtins.live_grep {
+      hidden = true,
+      no_ignore = true,
+    }
+  end, 'Search words')
+
   if is_available 'nvim-notify' then
     map('n', '<leader>sn', function()
       require('telescope').extensions.notify.notify()
@@ -26,23 +42,23 @@ if is_available 'telescope.nvim' then
 
   -- Git related maps
   map('n', '<leader>gb', function()
-    require('telescope.builtin').git_branches { use_file_path = true }
+    builtins.git_branches { use_file_path = true }
   end, 'Git branches')
   -- map.n['<leader>gc'] = {
   --   function()
-  --     require('telescope.builtin').git_commits { use_file_path = true }
+  --     builtins.git_commits { use_file_path = true }
   --   end,
   --   desc = 'Git commits (repository)',
   -- }
   -- map.n['<leader>gC'] = {
   --   function()
-  --     require('telescope.builtin').git_bcommits { use_file_path = true }
+  --     builtins.git_bcommits { use_file_path = true }
   --   end,
   --   desc = 'Git commits (current file)',
   -- }
   -- map.n['<leader>gt'] = {
   --   function()
-  --     require('telescope.builtin').git_status { use_file_path = true }
+  --     builtins.git_status { use_file_path = true }
   --   end,
   --   desc = 'Git status',
   -- }
@@ -53,7 +69,7 @@ if is_available 'telescope.nvim' then
   --     if aerial_avail then
   --       require('telescope').extensions.aerial.aerial()
   --     else
-  --       require('telescope.builtin').lsp_document_symbols()
+  --       builtins.lsp_document_symbols()
   --     end
   --   end,
   --   desc = 'Search symbols',

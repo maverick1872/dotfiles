@@ -18,6 +18,7 @@ return {
       ['<leader>p'] = 'Packages',
       ['<leader>g'] = 'Git',
       ['<leader>s'] = 'Search',
+      ['<leader>su'] = 'Search Unrestricted',
       ['<leader>t'] = 'Temp (scratch) Files',
     }, { mode = 'n' })
 

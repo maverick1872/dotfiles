@@ -1,0 +1,4 @@
+# Files that should always be included in rg results
+!.env
+
+# vim: set ft=gitignore:
