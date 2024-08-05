@@ -36,6 +36,8 @@ local options = {
   foldexpr = 'nvim_treesitter#foldexpr()',
   foldtext = [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').' ... '.trim(getline(v:foldend)) ]],
   fillchars = 'fold: ',
+  title = true,
+  titlestring = "IDE - %{substitute(getcwd(),'^.*/','','')}",
 }
 
 for k, v in pairs(options) do
