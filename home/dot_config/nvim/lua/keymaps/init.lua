@@ -53,7 +53,7 @@ map('n', '<S-h>', ':bprevious<CR>', 'Previous buffer')
 
 -- Changes
 map('n', '<leader>gj', ']c', 'Next change', { remap = true })
-map('n', '<leader>gu', '[c', 'Previous change', { remap = true })
+map('n', '<leader>gk', '[c', 'Previous change', { remap = true })
 map({ 'n', 'v' }, ']c', function()
   if vim.wo.diff then
     return ']c'
