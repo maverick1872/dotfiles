@@ -6,14 +6,19 @@ return {
   event = 'VeryLazy',
   branch = 'main',
   opts = {
-    -- See `:help gitsigns.txt`
-    -- The following is experimental and subject to change
-    _signs_staged_enable = true,
     signs = {
       add = { text = '│' },
       change = { text = '│' },
-      delete = { text = '_' },
-      topdelete = { text = '‾' },
+      delete = { text = '^', show_count = true },
+      topdelete = { text = 'v' },
+      changedelete = { text = '~' },
+      untracked = { text = '┆' },
+    },
+    signs_staged = {
+      add = { text = '│' },
+      change = { text = '│' },
+      delete = { text = '^' },
+      topdelete = { text = 'v' },
       changedelete = { text = '~' },
       untracked = { text = '┆' },
     },
