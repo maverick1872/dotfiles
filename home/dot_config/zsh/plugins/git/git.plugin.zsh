@@ -39,15 +39,20 @@ gc() {
 
   # Separate options (strings starting with '-') from any other argument
   for arg in "$*"; do
-    if [[ $arg == -* ]]; then
-      flags+=("$arg")
-    else
-      non_flags+=("$arg")
+    if [ -n "$arg" ]; then
+      if [[ $arg == -* ]]; then
+        flags+=("$arg")
+      else
+        non_flags+=("$arg")
+      fi
     fi
   done
 
-  git commit ${flags[@]} -m "${non_flags[@]}"
-}
+  if [[ ${#non_flags[@]} -gt 0 ]]; then
+    git commit "${flags[@]}" -m "${non_flags[@]}"
+  else
+    git commit "${flags[@]}"
+  fi}
 
 ## Commit staged files and push
 gcp() {
