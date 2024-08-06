@@ -2,34 +2,19 @@
 return {
   'folke/which-key.nvim',
   event = 'VeryLazy',
-  init = function()
-    vim.o.timeout = true
-    vim.o.timeoutlen = 300
-  end,
-  config = function(_, opts)
-    local wk = require 'which-key'
-    wk.setup(opts)
-    wk.register(opts.defaults)
-    -- Register Normal mode labels
-
-    wk.register({
-      ['<leader>b'] = 'Buffers',
-      ['<leader>l'] = 'LSP',
-      ['<leader>p'] = 'Packages',
-      ['<leader>g'] = 'Git',
-      ['<leader>s'] = 'Search',
-      ['<leader>su'] = 'Search Unrestricted',
-      ['<leader>t'] = 'Temp (scratch) Files',
-    }, { mode = 'n' })
-
-    -- Register Visual mode labels
-    wk.register({
-      ['<leader>l'] = 'LSP',
-    }, { mode = 'v' })
-  end,
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
+    delay = 400,
+    notify = true,
+    icons = { mappings = false },
+    spec = {
+      { '<leader>b', group = 'Buffers' },
+      { '<leader>l', group = 'LSP' },
+      { '<leader>p', group = 'Packages' },
+      { '<leader>g', group = 'Git' },
+      { '<leader>s', group = 'Search' },
+      { '<leader>su', group = 'Search Unrestricted' },
+      { '<leader>t', group = 'Temp (scratch) Files' },
+      { '<leader>l', group = 'LSP', mode = 'v' },
+    },
   },
 }
