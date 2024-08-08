@@ -22,6 +22,7 @@ function module.apply_to_config(config)
 	config.status_update_interval = 1000
 	config.color_scheme = "One Dark (Gogh)"
 	config.colors = wezterm.color.get_builtin_schemes()[config.color_scheme]
+	config.font_size = 12.0
 
 	-- must come after setting the color scheme
 	utils.create_tab_bar_colorscheme(config)
