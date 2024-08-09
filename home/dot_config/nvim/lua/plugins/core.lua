@@ -154,6 +154,7 @@ return {
   {
     'chentoast/marks.nvim',
     event = 'VeryLazy',
+    disable = true,
     opts = {
       -- whether to map keybinds or not. default true
       default_mappings = true,
@@ -190,5 +191,12 @@ return {
       },
       mappings = {},
     },
+  },
+
+  -- Better folding
+  {
+    'kevinhwang91/nvim-ufo',
+    disable = true,
+    dependencies = { 'kevinhwang91/promise-async' },
   },
 }
