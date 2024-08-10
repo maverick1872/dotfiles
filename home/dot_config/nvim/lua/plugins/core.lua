@@ -192,11 +192,4 @@ return {
       mappings = {},
     },
   },
-
-  -- Better folding
-  {
-    'kevinhwang91/nvim-ufo',
-    disable = true,
-    dependencies = { 'kevinhwang91/promise-async' },
-  },
 }
