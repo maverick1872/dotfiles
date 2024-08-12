@@ -23,10 +23,10 @@ dco() {
     strict_mode
     local header="Name|Status|Created At|Ports|Networks"
     local container_info=$(docker compose ps -q | xargs docker inspect --format "{{index .Config.Labels \"com.docker.compose.service\"}}|\
-{{.State.Status}}|\
-{{slice .Created 0 19}}|\
-{{range .NetworkSettings.Ports}}{{.HostIp}}:{{.HostPort}}->{{.ContainerPort}}{{end}}|\
-{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}")
+      {{.State.Status}}|\
+      {{slice .Created 0 19}}")
+# {{range .NetworkSettings.Ports}}{{.HostIp}}:{{.HostPort}}->{{.ContainerPort}}{{end}}|\
+# {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}")
     strict_mode off
 
     print $header'\n'$container_info | column -ts '|'
