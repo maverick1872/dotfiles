@@ -3,13 +3,13 @@ gcopr() {
   if [[ -n $1 ]]; then
     gh pr checkout "$1"
   else
-    GH_FORCE_TTY=100% gh pr list \
+    GH_FORCE_TTY=100% gh pr list --limit=100 \
       | fzf --prompt='Filter PRs: ' \
         --border \
         --height '~50%' \
         --reverse \
         --ansi \
-        --header-lines 3 \
+        --header-lines 4 \
         --preview 'GH_FORCE_TTY=100% gh pr view {1}' \
         --preview-window 'down' \
       | awk '{print $1}' | xargs gh pr checkout
