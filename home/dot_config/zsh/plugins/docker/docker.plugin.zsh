@@ -1,4 +1,5 @@
 alias clean-images='docker images -aq | xargs docker rmi'
+alias stop-containers='docker ps -aq | xargs docker stop'
 alias clean-containers='docker ps -aq | xargs docker rm'
 alias clean-volumes='docker volume ls -q | xargs docker volume rm'
 
