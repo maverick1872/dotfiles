@@ -1,4 +1,5 @@
 cask "slack"
 cask "google-cloud-sdk"
+cask "cloudflare-warp"
 
 brew "java"

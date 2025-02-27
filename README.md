@@ -2,9 +2,23 @@
 
 To use these dotfiles the following command will install Chezmoi, and then apply these dotfiles.
 ```sh
+## Install GitHub CLI via your choice of package manager
+# sudo pacman -S gh
+# brew install gh
+
+## Authenticate to GitHub and ensure SSH key is configured
+# gh auth login -p ssh
+
+## Configure GPG Commit signing
+# 
+
 ## Install chezmoi via your choice of package manager
 # sudo pacman -S chezmoi
 # brew install chezmoi
+
+## Install bitwarden cli via your choice of package manager
+# sudo pacman -S bitwarden-cli
+# brew install bitwarden-cli
 
 ## Clone this repoo via ssh, run the interactive configuration, then apply the dotfiles
 chezmoi init maverick1872 --ssh --apply

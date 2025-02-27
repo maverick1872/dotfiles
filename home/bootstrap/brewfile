@@ -1,20 +1,18 @@
 tap "homebrew/bundle"
 tap "homebrew/services"
-tap "homebrew/cask-fonts"
 
-cask "docker"
+cask "orbstack"
 cask "firefox"
 cask "iterm2"
+cask "wezterm"
 cask "spotify"
 cask "rar"
 cask "font-sauce-code-pro-nerd-font" #subject to change
 cask "postman"
 cask "karabiner-elements"
 
-brew "bitwarden-cli"
 brew "coreutils"
 brew "git"
-brew "gh"
 brew "jq"
 brew "yq"
 brew "ripgrep"
