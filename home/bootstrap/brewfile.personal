@@ -1,3 +1,4 @@
 brew "ffmpeg" 
 
 cask "autodesk-fusion"
+cask "signal"
