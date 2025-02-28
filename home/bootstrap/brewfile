@@ -12,6 +12,7 @@ cask "postman"
 cask "karabiner-elements"
 
 brew "coreutils"
+brew "gnupg"
 brew "git"
 brew "jq"
 brew "yq"
