@@ -1,2 +1,3 @@
-brew "autodesk-fusion"
 brew "ffmpeg" 
+
+cask "autodesk-fusion"
