@@ -4,16 +4,18 @@ if (( ! $+commands[rg] )); then
   return
 fi
 
-export RIPGREP_CONFIG="$HOME/.config/ripgrep"
-export RIPGREP_CONFIG_PATH="${RIPGREP_CONFIG}/config"
+export RIPGREP_CONFIG_DIR="$HOME/.config/ripgrep"
+export RIPGREP_CONFIG_PATH="${RIPGREP_CONFIG_DIR}/config"
+
+alias rg='rg --ignore-file=${RIPGREP_CONFIG_DIR}/ignore'
 
 # Search and replace leveraging ripgrep
 {{- if contains "linux" .osID }}
 rg-sr() {
-  rg $1 --hidden --files-with-matches | xargs -p sed -Eie "s|${1}|${2}|g"
+  rg $1 --hidden --files-with-matches | xargs -p sed -Ee "s|${1}|${2}|g"
 }
 {{- else }}
 rg-sr() {
-  rg $1 --hidden --files-with-matches | xargs -p sed -Eie '' "s|${1}|${2}|g"
+  rg $1 --hidden --files-with-matches | xargs -p sed -Ee "s|${1}|${2}|g"
 }
 {{- end }}

@@ -5,5 +5,3 @@
 --hidden
 # Leverage smart case
 --smart-case
-# Apply some global ignore patterns given hidden files are being included
---ignore-file=/home/maverick/.config/ripgrep/ignore
