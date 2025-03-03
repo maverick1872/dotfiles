@@ -8,11 +8,13 @@ cask "wezterm"
 cask "spotify"
 cask "rar"
 cask "font-sauce-code-pro-nerd-font" #subject to change
+cask "font-fira-code-nerd-font"
 cask "postman"
 cask "karabiner-elements"
 
 brew "coreutils"
 brew "gnupg"
+brew "gnu-sed"
 brew "git"
 brew "jq"
 brew "yq"

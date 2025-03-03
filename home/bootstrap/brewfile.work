@@ -1,5 +1,9 @@
+tap "hashicorp/tap"
+
 cask "slack"
 cask "google-cloud-sdk"
 cask "cloudflare-warp"
 
 brew "java"
+brew "hashicorp/tap/terraform"
+brew "terragrunt"

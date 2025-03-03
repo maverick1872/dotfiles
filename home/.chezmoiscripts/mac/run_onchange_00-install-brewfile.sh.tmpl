@@ -22,11 +22,8 @@ fi
 ## brewfile hash: {{ include "bootstrap/brewfile.personal" | sha256sum }}
 brew bundle --no-lock --file={{ joinPath .chezmoi.sourceDir "bootstrap/brewfile.personal" | quote }}
 
-else
+fi
 
 ## Install Work Brewfile
 # brewfile hash: {{ include "bootstrap/brewfile.work" | sha256sum }}
 brew bundle --no-lock --file={{ joinPath .chezmoi.sourceDir "bootstrap/brewfile.work" | quote }}
-
-fi
-
