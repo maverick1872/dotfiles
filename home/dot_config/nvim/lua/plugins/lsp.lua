@@ -1,3 +1,36 @@
+local serverConfigs = {
+  lua_ls = {
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim' },
+        },
+        workspace = {
+          library = {
+            [vim.fn.expand '$VIMRUNTIME/lua'] = true,
+            [vim.fn.stdpath 'config' .. '/lua'] = true,
+          },
+        },
+      },
+    },
+  },
+  yamlls = {
+    settings = {
+      yaml = {
+        keyOrdering = false,
+      },
+    },
+  },
+  jsonls = {
+    settings = {
+      format = {
+        enable = true,
+      },
+      validate = { enable = true },
+    },
+  },
+}
+
 return {
   'neovim/nvim-lspconfig',
   event = 'VeryLazy',
@@ -59,7 +92,7 @@ return {
     mason_lspconfig.setup_handlers {
       function(server)
         require('utils').notify('setting up lsp server: ' .. server, 'debug')
-        local serverConfig = require('plugins.configs.lsp')[server]
+        local serverConfig = serverConfigs[server]
         if serverConfig == nil then
           lspconfig[server].setup {}
         else
