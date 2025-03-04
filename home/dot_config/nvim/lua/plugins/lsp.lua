@@ -39,7 +39,7 @@ return {
         'bashls', -- Bash (minimal support for ZSH)
         'lua_ls', -- Lua
         'dockerls', -- Docker
-        'tsserver', -- Typescript/Javascript
+        'ts_ls', -- Typescript/Javascript
         'helm-ls', -- Helm
 
         --- Formatters ---
