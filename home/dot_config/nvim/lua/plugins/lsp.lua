@@ -24,6 +24,7 @@ return {
 
     ------ Setup Mason Tool Installer ------
     require('mason-tool-installer').setup {
+      run_on_start = true,
       -- https://mason-registry.dev/registry/list
       ensure_installed = {
         --- Language Servers ---
