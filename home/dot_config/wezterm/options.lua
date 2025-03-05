@@ -22,8 +22,9 @@ function module.apply_to_config(config)
 	config.status_update_interval = 1000
 	config.color_scheme = "One Dark (Gogh)"
 	config.colors = wezterm.color.get_builtin_schemes()[config.color_scheme]
+	config.colors.foreground = "silver"
 	config.font_size = 13.0
-	config.font = wezterm.font("Fira Nerd Font Mono", {weight="Regular", stretch="Normal", style="Normal"})
+	config.font = wezterm.font("FiraCode Nerd Font Mono", { weight = "Regular", stretch = "Normal", style = "Normal" })
 
 	-- must come after setting the color scheme
 	utils.create_tab_bar_colorscheme(config)
