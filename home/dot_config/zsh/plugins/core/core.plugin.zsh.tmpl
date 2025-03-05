@@ -63,6 +63,7 @@ list-path-dirs() {
 # General
 {{- if contains "darwin" .osID }}
 alias ls='gls --color'
+alias sed='gsed'
 {{- end }}
 alias l='ls -lh --group-directories-first -v'
 alias la='ls -lhA --group-directories-first -v'
@@ -81,8 +82,8 @@ reload-shell() {
 # GPG Key Management
 alias gen-gpg-key='gpg --full-generate-key --expert'
 
-# Function to export GPG keys using FZF with enriched file names
-export-gpg() {
+# Function to enable exporting GPG keys using FZF with enriched file names for backup purposes
+backup-gpg() {
   local key_list
   key_list=$(gpg --list-keys --with-colons | awk -F: '/^pub:/ {print $5}')
 
@@ -99,13 +100,14 @@ export-gpg() {
     return 1
   fi
 
-  local export_directory="$GNUPGHOME/exports"
-  [[ ! -d "$export_directory" ]] && mkdir -p "$export_directory"
+  local backup_dir="$GNUPGHOME/backup"
+  [[ ! -d "$backup_dir" ]] && mkdir -p "$backup_dir"
 
   local export_date=$(date +"%Y-%m-%d")
-  local main_private_key_filename="${export_directory}/${selected_key}_${export_date}.private.key"
-  local main_public_key_filename="${export_directory}/${selected_key}_${export_date}.public.asc"
-  local subkey_private_key_filename="${export_directory}/${selected_key}_subkeys_${export_date}.private.key"
+  local main_private_key_filename="${backup_dir}/${selected_key}_${export_date}.private.key"
+  local main_public_key_filename="${backup_dir}/${selected_key}_${export_date}.public.asc"
+  local subkey_private_key_filename="${backup_dir}/${selected_key}_subkeys_${export_date}.private.key"
+  local trust_filename=${backup_dir}/owner_trust_${export_date}.txt"
 
   # Export the main public key
   gpg --export "$selected_key" > "$main_public_key_filename"
@@ -114,7 +116,11 @@ export-gpg() {
   gpg --export-secret-keys "$selected_key" > "$main_private_key_filename"
   gpg --export-secret-subkeys "$selected_key" > "$subkey_private_key_filename"
 
-  echo "Private & public keys exported to $export_directory"
+  # Export owner trust
+  gpg --export-ownertrust > "$trust_filename"
+  echo "Owner trust saved: $trust_filename"
+
+  echo "Private & public keys exported to $backup_dir"
 }
 
 {{- if contains "darwin" .osID }}
