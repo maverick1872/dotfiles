@@ -17,7 +17,6 @@ return {
     'tpope/vim-sleuth',
     event = 'VeryLazy',
   },
-
   -- Auto highlighting text under cursor by LSP, Treesitter, or Regex
   {
     'rrethy/vim-illuminate',
@@ -26,9 +25,11 @@ return {
 
   -- Autopair
   {
-    'altermo/ultimate-autopair.nvim',
-    event = { 'InsertEnter', 'CmdlineEnter' },
-    branch = 'v0.6', --recomended as each new version will have breaking changes
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
   },
 
   -- Treesitter informed code comments
