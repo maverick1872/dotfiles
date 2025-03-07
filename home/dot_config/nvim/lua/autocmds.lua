@@ -23,29 +23,37 @@ autoCmd('FileType', {
 
 -- Auto apply chezmoi source to target when written
 autoCmd('BufWritePost', {
-  pattern = expand '~' .. '/.local/share/chezmoi/*',
+  pattern = expand '~' .. '/.local/share/chezmoi/home/dot_config*',
   callback = function()
     vim.cmd 'silent !chezmoi apply --source-path "<afile>:p"'
   end,
 })
 
--- Display diagnostics as virtual text only if not in insert mode
+-- Enable presentation mode for all node modules
+autoCmd('BufReadPost', {
+  pattern = '*/node_modules/*',
+  callback = function()
+    vim.g.presentation_mode = true
+    vim.diagnostic.enable(false)
+  end,
+  desc = 'Enable presentation mode for files in node_modules',
+})
+
+-- Hide diagnostics in all cases when in insert mode
 autoCmd('InsertEnter', {
   pattern = '*',
   callback = function()
-    vim.diagnostic.config {
-      virtual_text = false,
-    }
+    vim.diagnostic.enable(false)
   end,
 })
-autoCmd('InsertLeave', {
-  pattern = '*',
-  callback = function()
-    vim.diagnostic.config {
-      virtual_text = true,
-    }
-  end,
-})
+-- autoCmd('InsertLeave', {
+--   pattern = '*',
+--   callback = function()
+--     if not vim.g.presenation_mode then
+--       vim.diagnostic.enable()
+--     end
+--   end,
+-- })
 
 autoCmd('User', {
   pattern = 'TelescopePreviewerLoaded',

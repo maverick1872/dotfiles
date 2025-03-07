@@ -4,6 +4,9 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Set custom globals
+vim.g.presentation_mode = false
+
 ------ Vim Options, ------
 local options = {
   number = true, -- Make line numbers default

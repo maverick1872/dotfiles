@@ -6,12 +6,16 @@ map('n', '<leader>ll', function()
   vim.cmd 'ListLspCapabilities'
 end, 'Buffer Clients Information')
 
--- Distraction Free
+-- Presentation mode
 map('n', '<leader>lp', function()
-  vim.diagnostic.config {
-    virtual_text = not vim.diagnostic.config.virtual_text,
-  }
-end, 'Distraction free mode')
+  if vim.g.presentation_mode then
+    vim.g.presentation_mode = false
+    vim.diagnostic.enable()
+  else
+    vim.g.presentation_mode = true
+    vim.diagnostic.enable(false)
+  end
+end, 'Presentation mode')
 
 -- Treesitter
 if is_available 'nvim-treesitter' then
