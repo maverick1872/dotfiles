@@ -1,4 +1,5 @@
 brew "ffmpeg" 
 
 cask "autodesk-fusion"
+cask "bambu-studio"
 cask "signal"
