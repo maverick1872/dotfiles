@@ -1,15 +1,18 @@
 ### Source: https://superuser.com/questions/902241/how-to-make-zsh-not-store-failed-command/902508#902508
- zshaddhistory() {
-   local j=1
-   while ([[ ${${(z)1}[$j]} == *=* ]]) {
-     ((j++))
-   }
-   whence ${${(z)1}[$j]} >| /dev/null || return 1
- }
+zshaddhistory() {
+  local j=1
+  while ([[ ${${(z)1}[$j]} == *=* ]]) {
+   ((j++))
+  }
+  whence ${${(z)1}[$j]} >| /dev/null || return 1
+}
 
-# Short-hand to grep all aliases available
+# Short-hand to grep across all aliases and functions available
 search-aliases() {
+  echo -e "\nAliases:\n------------------"
   alias | grep "$1" --color
+  echo -e "\nFunctions:\n------------------"
+  functions | grep "$1\s()" --color
 }
 
 strict_mode(){
@@ -51,7 +54,7 @@ show-port() {
 
 _debug() {
   if [[ -n $ZSH_DEBUG ]]; then
-	  echo "[ZSH] $1"
+    echo "[ZSH] $1"
   fi
 }
 
@@ -71,6 +74,8 @@ alias ld='ls -lhd --group-directories-first -v */'
 alias lda='ls -lhd --group-directories-first -v */ .*/'
 alias rm!='rm -rf'
 alias edit='$EDITOR'
+
+alias random-string='openssl rand -base64 16'
 
 reload-shell() {
   if [[ $1 == "debug" ]]; then
@@ -107,7 +112,7 @@ backup-gpg() {
   local main_private_key_filename="${backup_dir}/${selected_key}_${export_date}.private.key"
   local main_public_key_filename="${backup_dir}/${selected_key}_${export_date}.public.asc"
   local subkey_private_key_filename="${backup_dir}/${selected_key}_subkeys_${export_date}.private.key"
-  local trust_filename=${backup_dir}/owner_trust_${export_date}.txt"
+  local trust_filename="${backup_dir}/owner_trust_${export_date}.txt"
 
   # Export the main public key
   gpg --export "$selected_key" > "$main_public_key_filename"
