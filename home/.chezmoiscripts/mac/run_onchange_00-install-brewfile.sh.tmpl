@@ -8,7 +8,7 @@ fi
 
 ## Install Base Brewfile
 ## brewfile hash: {{ include "bootstrap/brewfile" | sha256sum }}
-brew bundle --no-lock --file={{ joinPath .chezmoi.sourceDir "bootstrap/brewfile" | quote }}
+brew bundle --file={{ joinPath .chezmoi.sourceDir "bootstrap/brewfile" | quote }}
 
 
 if [[ "${IS_PERSONAL}" == "true" ]]; then
@@ -20,10 +20,10 @@ fi
 
 ## Install Personal Brewfile
 ## brewfile hash: {{ include "bootstrap/brewfile.personal" | sha256sum }}
-brew bundle --no-lock --file={{ joinPath .chezmoi.sourceDir "bootstrap/brewfile.personal" | quote }}
+brew bundle --file={{ joinPath .chezmoi.sourceDir "bootstrap/brewfile.personal" | quote }}
 
 fi
 
 ## Install Work Brewfile
 # brewfile hash: {{ include "bootstrap/brewfile.work" | sha256sum }}
-brew bundle --no-lock --file={{ joinPath .chezmoi.sourceDir "bootstrap/brewfile.work" | quote }}
+brew bundle --file={{ joinPath .chezmoi.sourceDir "bootstrap/brewfile.work" | quote }}
