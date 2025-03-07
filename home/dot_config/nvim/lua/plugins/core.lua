@@ -131,6 +131,7 @@ return {
 
   -- Documentation Generator
   {
+    enabled = false,
     'kkoomen/vim-doge',
     event = 'BufEnter',
   },

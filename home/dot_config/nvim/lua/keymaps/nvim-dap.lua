@@ -1,9 +1,11 @@
 local map = require('utils').map
 local is_available = require('utils').is_available
+local notify = require('utils').notify
 -- local get_icon = require('utils').get_icon
 -- local section = { desc = get_icon('Debugger', 1, true) .. 'Debugger' }
 
 if is_available 'nvim-dap' then
+  notify 'binding nvim-dap keybinds'
   map({ 'n', 'v' }, '<leader>d', 'Debugger')
   -- modified function keys found with `showkey -a` in the terminal to get key code
   -- run `nvim -V3log +quit` and search through the "Terminal info" in the `log` file for the correct keyname
@@ -43,6 +45,7 @@ if is_available 'nvim-dap' then
   map('n', '<leader>ds', require('dap').run_to_cursor, 'Run To Cursor')
 
   if is_available 'nvim-dap-ui' then
+    notify 'binding nvim-dap-ui keybinds'
     map('n', '<leader>dE', function()
       vim.ui.input({ prompt = 'Expression: ' }, function(expr)
         if expr then

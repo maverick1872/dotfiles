@@ -9,6 +9,7 @@ return {
     spec = {
       { '<leader>b', group = 'Buffers' },
       { '<leader>l', group = 'LSP' },
+      { '<leader>d', group = 'Debugger' },
       { '<leader>p', group = 'Packages' },
       { '<leader>g', group = 'Git' },
       { '<leader>s', group = 'Search' },
