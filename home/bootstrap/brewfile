@@ -28,6 +28,6 @@ brew "git-delta"
 brew "fzf"
 brew "fnm"
 brew "zoxide"
-brew "restic"
-brew "resticprofile"
+brew "restic" # Backup utitlity that's os agnostic
+brew "resticprofile" # Profile based wrapper for Restic
 
