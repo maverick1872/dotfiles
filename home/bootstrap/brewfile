@@ -1,5 +1,6 @@
 tap "homebrew/bundle"
 tap "homebrew/services"
+tap "creativeprojects/tap"
 
 cask "orbstack"
 cask "firefox"
@@ -27,4 +28,6 @@ brew "git-delta"
 brew "fzf"
 brew "fnm"
 brew "zoxide"
+brew "restic"
+brew "resticprofile"
 

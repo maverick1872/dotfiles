@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://creativeprojects.github.io/resticprofile/jsonschema/config.json
+
+version: "1"
+default:
+  repository: "sftp:terry@homeserver:/mnt/Redundant/Backups/MacBook Pro 18"
+  password-file: "{{ .Env.RESTIC_CONFIG_DIR }}/repo-pass.txt"
+  backup:
+    verbose: true
+    exclude-file: "{{ .Env.RESTIC_CONFIG_DIR }}/exclude.txt"
+    source:
+      - "{{ .Env.HOME }}"

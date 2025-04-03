@@ -23,9 +23,9 @@ plugins=(
   git
   github
   node
+  restic
   ripgrep
   rust
-  tmux
   zoxide
   zsh-syntax-highlighting
   zsh-autosuggestions
