@@ -4,11 +4,9 @@ tap "creativeprojects/tap"
 
 cask "orbstack"
 cask "firefox"
-cask "iterm2"
 cask "wezterm"
 cask "spotify"
 cask "rar"
-cask "font-sauce-code-pro-nerd-font" #subject to change
 cask "font-fira-code-nerd-font"
 cask "postman"
 cask "karabiner-elements"
