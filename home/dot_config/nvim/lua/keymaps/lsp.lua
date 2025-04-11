@@ -38,10 +38,13 @@ end
 
 local lspFormat = function(bufnr)
   local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-  -- TODO: Make calls to null-ls protected in case null ls is unavilable
-  local available_sources = require('null-ls.sources').get_available
-  local attachedSources = available_sources(ft, require('null-ls.methods').internal.FORMATTING)
-  local nullLsHasFiletype = #attachedSources > 0
+  if is_available 'null-ls.nvim' then
+    local available_sources = require('null-ls.sources').get_available
+    local attachedSources = available_sources(ft, require('null-ls.methods').internal.FORMATTING)
+    local nullLsHasFiletype = #attachedSources > 0
+  else 
+    local nullLsHasFiletype = false
+  end
   notify('Formatting sources attached: ' .. vim.inspect(attachedSources), 'debug')
   vim.lsp.buf.format {
     bufnr = bufnr,

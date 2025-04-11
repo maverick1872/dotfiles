@@ -1,3 +1,5 @@
+local is_available = require('utils').is_available
+
 local serverConfigs = {
   lua_ls = {
     settings = {
@@ -61,26 +63,26 @@ return {
       -- https://mason-registry.dev/registry/list
       ensure_installed = {
         --- Language Servers ---
-        'jsonls', -- JSON
-        'marksman', -- Markdown
-        'prismals', -- Prisma ORM
+        'jsonls',        -- JSON
+        'marksman',      -- Markdown
+        'prismals',      -- Prisma ORM
         'rust_analyzer', -- Rust
-        'sqlls', -- SQL
-        'volar', -- Vue
-        'yamlls', -- YAML
-        'terraformls', -- Terraform
-        'bashls', -- Bash (minimal support for ZSH)
-        'lua_ls', -- Lua
-        'dockerls', -- Docker
-        'ts_ls', -- Typescript/Javascript
-        'helm-ls', -- Helm
+        'sqlls',         -- SQL
+        'volar',         -- Vue
+        'yamlls',        -- YAML
+        'terraformls',   -- Terraform
+        'bashls',        -- Bash (minimal support for ZSH)
+        'lua_ls',        -- Lua
+        'dockerls',      -- Docker
+        'ts_ls',         -- Typescript/Javascript
+        'helm-ls',       -- Helm
 
         --- Formatters ---
-        'eslint_d', -- Daemonized Eslint
+        'eslint_d',  -- Daemonized Eslint
         'prettierd', -- Daemonized Prettier
-        'shfmt', -- Shell (sh/bash/mksh)
-        'stylua', -- Lua
-        'yamlfmt', -- Yaml
+        'shfmt',     -- Shell (sh/bash/mksh)
+        'stylua',    -- Lua
+        'yamlfmt',   -- Yaml
       },
     }
 
@@ -102,6 +104,8 @@ return {
     }
 
     ------ Automatic Configuration of Null-ls sources ------
-    require('mason-null-ls').setup { handlers = {} }
+    if is_available 'null-ls.nvim' then
+      require('mason-null-ls').setup { handlers = {} }
+    end
   end,
 }
