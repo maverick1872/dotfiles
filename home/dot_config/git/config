@@ -4,6 +4,7 @@
 [core]
   pager = delta
   commentChar = ";"
+	hooksPath = /home/maverick/.config/git/hooks
 
 [interactive]
   diffFilter = delta --color-only
@@ -31,12 +32,11 @@
 [push]
   autoSetupRemote = true
 
-[spr]
-  requiretestplan = false
-
 [rerere]
 	enabled = true
+
 [column]
 	ui = auto
+
 [branch]
 	sort = -committerdate
