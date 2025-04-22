@@ -12,5 +12,7 @@ run() {
 }
 
 run picom -b
-run xidlehook --timer 300 '$AWESOME_CONFIG/utils/scripts/lockscreen.sh' ''
+run flameshot
+run xidlehook --not-when-audio --timer 300 '$AWESOME_CONFIG/utils/scripts/lockscreen.sh' ''
 run xidlehook --not-when-audio --timer 3600 'systemctl suspend' ''
+

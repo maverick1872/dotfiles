@@ -41,7 +41,7 @@ return {
 		},
 	},
 	defaultPrograms = {
-		terminal = "kitty",
+		terminal = "wezterm",
 		editor = os.getenv("EDITOR") or "vim",
 	},
 	autoStartedApplications = "${HOME}/.config/awesome/autorun.sh",
