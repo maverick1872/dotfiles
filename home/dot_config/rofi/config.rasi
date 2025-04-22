@@ -10,7 +10,7 @@ configuration {
 	fixed-num-lines: false;
 	show-icons: true;
 	drun-icon-theme: "Newaita-Dark";
-	terminal: "kitty";
+	terminal: "wezterm";
 	run-shell-command: "{terminal} -e {cmd}";
 	window-match-fields: "all";
 	drun-match-fields: "name,exec";
