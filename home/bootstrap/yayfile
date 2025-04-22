@@ -21,7 +21,7 @@ github-cli
 go-yq
 grub
 jq
-kitty
+wezterm
 linux-headers
 linux-lts
 man-db
