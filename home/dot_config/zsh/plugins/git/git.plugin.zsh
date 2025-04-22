@@ -89,6 +89,15 @@ ucp() {
 #   git switch -c $1 || git switch $1
 # }
 
+## Git Stash w/ message
+gsta() {
+  git stash push -m "$*"
+}
+
+gstas() {
+  git stash push --staged -m "$*"
+}
+
 clean_merged_branches() {
   git checkout -q main && git for-each-ref refs/heads/ "--format=%(refname:short)" | \
   while read branch; do
@@ -105,14 +114,11 @@ clean_merged_branches() {
 }
 
 # Random
-alias g=git
 alias gcf='git config --list'
 alias gclean='git clean --interactive -d'
-alias gunwip='git rev-list --max-count=1 --format="%s" HEAD | grep -q "\--wip--" && git reset HEAD~1'
 alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
 alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign --message "--wip-- [skip ci]"'
 alias gfg='git ls-files | grep'
-alias grt='cd "$(git rev-parse --show-toplevel || echo .)"'
 
 # Git Add
 alias ga='git add'
@@ -147,16 +153,6 @@ alias gcmsg='git commit --message'
 alias 'gc!'='git commit --verbose --amend'
 alias gca='git commit --verbose --all'
 alias 'gca!'='git commit --verbose --all --amend'
-alias gcam='git commit --all --message'
-alias 'gcan!'='git commit --verbose --all --no-edit --amend'
-alias 'gcans!'='git commit --verbose --all --signoff --no-edit --amend'
-alias gcas='git commit --all --signoff'
-alias gcasm='git commit --all --signoff --message'
-alias gcs='git commit --gpg-sign'
-alias gcsm='git commit --signoff --message'
-alias gcss='git commit --gpg-sign --signoff'
-alias gcssm='git commit --gpg-sign --signoff --message'
-alias 'gcn!'='git commit --verbose --no-edit --amend'
 
 # Git Checkout
 alias gcb='git checkout -b'
@@ -171,83 +167,38 @@ alias gchpc='git cherry-pick --continue'
 
 # Git Diff
 alias gd='git diff'
-alias gdca='git diff --cached'
 alias gdct='git describe --tags $(git rev-list --tags --max-count=1)'
 alias gdcw='git diff --cached --word-diff'
 alias gds='git diff --staged'
-alias gdt='git diff-tree --no-commit-id --name-only -r'
 alias gdup='git diff --cached @{upstream}'
-alias gdw='git diff --word-diff'
 alias gdom='git diff origin/$(git_main_branch)'
 alias gdod='git diff origin/$(git_develop_branch)'
 
 # Git Fetch
 alias gf='git fetch'
 alias gfa='git fetch --all --prune --jobs=10'
-alias gfo='git fetch origin'
 
 # Git Pull
 alias gl='git pull'
-alias gluc='git pull upstream $(git_current_branch)'
-alias glum='git pull upstream $(git_main_branch)'
-alias gpr='git pull --rebase'
-alias gpra='git pull --rebase --autostash'
-alias gprav='git pull --rebase --autostash -v'
-alias gprom='git pull --rebase origin $(git_main_branch)'
-alias gpromi='git pull --rebase=interactive origin $(git_main_branch)'
-alias gprv='git pull --rebase -v'
-
-# Git Ignore
-alias gignore='git update-index --assume-unchanged'
-alias gignored='git ls-files -v | grep "^[[:lower:]]"'
-alias gunignore='git update-index --no-assume-unchanged'
 
 # Git Log
 alias glg='git log --stat'
-alias glgg='git log --graph'
-alias glgga='git log --graph --decorate --all'
-alias glgm='git log --graph --max-count=10'
-alias glgp='git log --stat --patch'
 alias glo='git log --pretty=format:"%Cred%cs%Creset - %C(auto)%h%Creset - %<(16,trunc)%Cgreen%an%Creset - %s %C(auto)%d" --date=local'
-# alias glo='git log --oneline --decorate'
-alias glod='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset"'
-alias glods='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset" --date=short'
-alias glog='git log --oneline --decorate --graph'
-alias gloga='git log --oneline --decorate --graph --all'
-alias glol='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"'
-alias glola='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" --all'
-alias glols='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset" --stat'
 
 # Git Merge
 alias gm='git merge'
 alias gma='git merge --abort'
 alias gmom='git merge origin/$(git_main_branch)'
 alias gmod='git merge origin/$(git_develop_branch)'
-alias gms='git merge --squash'
-alias gmtl='git mergetool --no-prompt'
 alias gmtlvim='git mergetool --no-prompt --tool=vimdiff'
 alias gmum='git merge upstream/$(git_main_branch)'
 
 # Git Push
 alias gp='git push'
-alias gpd='git push --dry-run'
 alias gpf='git push --force-with-lease --force-if-includes'
 alias gpoat='git push origin --all && git push origin --tags'
-alias gpod='git push origin --delete'
-alias gpsup='git push --set-upstream origin $(git_current_branch)'
-alias gpsupf='git push --set-upstream origin $(git_current_branch) --force-with-lease --force-if-includes'
 alias gpu='git push upstream'
 alias gpv='git push --verbose'
-
-
-# Git Remotes
-alias gr='git remote'
-alias gra='git remote add'
-alias grmv='git remote rename'
-alias grset='git remote set-url'
-alias grrm='git remote remove'
-alias grup='git remote update'
-alias grv='git remote --verbose'
 
 # Git Rebase
 alias grb='git rebase'
@@ -259,15 +210,14 @@ alias grbm='git rebase $(git_main_branch)'
 alias grbo='git rebase --onto'
 alias grbom='git rebase origin/$(git_main_branch)'
 alias grbs='git rebase --skip'
-alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 
 # Git Reset
-alias grh='git reset'
+alias gr='git reset'
 alias gru='git reset --'
 alias gpristine='git reset --hard && git clean --force -dfx'
-alias grhh='git reset --hard'
-alias grhk='git reset --keep'
-alias grhs='git reset --soft'
+alias grh='git reset --hard'
+alias grk='git reset --keep'
+alias grs='git reset --soft'
 alias groh='git reset origin/$(git_current_branch) --hard'
 
 # Git Revert
@@ -294,10 +244,7 @@ alias gsh='git show'
 alias gsps='git show --pretty=short --show-signature'
 
 # Git Stash
-alias gsta='git stash push'
-alias gstaa='git stash apply'
 alias gstall='git stash --all'
-alias gstc='git stash clear'
 alias gstd='git stash drop'
 alias gstl='git stash list'
 alias gstp='git stash pop'
