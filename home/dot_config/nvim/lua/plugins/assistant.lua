@@ -1,7 +1,7 @@
 return {
   "yetone/avante.nvim",
   event = "VeryLazy",
-  version = false, -- Never set this value to "*"! Never!
+  commit = '0d26590', -- Never set this value to "*"! Never!
   opts = {
     provider = "copilot",
     copilot = {

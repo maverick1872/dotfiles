@@ -42,7 +42,7 @@ local lspFormat = function(bufnr)
     local available_sources = require('null-ls.sources').get_available
     local attachedSources = available_sources(ft, require('null-ls.methods').internal.FORMATTING)
     local nullLsHasFiletype = #attachedSources > 0
-  else 
+  else
     local nullLsHasFiletype = false
   end
   notify('Formatting sources attached: ' .. vim.inspect(attachedSources), 'debug')

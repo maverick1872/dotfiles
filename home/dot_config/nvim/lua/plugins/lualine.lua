@@ -103,9 +103,16 @@ return {
             vim.notify('Copied path: ' .. path)
           end,
         },
+        {
+          function()
+            return vim.g.presentation_mode and "󱡊 PRESENTATION" or ""
+          end,
+          color = { fg = colors.red, gui = 'bold' },
+        },
       },
       lualine_c = { '%=', lsp },
-      lualine_x = {},
+      lualine_x = {
+      },
       lualine_y = {
         'diff',
         {

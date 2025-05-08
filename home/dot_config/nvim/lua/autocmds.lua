@@ -1,4 +1,3 @@
-local userCmd = vim.api.nvim_create_user_command
 local autoCmd = vim.api.nvim_create_autocmd
 local autoGrp = vim.api.nvim_create_augroup
 local expand = vim.fn.expand
@@ -33,8 +32,8 @@ autoCmd('BufWritePost', {
 autoCmd('BufReadPost', {
   pattern = '*/node_modules/*',
   callback = function()
-    vim.g.presentation_mode = true
-    vim.diagnostic.enable(false)
+    vim.b.was_in_presentation_mode = true
+    vim.cmd('PresentationModeEnable')
   end,
   desc = 'Enable presentation mode for files in node_modules',
 })
@@ -46,14 +45,18 @@ autoCmd('InsertEnter', {
     vim.diagnostic.enable(false)
   end,
 })
--- autoCmd('InsertLeave', {
---   pattern = '*',
---   callback = function()
---     if not vim.g.presenation_mode then
---       vim.diagnostic.enable()
---     end
---   end,
--- })
+
+-- Re-enable diagnostics when leaving insert mode (unless in presentation mode)
+autoCmd('InsertLeave', {
+  pattern = '*',
+  callback = function()
+    if not vim.g.presentation_mode then
+      vim.diagnostic.enable(true)
+    end
+  end,
+})
+
+-- Create commands to toggle presentation mode
 
 autoCmd('User', {
   pattern = 'TelescopePreviewerLoaded',
@@ -81,50 +84,4 @@ autoCmd('User', {
 
 autoCmd('LspAttach', {
   callback = require 'keymaps.lsp',
-})
-
-userCmd('ListLspCapabilities', function()
-  local curBuf = vim.api.nvim_get_current_buf()
-  local clients = vim.lsp.get_active_clients { bufnr = curBuf }
-
-  for _, client in pairs(clients) do
-    if client.name ~= 'null-ls' then
-      local capAsList = {}
-      for key, value in pairs(client.server_capabilities) do
-        if value and key:find 'Provider' then
-          local capability = key:gsub('Provider$', '')
-          table.insert(capAsList, '- ' .. capability)
-        end
-      end
-      table.sort(capAsList) -- sorts alphabetically
-      local msg = '# ' .. client.name .. '\n' .. table.concat(capAsList, '\n')
-      notify(msg, 'trace', {
-        on_open = function(win)
-          local buf = vim.api.nvim_win_get_buf(win)
-          vim.api.nvim_buf_set_option(buf, 'filetype', 'markdown')
-        end,
-        timeout = 14000,
-      })
-      vim.fn.setreg('+', 'Capabilities = ' .. vim.inspect(client.server_capabilities))
-    end
-  end
-end, {})
-
-userCmd('FormatDisable', function(args)
-  if args.bang then
-    -- FormatDisable! will disable formatting just for all buffer
-    vim.g.disable_autoformat = true
-  else
-    vim.b.disable_autoformat = true
-  end
-end, {
-  desc = 'Disable autoformat',
-  bang = true,
-})
-
-userCmd('FormatEnable', function()
-  vim.b.disable_autoformat = false
-  vim.g.disable_autoformat = false
-end, {
-  desc = 'Re-enable autoformat',
 })
