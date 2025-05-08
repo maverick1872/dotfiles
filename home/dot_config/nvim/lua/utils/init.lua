@@ -165,8 +165,8 @@ end
 
 --- Serve a notification with a title predefined title
 ---@param msg string The notification body
----@param type? number The type of the notification (:help vim.log.levels)
----@param opts? table The nvim-notify options to use (:help notify-options)
+---@param type? string|number The type of the notification (:help vim.log.levels)
+---@param opts? table The nvim-notify options to use (:help notify.Options)
 function M.notify(msg, type, opts)
   vim.schedule(function()
     if M.is_available 'nvim-notify' then
@@ -384,7 +384,7 @@ end
 
 --- regex used for matching a valid URL/URI string
 M.url_matcher =
-  '\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+'
+'\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+'
 
 --- Delete the syntax matching rules for URLs/URIs if set
 function M.delete_url_match()
