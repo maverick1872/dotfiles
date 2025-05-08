@@ -8,14 +8,12 @@ end, 'Buffer Clients Information')
 
 -- Presentation mode
 map('n', '<leader>lp', function()
-  if vim.g.presentation_mode then
-    vim.g.presentation_mode = false
-    vim.diagnostic.enable()
-  else
-    vim.g.presentation_mode = true
-    vim.diagnostic.enable(false)
-  end
-end, 'Presentation mode')
+  vim.cmd 'PresentationModeToggle'
+end, 'Presentation mode toggle for buffer')
+
+map('n', '<leader>lp', function()
+  vim.cmd 'PresentationModeToggle!'
+end, 'Presentation mode toggle')
 
 -- Treesitter
 if is_available 'nvim-treesitter' then

@@ -3,25 +3,34 @@ local notify = require('utils').notify
 
 userCmd('PresentationModeEnable', function()
   -- Store the previous state when enabling manually
-  vim.b.was_in_presentation_mode = true
+  vim.b.presentation_mode = true
   vim.g.presentation_mode = true
   vim.diagnostic.enable(false)
   notify("Presentation mode enabled", "info")
-end, { desc = 'Enable presentation mode (disables diagnostics)' })
+end, { desc = 'Enable presentation mode' })
 
 userCmd('PresentationModeDisable', function()
-  vim.b.was_in_presentation_mode = false
+  vim.b.presentation_mode = false
   vim.g.presentation_mode = false
   vim.diagnostic.enable(true)
   notify("Presentation mode disabled", "info")
-end, { desc = 'Disable presentation mode (enables diagnostics)' })
+end, { desc = 'Disable presentation mode' })
 
-userCmd('PresentationModeToggle', function()
-  vim.g.presentation_mode = not vim.g.presentation_mode
-  vim.b.was_in_presentation_mode = vim.g.presentation_mode
-  vim.diagnostic.enable(not vim.g.presentation_mode)
-  notify("Presentation mode " .. (vim.g.presentation_mode and "enabled" or "disabled"), "info")
-end, { desc = 'Toggle presentation mode' })
+userCmd('PresentationModeToggle', function(args)
+  if args.bang then
+    -- PresentationModeToggle! will disable presentation mode for all buffers
+    if vim.g.presentation_mode then
+      vim.cmd 'PresentationModeDisable'
+    else
+      vim.cmd 'PresentationModeEnable'
+    end
+    return
+  end
+  vim.b.presentation_mode = not vim.b.presentation_mode
+
+  local bufnr = vim.api.nvim_get_current_buf()
+  vim.diagnostic.enable(true, { nil, bufnr })
+end, { desc = 'Toggle presentation mode for current buffer only', bang = true })
 
 userCmd('ListLspCapabilities', function()
   local curBuf = vim.api.nvim_get_current_buf()
