@@ -105,6 +105,23 @@ return {
         },
         {
           function()
+            local has_formatter = false
+            local clients = vim.lsp.get_clients({ bufnr = 0 })
+            for _, client in ipairs(clients) do
+              if client.server_capabilities.documentFormattingProvider then
+                has_formatter = true
+                break
+              end
+            end
+            local formatting_disabled = (vim.b.disable_autoformat or vim.g.disable_autoformat)
+            return has_formatter and
+                (formatting_disabled and "Auto format ✗" or "Auto format ✓") or ""
+          end,
+          color = { fg = colors.green },
+        },
+        {
+          function()
+            local in_presentation_mode = vim.g.presentation_mode or vim.b.presentation_mode
             return vim.g.presentation_mode and "󱡊 PRESENTATION" or ""
           end,
           color = { fg = colors.red, gui = 'bold' },
