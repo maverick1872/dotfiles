@@ -122,18 +122,19 @@ return {
         {
           function()
             local in_presentation_mode = vim.g.presentation_mode or vim.b.presentation_mode
-            return vim.g.presentation_mode and "󱡊 PRESENTATION" or ""
+            return in_presentation_mode and "󱡊 PRESENTATION" or ""
           end,
           color = { fg = colors.red, gui = 'bold' },
         },
       },
-      lualine_c = { '%=', lsp },
+      lualine_c = { '%=', lsp, diagnostics },
       lualine_x = {
       },
       lualine_y = {
         'diff',
         {
           'branch',
+          fmt = function(str) return str:sub(1, 28) end,
           on_click = function()
             local branch = vim.fn.system "git branch --show-current 2> /dev/null | tr -d '\n'"
             local trimmedBranch = branch:gsub('\n', '')
