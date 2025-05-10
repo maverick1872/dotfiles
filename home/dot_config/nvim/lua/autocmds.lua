@@ -24,8 +24,36 @@ autoCmd('FileType', {
 autoCmd('BufWritePost', {
   pattern = expand '~' .. '/.local/share/chezmoi/home/dot_config*',
   callback = function()
+    notify('Applying chezmoi changes...')
     vim.cmd 'silent !chezmoi apply --source-path "<afile>:p"'
   end,
+})
+
+autoCmd('BufWritePost', {
+  pattern = 'schema.prisma',
+  callback = function()
+    -- Run prisma validate first to check for errors
+    notify('Validating Prisma schema...')
+    vim.fn.jobstart('npx prisma validate', {
+      on_exit = function(_, exit_code)
+        if exit_code == 0 then
+          -- If validation succeeded, run prisma generate
+          vim.fn.jobstart('npx prisma generate', {
+            on_exit = function(_, gen_exit_code)
+              if gen_exit_code == 0 then
+                notify('Prisma client generated successfully', 'info')
+              else
+                notify('Failed to generate Prisma schema', 'error')
+              end
+            end
+          })
+        else
+          notify('Prisma schema validation failed', 'error')
+        end
+      end
+    })
+  end,
+  desc = "Validate Prisma schema and generate client on save"
 })
 
 -- Enable presentation mode for all node modules
