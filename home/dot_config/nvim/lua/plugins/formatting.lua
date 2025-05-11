@@ -3,6 +3,7 @@ return {
   event = 'VeryLazy',
   dependencies = {},
   opts = {
+    format_on_save = false, -- Formatting is triggered by the `FormatBuffer` command
     formatters_by_ft = {
       css = { 'prettier' },
       html = { 'prettier' },
@@ -16,14 +17,15 @@ return {
       hcl = { 'terraform_fmt' },
       typescript = { 'prettier' },
       typescriptreact = { 'prettier' },
-      yaml = { 'yamllint' },
+      yaml = { 'yamlfmt' },
     },
-    format_on_save = false, -- Formatting is triggered by the `FormatBuffer` command
-  },
-  formatters = {
-    beautysh = {
-      prepend_args = { '--indent-size', '2' },
+    formatters = {
+      beautysh = {
+        prepend_args = { '--indent-size', '2' },
+      },
+      yamlfmt = {
+        prepend_args = { '-formatter', 'retain_line_breaks_single=true,trim_trailing_whitespace=true' },
+      },
     },
-    stylelua = {},
   },
 }
