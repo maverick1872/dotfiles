@@ -1,6 +1,6 @@
 local map = require('utils').map
 local is_available = require('utils').is_available
-local gs = require 'gitsigns'
+local gs = require('gitsigns')
 
 map({ 'n', 'v' }, '<Space>', '<Nop>')
 
@@ -58,7 +58,7 @@ map({ 'n', 'v' }, ']c', function()
   if vim.wo.diff then
     return ']c'
   end
-  if is_available 'gitsigns' then
+  if is_available('gitsigns') then
     vim.schedule(function()
       gs.next_hunk()
     end)
@@ -69,7 +69,7 @@ map({ 'n', 'v' }, '[c', function()
   if vim.wo.diff then
     return '[c'
   end
-  if is_available 'gitsigns' then
+  if is_available('gitsigns') then
     vim.schedule(function()
       gs.prev_hunk()
     end)
@@ -87,9 +87,9 @@ end, 'Jump to previous hunk', { expr = true })
 -- map('n', '<leader>e', vim.diagnostic.open_float, 'Open floating diagnostic message')
 -- map('n', '<leader>dl', vim.diagnostic.setloclist, 'Open diagnostics list')
 
-require 'keymaps.comment'
-require 'keymaps.lsp'
-require 'keymaps.neotree'
-require 'keymaps.nvim-dap'
-require 'keymaps.telescope'
-require 'keymaps.scratch'
+require('keymaps.comment')
+require('keymaps.lsp')
+require('keymaps.neotree')
+require('keymaps.nvim-dap')
+require('keymaps.telescope')
+require('keymaps.scratch')

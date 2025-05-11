@@ -35,12 +35,12 @@ return {
     dependencies = { 'kevinhwang91/promise-async' },
     opts = {
       fold_virt_text_handler = handler,
-      provider_selector = function(bufnr, filetype, buftype)
+      provider_selector = function()
         return { 'treesitter', 'indent' }
       end,
     },
     config = function(_, opts)
-      local ufo = require 'ufo'
+      local ufo = require('ufo')
       ufo.setup(opts)
 
       vim.keymap.set('n', 'zR', ufo.openAllFolds, { desc = 'Open all folds' })

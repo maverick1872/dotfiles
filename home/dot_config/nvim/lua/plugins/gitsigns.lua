@@ -30,7 +30,7 @@ return {
       ignore_whitespace = false,
     },
     current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
-    on_attach = function(bufnr)
+    on_attach = function()
       local gs = package.loaded.gitsigns
       map('n', '<leader>gP', gs.preview_hunk, 'Preview hunk')
       map('n', '<leader>gs', gs.stage_hunk, 'Stage hunk')

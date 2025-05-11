@@ -6,7 +6,7 @@ return {
     'windwp/nvim-ts-autotag',
   },
   config = function()
-    require('nvim-treesitter.configs').setup {
+    require('nvim-treesitter.configs').setup({
       rainbow = {
         enable = true,
       },
@@ -40,6 +40,6 @@ return {
         enable = true,
         additional_vim_regex_highlighting = false,
       },
-    }
+    })
   end,
 }

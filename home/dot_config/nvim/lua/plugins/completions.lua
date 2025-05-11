@@ -1,9 +1,9 @@
 local has_words_before = function()
-  if vim.api.nvim_buf_get_option(0, 'buftype') == 'prompt' then
+  if vim.api.nvim_get_option_value('buftype', { buf = 0 }) == 'prompt' then
     return false
   end
   local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match '^%s*$' == nil
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match('^%s*$') == nil
 end
 
 return {
@@ -24,30 +24,30 @@ return {
     'zbirenbaum/copilot-cmp', -- Copilot CMP source
   },
   config = function()
-    local cmp = require 'cmp'
-    local luasnip = require 'luasnip'
+    local cmp = require('cmp')
+    local luasnip = require('luasnip')
     local notify = require('utils').notify
-    notify(os.getenv 'SYSTEM_NODE_PATH', 'debug')
+    notify('System Node Path env var: ' .. os.getenv('SYSTEM_NODE_PATH'), 'debug')
     require('luasnip/loaders/from_vscode').lazy_load()
-    require('copilot').setup {
-      copilot_node_command = os.getenv 'SYSTEM_NODE_PATH',
-    }
+    require('copilot').setup({
+      copilot_node_command = os.getenv('SYSTEM_NODE_PATH'),
+    })
     require('copilot_cmp').setup()
 
-    cmp.setup {
+    cmp.setup({
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
         end,
       },
       mapping = {
-        ['<CR>'] = cmp.mapping.confirm { select = false }, -- Accept explictly selected item.
-        ['<Space>'] = cmp.mapping.confirm { select = false }, -- Accept explictly selected item.
+        ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept explictly selected item.
+        ['<Space>'] = cmp.mapping.confirm({ select = false }), -- Accept explictly selected item.
         -- ['<Esc>'] = cmp.mapping.abort(), -- Close completions and restore line
         ['<Left>'] = cmp.mapping.close(), -- Close completions and restore line
         ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
         ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
-        ['<Right>'] = cmp.mapping.confirm { select = false }, -- Accept explictly selected item.
+        ['<Right>'] = cmp.mapping.confirm({ select = false }), -- Accept explictly selected item.
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
         ['<Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() and has_words_before() then
@@ -98,7 +98,7 @@ return {
       experimental = {
         ghost_text = true,
       },
-    }
+    })
 
     cmp.setup.filetype('gitcommit', {
       sources = cmp.config.sources({

@@ -1,36 +1,37 @@
 local map = require('utils').map
 local is_available = require('utils').is_available
-if is_available 'telescope.nvim' then
-  local builtins = require 'telescope.builtin'
+if is_available('telescope.nvim') then
+  local builtins = require('telescope.builtin')
   map('n', '<leader>ss', builtins.resume, 'Resume previous search')
+  map('n', '<leader>sb', builtins.buffers, 'Search buffers')
   map('n', '<leader>sk', builtins.keymaps, 'Search keybindings')
   map('n', '<leader>sw', builtins.live_grep, 'Search words')
   map('n', '<leader>sf', builtins.find_files, 'Search files')
   map('n', '<leader>s/', builtins.current_buffer_fuzzy_find, 'Search for words in current buffer')
 
   map('n', '<leader>suf', function()
-    builtins.find_files {
+    builtins.find_files({
       hidden = true,
       no_ignore = true,
-    }
+    })
   end, 'Search files')
 
   map('n', '<leader>suw', function()
-    builtins.live_grep {
+    builtins.live_grep({
       hidden = true,
       no_ignore = true,
-    }
+    })
   end, 'Search words')
 
-  if is_available 'nvim-notify' then
+  if is_available('nvim-notify') then
     map('n', '<leader>sn', function()
       require('telescope').extensions.notify.notify()
     end, 'Search notifications')
   end
 
-  if is_available 'scratch.nvim' then
+  if is_available('scratch.nvim') then
     map('n', '<leader>st', function()
-      vim.cmd 'ScratchOpen'
+      vim.cmd('ScratchOpen')
     end, 'Search temp files')
   end
 
@@ -42,7 +43,7 @@ if is_available 'telescope.nvim' then
 
   -- Git related maps
   map('n', '<leader>gb', function()
-    builtins.git_branches { use_file_path = true }
+    builtins.git_branches({ use_file_path = true })
   end, 'Git branches')
   -- map.n['<leader>gc'] = {
   --   function()

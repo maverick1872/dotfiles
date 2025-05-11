@@ -81,13 +81,18 @@ return {
   {
     'akinsho/bufferline.nvim',
     enabled = false,
-    dependencies = 'nvim-tree/nvim-web-devicons',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      -- 'tiagvola/scope.nvim'
+    },
     opts = {
       options = {
         mode = 'buffers',
         separator_style = 'slant',
         themable = false,
         show_duplicate_prefix = true,
+        show_tab_indicators = true,
+        diagnostics = 'nvim_lsp',
       },
     },
   },
@@ -102,6 +107,8 @@ return {
         week_header = {
           enable = true,
         },
+        shuffle_letter = false,
+        change_to_vcs_root = true,
         shortcut = {
           { desc = '󰊳 Update', group = '@property', action = 'Lazy update', key = 'u' },
           {

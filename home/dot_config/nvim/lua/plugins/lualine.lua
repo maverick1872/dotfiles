@@ -127,7 +127,7 @@ return {
           color = { fg = colors.red, gui = 'bold' },
         },
       },
-      lualine_c = { '%=', lsp, diagnostics },
+      lualine_c = { '%=', lsp, 'diagnostics' },
       lualine_x = {
       },
       lualine_y = {
