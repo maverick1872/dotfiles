@@ -3,66 +3,47 @@ local map = require('utils').map
 local notify = require('utils').notify
 
 map('n', '<leader>ll', function()
-  vim.cmd 'ListLspCapabilities'
+  vim.cmd('ListLspCapabilities')
 end, 'Buffer Clients Information')
 
 -- Presentation mode
 map('n', '<leader>lp', function()
-  vim.cmd 'PresentationModeToggle'
+  vim.cmd('PresentationModeToggle')
 end, 'Presentation mode toggle for buffer')
 
 map('n', '<leader>lp', function()
-  vim.cmd 'PresentationModeToggle!'
+  vim.cmd('PresentationModeToggle!')
 end, 'Presentation mode toggle')
 
 -- Treesitter
-if is_available 'nvim-treesitter' then
+if is_available('nvim-treesitter') then
   map('n', '<leader>pt', '<cmd>TSUpdate<cr>', 'Treesitter Update')
 end
 
 -- Mason Package Manager
-if is_available 'mason.nvim' then
+if is_available('mason.nvim') then
   map('n', '<leader>pm', '<cmd>Mason<cr>', 'Mason Installer')
   map('n', '<leader>pM', '<cmd>MasonToolsUpdate<cr>', 'Mason Tools Update')
 end
 
-if is_available 'mason-lspconfig.nvim' then
+if is_available('mason-lspconfig.nvim') then
   map('n', '<leader>li', '<cmd>LspInfo<cr>', 'LSP information')
 end
 
-if is_available 'null-ls.nvim' then
+if is_available('null-ls.nvim') then
   map('n', '<leader>lI', '<cmd>NullLsInfo<cr>', 'Null-ls information')
 end
-
-local lspFormat = function(bufnr)
-  local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-  if is_available 'null-ls.nvim' then
-    local available_sources = require('null-ls.sources').get_available
-    local attachedSources = available_sources(ft, require('null-ls.methods').internal.FORMATTING)
-    local nullLsHasFiletype = #attachedSources > 0
-  else
-    local nullLsHasFiletype = false
-  end
-  notify('Formatting sources attached: ' .. vim.inspect(attachedSources), 'debug')
-  vim.lsp.buf.format {
-    bufnr = bufnr,
-    filter = function(client)
-      if nullLsHasFiletype then
-        return client.name == 'null-ls'
-      else
-        return true
-      end
-    end,
-  }
-end
-local lspFormatGroup = vim.api.nvim_create_augroup('LspFormatting', {})
 
 return function(args)
   local bufnr = args.buf
   local client = vim.lsp.get_client_by_id(args.data.client_id)
-  local clientConfig = client.config
-  local opts = { buffer = bufnr }
 
+  if not client then
+    notify('No client config found for ' .. args.data.client_id, 'warn')
+    return
+  end
+
+  local clientConfig = client.config
   notify(client.name .. ' config: ' .. vim.inspect(clientConfig), 'debug')
   if clientConfig.capabilities then
     local capabilities = {}
@@ -74,23 +55,24 @@ return function(args)
     end
   end
 
-  if client.supports_method 'textDocument/implementation' then
+  local opts = { buffer = bufnr }
+  if client:supports_method('textDocument/implementation') then
     map('n', 'gi', vim.lsp.buf.implementation, 'Go to implementation', opts)
   end
 
-  if client.supports_method 'textDocument/declaration' then
+  if client:supports_method('textDocument/declaration') then
     map('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration', opts)
   end
 
-  if client.supports_method 'textDocument/definition' then
+  if client:supports_method('textDocument/definition') then
     map('n', 'gd', vim.lsp.buf.definition, 'Go to definitions', opts)
   end
 
-  if client.supports_method 'textDocument/hover' then
+  if client:supports_method('textDocument/hover') then
     map('n', 's', vim.lsp.buf.hover, 'Hover LSP', opts)
   end
 
-  if client.supports_method 'textDocument/signatureHelp' then
+  if client:supports_method('textDocument/signatureHelp') then
     map('n', 'gs', vim.lsp.buf.signature_help, 'Signature help', opts)
   end
 
@@ -101,39 +83,25 @@ return function(args)
   -- end, 'List workspace folders', opts)
 
   -- map('n', '<space>D', vim.lsp.buf.type_definition, opts)
-  if client.supports_method 'textDocument/rename' then
+  if client:supports_method('textDocument/rename') then
     map('n', '<leader>lr', vim.lsp.buf.rename, 'Rename symbol', opts)
   end
 
-  if client.supports_method 'textDocument/codeAction' then
+  if client:supports_method('textDocument/codeAction') then
     map({ 'n', 'v' }, '<leader>la', vim.lsp.buf.code_action, 'Available Code Actions', opts)
   end
 
-  if client.supports_method 'textDocument/diagnostics' then
+  if client:supports_method('textDocument/diagnostics') then
     map({ 'n', 'v' }, '<leader>ld', vim.diagnostic.open_float, 'Show Diagnostics', opts)
   end
 
-  if client.supports_method 'textDocument/references' then
+  if client:supports_method('textDocument/references') then
     map('n', 'gr', vim.lsp.buf.references, 'Go to references', opts)
   end
 
-  if client.supports_method 'textDocument/formatting' then
+  if client:supports_method('textDocument/formatting') then
     map('n', '<space>lf', function()
-      lspFormat(bufnr)
+      vim.cmd('FormatBuffer')
     end, 'Format file', opts)
-    vim.api.nvim_clear_autocmds {
-      group = lspFormatGroup,
-      buffer = bufnr,
-    }
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      group = lspFormatGroup,
-      buffer = bufnr,
-      callback = function()
-        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-          return
-        end
-        lspFormat(bufnr)
-      end,
-    })
   end
 end
