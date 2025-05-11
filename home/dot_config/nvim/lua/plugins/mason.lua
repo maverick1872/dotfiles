@@ -1,19 +1,3 @@
-local languageServers = {
-  'jsonls', -- JSON
-  'marksman', -- Markdown
-  'prismals', -- Prisma ORM
-  'rust_analyzer', -- Rust
-  'sqlls', -- SQL
-  'volar', -- Vue
-  'yamlls', -- YAML
-  'terraformls', -- Terraform
-  'bashls', -- Bash (minimal support for ZSH)
-  'lua_ls', -- Lua
-  'dockerls', -- Docker
-  'ts_ls', -- Typescript/Javascript
-  'helm-ls', -- Helm
-}
-
 local formatters = {
   'eslint_d', -- Daemonized Eslint
   'prettierd', -- Daemonized Prettier
@@ -24,16 +8,25 @@ local formatters = {
 
 local linters = {
   'luacheck', -- Lua
+  'yamllint', -- Yaml
+  'flake8',
+  'mypy',
+  'shellcheck',
+  'markdownlint',
+  'yamllint',
+  'jsonlint',
+  'hadolint',
+  'tflint',
 }
 
 return {
-  'williamboman/mason.nvim',
+  'mason-org/mason.nvim',
   event = 'VeryLazy',
   dependencies = {
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
     -- 'mason-tool-installer' should be replaced when automatic installation of
     -- all tools is included in the core 'williamboman/mason.nvim' plugin.
     -- Ref issue #103
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
   },
   config = function()
     require('mason').setup({
@@ -48,40 +41,13 @@ return {
 
     ------ Setup Mason Tool Installer ------
     local tools = {}
-    vim.list_extend(tools, languageServers)
+    -- https://mason-registry.dev/registry/list
     vim.list_extend(tools, formatters)
     vim.list_extend(tools, linters)
 
     require('mason-tool-installer').setup({
       run_on_start = true,
-      -- https://mason-registry.dev/registry/list
       ensure_installed = tools,
-      -- ensure_installed = {
-      --   --- Language Servers ---
-      --   'jsonls', -- JSON
-      --   'marksman', -- Markdown
-      --   'prismals', -- Prisma ORM
-      --   'rust_analyzer', -- Rust
-      --   'sqlls', -- SQL
-      --   'volar', -- Vue
-      --   'yamlls', -- YAML
-      --   'terraformls', -- Terraform
-      --   'bashls', -- Bash (minimal support for ZSH)
-      --   'lua_ls', -- Lua
-      --   'dockerls', -- Docker
-      --   'ts_ls', -- Typescript/Javascript
-      --   'helm-ls', -- Helm
-      --
-      --   --- Formatters ---
-      --   'eslint_d', -- Daemonized Eslint
-      --   'prettierd', -- Daemonized Prettier
-      --   'shfmt', -- Shell (sh/bash/mksh)
-      --   'stylua', -- Lua
-      --   'yamlfmt', -- Yaml
-      --
-      --   --- Linters ---
-      --   'luacheck', -- Lua
-      -- },
     })
   end,
 }
