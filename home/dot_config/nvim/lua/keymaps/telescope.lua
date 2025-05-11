@@ -4,6 +4,7 @@ if is_available('telescope.nvim') then
   local builtins = require('telescope.builtin')
   map('n', '<leader>ss', builtins.resume, 'Resume previous search')
   map('n', '<leader>sb', builtins.buffers, 'Search buffers')
+  map('n', '<leader>sd', builtins.diagnostics, 'Search diagnostics')
   map('n', '<leader>sk', builtins.keymaps, 'Search keybindings')
   map('n', '<leader>sw', builtins.live_grep, 'Search words')
   map('n', '<leader>sf', builtins.find_files, 'Search files')
