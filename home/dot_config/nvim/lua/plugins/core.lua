@@ -201,4 +201,10 @@ return {
       mappings = {},
     },
   },
+
+  -- Helm syntax highlighting
+  {
+    'towolf/vim-helm',
+    ft = 'helm',
+  },
 }
