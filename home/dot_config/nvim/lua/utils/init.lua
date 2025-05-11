@@ -20,17 +20,43 @@ function M.is_available(plugin)
 end
 
 --- Serve a notification with a title predefined title
----@param msg string The notification body
----@param type? string|number The type of the notification (:help vim.log.levels)
+---@param msg string|table The notification body
+---@param level? string|number The type of the notification (:help vim.log.levels)
 ---@param opts? table The nvim-notify options to use (:help notify.Options)
-function M.notify(msg, type, opts)
+function M.notify(msg, level, opts)
+  if type(msg) == 'table' then
+    msg = 'Table Contents: \n' .. M.stringify_table(msg)
+  end
+
   vim.schedule(function()
     if M.is_available('nvim-notify') then
-      require('notify').notify(msg, type, M.extend_tbl({ title = 'Neovim' }, opts))
+      require('notify').notify(msg, level, M.extend_tbl({ title = 'Neovim' }, opts))
     else
-      vim.notify(msg, type, M.extend_tbl({ title = 'Neovim' }, opts))
+      vim.notify(msg, level, M.extend_tbl({ title = 'Neovim' }, opts))
     end
   end)
+end
+
+function M.stringify_table(tbl, indentLevel)
+  local str = ''
+  local indentStr = '#'
+
+  if indentLevel == nil then
+    return M.stringify_table(tbl, 0)
+  end
+
+  for _ = 0, indentLevel do
+    indentStr = indentStr .. '\t'
+  end
+
+  for index, value in pairs(tbl) do
+    if type(value) == 'table' then
+      str = str .. indentStr .. index .. ': \n' .. M.stringify_table(value, (indentLevel + 1))
+    else
+      str = str .. indentStr .. index .. ': ' .. value .. '\n'
+    end
+  end
+  return str
 end
 
 --- Run a shell command and capture the output and if the command succeeded or failed
