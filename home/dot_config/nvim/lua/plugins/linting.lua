@@ -1,18 +1,19 @@
+local notify = require('utils').notify
+
 return {
   'mfussenegger/nvim-lint',
   event = 'VeryLazy',
   dependencies = {},
   opts = {
     -- Event to trigger linters
-    -- TODO convert this to self managed user commands and auto commands
     events = { 'BufWritePost', 'BufReadPost', 'InsertLeave' },
 
     -- Linters by filetype
     linters_by_ft = {
-      javascript = { 'eslint' },
-      typescript = { 'eslint' },
-      javascriptreact = { 'eslint' },
-      typescriptreact = { 'eslint' },
+      javascript = { 'eslint_d' },
+      typescript = { 'eslint_d' },
+      javascriptreact = { 'eslint_d' },
+      typescriptreact = { 'eslint_d' },
       python = { 'flake8', 'mypy' },
       lua = { 'luacheck' },
       sh = { 'shellcheck' },
@@ -23,26 +24,13 @@ return {
       terraform = { 'tflint' },
     },
 
-    -- Linter configurations
-    linters = {
-      -- Example of configuring a linter
-      eslint = {
-        -- Only use eslint if an .eslintrc.* file exists in the project
-        condition = function(ctx)
-          return vim.fs.find({ '.eslintrc', '.eslintrc.js', '.eslintrc.json', '.eslintrc.yml' }, {
-            path = ctx.filename,
-            upward = true,
-          })[1] ~= nil
-        end,
-      },
-
+    linter_overrides = {
       luacheck = {
-        -- Adjust luacheck options
-        args = {
-          '--globals',
-          'vim',
-          '--no-max-line-length',
-        },
+        condition = function(ctx)
+          if ctx.filename == '.luacheckrc' then
+            return false
+          end
+        end,
       },
     },
   },
@@ -52,25 +40,45 @@ return {
     -- Setup linters from opts
     lint.linters_by_ft = opts.linters_by_ft
 
-    -- Configure linters
-    for name, linter_opts in pairs(opts.linters or {}) do
+    -- Configure linter option overrides if any
+    for name, overrides in pairs(opts.linter_overrides or {}) do
       if lint.linters[name] then
-        lint.linters[name] = vim.tbl_deep_extend('force', lint.linters[name], linter_opts)
+        lint.linters[name] = vim.tbl_deep_extend('force', lint.linters[name], overrides)
       end
     end
+
+    -- User Command to manually trigger linting
+    vim.api.nvim_create_user_command('Lint', function()
+      local nvim_lint = require('lint')
+      local linters_for_filetype = nvim_lint.linters_by_ft[vim.bo.filetype] or {}
+      local file = vim.api.nvim_buf_get_name(0)
+      local ctx = {
+        filename = vim.fs.basename(file),
+        dirname = vim.fn.fnamemodify(file, ':h'),
+      }
+
+      linters_for_filetype = vim.tbl_filter(function(name)
+        local linter_configuration = nvim_lint.linters[name]
+        return linter_configuration
+          and not (
+            type(linter_configuration) == 'table'
+            and linter_configuration.condition
+            and not linter_configuration.condition(ctx)
+          )
+      end, linters_for_filetype)
+
+      if #linters_for_filetype > 0 then
+        nvim_lint.try_lint(linters_for_filetype)
+      end
+    end, {})
 
     -- Create autocmd to trigger linting
     local lint_augroup = vim.api.nvim_create_augroup('nvim-lint', { clear = true })
     vim.api.nvim_create_autocmd(opts.events, {
       group = lint_augroup,
       callback = function()
-        require('lint').try_lint()
+        vim.cmd('Lint')
       end,
     })
-
-    -- Command to manually trigger linting
-    vim.api.nvim_create_user_command('Lint', function()
-      require('lint').try_lint()
-    end, {})
   end,
 }

@@ -11,7 +11,7 @@ return {
       javascript = { 'prettier' },
       javascriptreact = { 'prettier' },
       jinja = { 'djlint' },
-      lua = { 'stylua' },
+      lua = { 'stylua', 'trim_whitespace' },
       sh = { 'beautysh' },
       terraform = { 'terraform_fmt' },
       hcl = { 'terraform_fmt' },
