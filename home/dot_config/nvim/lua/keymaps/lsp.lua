@@ -30,10 +30,6 @@ if is_available('mason-lspconfig.nvim') then
   map('n', '<leader>li', '<cmd>LspInfo<cr>', 'LSP information')
 end
 
-if is_available('null-ls.nvim') then
-  map('n', '<leader>lI', '<cmd>NullLsInfo<cr>', 'Null-ls information')
-end
-
 return function(args)
   local bufnr = args.buf
   local client = vim.lsp.get_client_by_id(args.data.client_id)

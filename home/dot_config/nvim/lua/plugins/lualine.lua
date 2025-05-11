@@ -46,7 +46,7 @@ local lsp = {
     end
     for _, client in ipairs(clients) do
       local filetypes = client.config.filetypes
-      if filetypes and client.name ~= 'null-ls' and vim.fn.index(filetypes, buf_ft) ~= -1 then
+      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
         return client.name
       end
     end
@@ -98,7 +98,7 @@ return {
           'filename',
           path = 1,
           on_click = function()
-            local path = vim.fn.expand '%:.'
+            local path = vim.fn.expand('%:.')
             vim.fn.setreg('+', path)
             vim.notify('Copied path: ' .. path)
           end,
@@ -114,29 +114,29 @@ return {
               end
             end
             local formatting_disabled = (vim.b.disable_autoformat or vim.g.disable_autoformat)
-            return has_formatter and
-                (formatting_disabled and "Auto format ✗" or "Auto format ✓") or ""
+            return has_formatter and (formatting_disabled and 'Auto format ✗' or 'Auto format ✓') or ''
           end,
           color = { fg = colors.green },
         },
         {
           function()
             local in_presentation_mode = vim.g.presentation_mode or vim.b.presentation_mode
-            return in_presentation_mode and "󱡊 PRESENTATION" or ""
+            return in_presentation_mode and '󱡊 PRESENTATION' or ''
           end,
           color = { fg = colors.red, gui = 'bold' },
         },
       },
       lualine_c = { '%=', lsp, 'diagnostics' },
-      lualine_x = {
-      },
+      lualine_x = {},
       lualine_y = {
         'diff',
         {
           'branch',
-          fmt = function(str) return str:sub(1, 28) end,
+          fmt = function(str)
+            return str:sub(1, 28)
+          end,
           on_click = function()
-            local branch = vim.fn.system "git branch --show-current 2> /dev/null | tr -d '\n'"
+            local branch = vim.fn.system("git branch --show-current 2> /dev/null | tr -d '\n'")
             local trimmedBranch = branch:gsub('\n', '')
             vim.fn.setreg('+', trimmedBranch)
             vim.notify('Copied branch: ' .. trimmedBranch)
@@ -158,7 +158,7 @@ return {
           'filename',
           path = 1,
           on_click = function()
-            local path = vim.fn.expand '%:.'
+            local path = vim.fn.expand('%:.')
             vim.fn.setreg('+', path)
             vim.notify('Copied path: ' .. path)
           end,

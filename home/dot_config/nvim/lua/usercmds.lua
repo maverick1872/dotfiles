@@ -94,33 +94,6 @@ userCmd('PresentationModeToggle', function(args)
   vim.diagnostic.enable(true, { nil, bufnr })
 end, { desc = 'Toggle presentation mode for current buffer only', bang = true })
 
-userCmd('ListLspCapabilities', function()
-  local curBuf = vim.api.nvim_get_current_buf()
-  local clients = vim.lsp.get_clients({ bufnr = curBuf })
-
-  for _, client in pairs(clients) do
-    if client.name ~= 'null-ls' then
-      local capAsList = {}
-      for key, value in pairs(client.server_capabilities) do
-        if value and key:find('Provider') then
-          local capability = key:gsub('Provider$', '')
-          table.insert(capAsList, '- ' .. capability)
-        end
-      end
-      table.sort(capAsList) -- sorts alphabetically
-      local msg = '# ' .. client.name .. '\n' .. table.concat(capAsList, '\n')
-      notify(msg, 'trace', {
-        on_open = function(win)
-          local buf = vim.api.nvim_win_get_buf(win)
-          vim.api.nvim_set_option_value('filetype', 'markdown', { buf = buf })
-        end,
-        timeout = 14000,
-      })
-      vim.fn.setreg('+', 'Capabilities = ' .. vim.inspect(client.server_capabilities))
-    end
-  end
-end, {})
-
 userCmd('FormatDisable', function(args)
   if args.bang then
     -- FormatDisable! will disable formatting just for all buffer
