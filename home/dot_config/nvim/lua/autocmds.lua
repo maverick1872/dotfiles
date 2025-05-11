@@ -4,11 +4,11 @@ local expand = vim.fn.expand
 local notify = require('utils').notify
 
 -- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
+-- See `:help vim.hl.on_yank()`
 local highlight_group = autoGrp('YankHighlight', { clear = true })
 autoCmd('TextYankPost', {
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
   group = highlight_group,
   pattern = '*',
@@ -21,14 +21,23 @@ autoCmd('FileType', {
 })
 
 -- Auto apply chezmoi source to target when written
-autoCmd('BufWritePost', {
-  pattern = expand '~' .. '/.local/share/chezmoi/home/dot_config*',
+autoCmd('BufWritePre', {
   callback = function()
-    notify('Applying chezmoi changes...')
-    vim.cmd 'silent !chezmoi apply --source-path "<afile>:p"'
+    vim.cmd('FormatBuffer!')
+    notify('Formatted files', 'debug', { hide_from_history = true })
   end,
 })
 
+-- Auto apply chezmoi source to target when written
+autoCmd('BufWritePost', {
+  pattern = expand('~') .. '/.local/share/chezmoi/home/dot_config*',
+  callback = function()
+    notify('Applying chezmoi changes...', 'info', { hide_from_history = true })
+    vim.cmd('silent !chezmoi apply --source-path "<afile>:p"')
+  end,
+})
+
+-- Auto validate and generate Prisma client on save
 autoCmd('BufWritePost', {
   pattern = 'schema.prisma',
   callback = function()
@@ -45,22 +54,24 @@ autoCmd('BufWritePost', {
               else
                 notify('Failed to generate Prisma schema', 'error')
               end
-            end
+            end,
           })
         else
           notify('Prisma schema validation failed', 'error')
         end
-      end
+      end,
     })
   end,
-  desc = "Validate Prisma schema and generate client on save"
+  desc = 'Validate Prisma schema and generate client on save',
 })
 
+------ Presentation Mode ------
 -- Enable presentation mode for all node modules
 autoCmd('BufReadPost', {
   pattern = '*/node_modules/*',
   callback = function()
-    vim.b.was_in_presentation_mode = true
+    -- default to presentation mode enabled
+    vim.b.presentation_mode = true
     vim.cmd('PresentationModeEnable')
   end,
   desc = 'Enable presentation mode for files in node_modules',
@@ -78,13 +89,12 @@ autoCmd('InsertEnter', {
 autoCmd('InsertLeave', {
   pattern = '*',
   callback = function()
-    if not vim.g.presentation_mode then
+    if not vim.g.presentation_mode or vim.b.presentation_mode then
       vim.diagnostic.enable(true)
     end
   end,
 })
-
--- Create commands to toggle presentation mode
+-------------------------------
 
 autoCmd('User', {
   pattern = 'TelescopePreviewerLoaded',
@@ -96,20 +106,19 @@ autoCmd('User', {
 autoCmd('User', {
   pattern = 'MasonToolsStartingInstall',
   callback = function()
-    notify 'Installing tools via MasonToolsInstaller'
+    notify('MasonToolsInstaller: Installing tools')
   end,
 })
 
 autoCmd('User', {
   pattern = 'MasonToolsUpdateCompleted',
   callback = function(e)
-    -- TODO: This doesn't work; let's revisit
-    if not next(e.data) == nil then
-      notify(vim.inspect(e.data))
+    if e.data and next(e.data) ~= nil then
+      notify('MasonToolsInstaller - Tools updated: ' .. vim.inspect(e.data))
     end
   end,
 })
 
 autoCmd('LspAttach', {
-  callback = require 'keymaps.lsp',
+  callback = require('keymaps.lsp'),
 })
