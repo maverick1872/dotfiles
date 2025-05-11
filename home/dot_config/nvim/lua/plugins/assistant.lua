@@ -1,6 +1,6 @@
 return {
   'yetone/avante.nvim',
-  event = 'VeryLazy',
+  cmd = { 'AvanteAsk', 'AvanteEdit', 'AvanteChat', 'AvanteToggle' },
   commit = '0d26590', -- Never set this value to "*"! Never!
   opts = {
     provider = 'copilot',
