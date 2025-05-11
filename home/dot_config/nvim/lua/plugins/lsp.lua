@@ -20,7 +20,7 @@ External Documentation:
 
 return {
   'neovim/nvim-lspconfig',
-  event = 'VeryLazy',
+  event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     --- Mason LSPConfig is responsible primarily for two things:
     --- 1. It ensures expected LSP servers are installed.
