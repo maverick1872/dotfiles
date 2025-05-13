@@ -28,6 +28,10 @@ return {
     'mason-org/mason-lspconfig.nvim',
   },
   config = function()
+    -- require("lspconfig").lspconfig.yamlls.setup(require("schema-companion").setup_client({
+    --   -- your yaml language server configuration
+    -- }))
+
     ------ Setup Mason LSPConfig ------
     require('mason-lspconfig').setup({
       ensure_installed = {
@@ -46,5 +50,8 @@ return {
         'helm_ls', -- Helm
       },
     })
+
+    -- Manually set ts_ls filetypes. This doesn't seem to be applying when defined in /lsp/ts_ls.lua
+    vim.lsp.config['ts_ls'].filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' }
   end,
 }
