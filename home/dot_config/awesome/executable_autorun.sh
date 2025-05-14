@@ -11,6 +11,7 @@ run() {
   fi
 }
 
+run ~/.config/i3/setup-displays.sh
 run picom -b
 run flameshot
 run xidlehook --not-when-audio --timer 300 '$AWESOME_CONFIG/utils/scripts/lockscreen.sh' ''
