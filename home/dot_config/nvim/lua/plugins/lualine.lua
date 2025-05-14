@@ -1,6 +1,7 @@
 -- Bubbles config for lualine
 -- Author: lokesh-krishna
 -- MIT license, see LICENSE for more details.
+local notify = require('utils').notify
 
 local colors = {
   blue = '#80a0ff',
@@ -38,16 +39,17 @@ local bubbles_theme = {
 
 local lsp = {
   function()
-    local msg = 'No Active Lsp'
-    local buf_ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
-    local clients = vim.lsp.get_clients()
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
     if next(clients) == nil then
-      return msg
+      return 'Inactive'
     end
-    for _, client in ipairs(clients) do
-      local filetypes = client.config.filetypes
-      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-        return client.name
+
+    local msg = ''
+    for i, client in ipairs(clients) do
+      if i > 1 then
+        msg = msg .. ' | ' .. client.name
+      else
+        msg = client.name
       end
     end
     return msg
