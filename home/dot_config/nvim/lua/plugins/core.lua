@@ -17,6 +17,7 @@ return {
     'tpope/vim-sleuth',
     event = 'VeryLazy',
   },
+
   -- Auto highlighting text under cursor by LSP, Treesitter, or Regex
   {
     'rrethy/vim-illuminate',
@@ -39,6 +40,13 @@ return {
     opts = {
       mappings = false,
     },
+  },
+  {
+    'folke/ts-comments.nvim',
+    cond = false,
+    opts = {},
+    event = 'VeryLazy',
+    enabled = vim.fn.has('nvim-0.10.0') == 1,
   },
 
   -- Indentation guides
@@ -67,7 +75,7 @@ return {
   -- Code Outline Utility
   {
     'stevearc/aerial.nvim',
-    cond = false,
+    -- cond = false,
     event = 'VeryLazy',
     opts = {},
     -- Optional dependencies
@@ -139,30 +147,15 @@ return {
 
   -- Documentation Generator
   {
-    enabled = false,
     'kkoomen/vim-doge',
-    event = 'BufEnter',
-  },
-
-  -- Scratch files
-  {
-    'LintaoAmons/scratch.nvim',
-    event = 'VeryLazy',
-    opts = {
-      -- scratch_file_dir = '${XDG_CACHE_HOME}/scratches',
-      use_telescope = true,
-      window_cmd = 'edit',
-      filetypes = { 'ts', 'json', 'sh', 'js' },
-      filetype_details = {
-        json = {},
-      },
-    },
+    event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
+    cond = false,
   },
 
   -- Better Marks UX
   {
     'chentoast/marks.nvim',
-    event = 'VeryLazy',
+    event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
     disable = true,
     opts = {
       -- whether to map keybinds or not. default true
@@ -206,5 +199,18 @@ return {
   {
     'towolf/vim-helm',
     ft = 'helm',
+  },
+  {
+    'folke/todo-comments.nvim',
+    cmd = { 'TodoTelescope' },
+    event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "]t", function() require("todo-comments").jump_next() end, desc = "Next Todo Comment" },
+      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous Todo Comment" },
+      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+    },
   },
 }
