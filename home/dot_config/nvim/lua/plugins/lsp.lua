@@ -50,8 +50,5 @@ return {
         'helm_ls', -- Helm
       },
     })
-
-    -- Manually set ts_ls filetypes. This doesn't seem to be applying when defined in /lsp/ts_ls.lua
-    vim.lsp.config['ts_ls'].filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' }
   end,
 }
