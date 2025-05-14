@@ -22,7 +22,7 @@ plugins=(
   gcloud
   git
   github
-  node
+  node # Must come after FNM as we leverage it for all Node Version Management
   restic
   ripgrep
   rust

@@ -3,8 +3,9 @@ if (( ! $+commands[fnm] )); then
   return
 fi
 
-# Maintain a reference to the system node path so that we can use it as necessary
-export SYSTEM_NODE_PATH=$(which node)
+# Maintain a reference to the Default alias node path so that we can use it as necessary
+_debug "FNM: Setting system node version to FNM Default alias"
+export SYSTEM_NODE_PATH=$(fnm exec --using=default which node)
 
 eval "$(fnm env --use-on-cd)"
 
