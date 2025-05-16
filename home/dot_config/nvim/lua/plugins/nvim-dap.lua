@@ -11,6 +11,8 @@ return {
     'mason-org/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
   },
+  -- The following leveraged as a source of reference on how to get an intial working configuration
+  -- https://github.com/ecosse3/nvim/blob/dev/lua/plugins/dap.lua
   config = function()
     local dap = require('dap')
     local dapui = require('dapui')
@@ -29,25 +31,60 @@ return {
       ensure_installed = { 'js' },
     })
 
-    -- Dap UI setup
-    -- For more information, see |:help nvim-dap-ui|
+    -- ╭──────────────────────────────────────────────────────────╮
+    -- │ DAP UI Setup                                             │
+    -- │ For more information, see :help nvim-dap-ui              │
+    -- ╰──────────────────────────────────────────────────────────╯
     dapui.setup({
-      -- Set icons to characters that are more likely to work in every terminal.
-      --    Feel free to remove or use ones that you like more! :)
-      --    Don't feel like these are good choices.
-      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-      controls = {
-        icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
+      icons = { expanded = '▾', collapsed = '▸' },
+      mappings = {
+        -- Use a table to apply multiple mappings
+        expand = { '<CR>', '<2-LeftMouse>' },
+        open = 'o',
+        remove = 'd',
+        edit = 'e',
+        repl = 'r',
+        toggle = 't',
+      },
+      -- Expand lines larger than the window
+      -- Requires >= 0.7
+      expand_lines = vim.fn.has('nvim-0.7'),
+      -- Layouts define sections of the screen to place windows.
+      -- The position can be "left", "right", "top" or "bottom".
+      -- The size specifies the height/width depending on position. It can be an Int
+      -- or a Float. Integer specifies height/width directly (i.e. 20 lines/columns) while
+      -- Float value specifies percentage (i.e. 0.3 - 30% of available lines/columns)
+      -- Elements are the elements shown in the layout (in order).
+      -- Layouts are opened in order so that earlier layouts take priority in window sizing.
+      layouts = {
+        {
+          elements = {
+            { id = 'scopes', size = 0.25 },
+            { id = 'breakpoints', size = 0.25 },
+          },
+          size = 50, -- 50 columns
+          position = 'left',
         },
+        {
+          elements = {
+            'watches',
+            'repl',
+          },
+          size = 0.25, -- 25% of total lines
+          position = 'bottom',
+        },
+      },
+      floating = {
+        max_height = nil, -- These can be integers or a float between 0 and 1.
+        max_width = nil, -- Floats will be treated as percentage of your screen.
+        border = 'rounded', -- Border style. Can be "single", "double" or "rounded"
+        mappings = {
+          close = { 'q', '<Esc>' },
+        },
+      },
+      windows = { indent = 1 },
+      render = {
+        max_type_length = nil, -- Can be integer or nil.
       },
     })
     vim.fn.sign_define('DapBreakpoint', { text = '🔵', texthl = '', linehl = '', numhl = '' })
@@ -58,27 +95,9 @@ return {
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-    dap.configurations.typescript = {
-      {
-        type = 'node2',
-        name = 'node attach',
-        request = 'attach',
-        program = '${file}',
-        cwd = vim.fn.getcwd(),
-        sourceMaps = true,
-        protocol = 'inspector',
-      },
-      {
-        name = 'pwa-node',
-        type = 'pwa-node',
-        request = 'attach',
-        port = 9229,
-        skipFiles = { '<node_internals>/**', 'node_modules/**' },
-        cwd = '${workspaceFolder}',
-      },
-    }
-    dap.configurations.javascript = dap.configurations.typescript
-
+    -- ╭──────────────────────────────────────────────────────────╮
+    -- │ Adapters                                                 │
+    -- ╰──────────────────────────────────────────────────────────╯
     dap.adapters['pwa-node'] = {
       type = 'server',
       host = 'localhost',
@@ -92,24 +111,51 @@ return {
       },
     }
 
-    dap.adapters['pwa-chrome'] = {
-      type = 'server',
-      host = 'localhost',
-      port = '${port}',
-      executable = {
-        command = 'node',
-        args = {
-          vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js',
-          '${port}',
+    -- ╭──────────────────────────────────────────────────────────╮
+    -- │ Configurations                                           │
+    -- ╰──────────────────────────────────────────────────────────╯
+    exts = { 'javascript', 'typescript' }
+    for i, ext in ipairs(exts) do
+      dap.configurations[ext] = {
+        {
+          name = 'Attach Node Process (pwa-node)',
+          type = 'pwa-node',
+          request = 'attach',
+          port = 9229,
+          skipFiles = { '<node_internals>/**', 'node_modules/**' },
+          cwd = '${workspaceFolder}',
         },
-      },
-    }
-
-    -- local mason_path = vim.fn.glob(vim.fn.stdpath 'data' .. '/mason/')
-    -- dap.adapters.node2 = {
-    --   type = 'executable',
-    --   command = 'js-debug-adapter',
-    --   -- args = { mason_path .. 'packages/js-debug-adapter' },
-    -- }
+        {
+          type = 'pwa-node',
+          request = 'launch',
+          name = 'Launch Current File (pwa-node with ts-node)',
+          cwd = vim.fn.getcwd(),
+          runtimeArgs = { '--loader', 'ts-node/esm' },
+          runtimeExecutable = 'node',
+          args = { '${file}' },
+          sourceMaps = true,
+          protocol = 'inspector',
+          skipFiles = { '<node_internals>/**', 'node_modules/**' },
+          resolveSourceMapLocations = {
+            '${workspaceFolder}/**',
+            '!**/node_modules/**',
+          },
+        },
+        {
+          type = 'pwa-node',
+          request = 'launch',
+          name = 'Launch Test Current File (pwa-node with jest)',
+          cwd = vim.fn.getcwd(),
+          runtimeArgs = { '${workspaceFolder}/node_modules/.bin/jest' },
+          runtimeExecutable = 'node',
+          args = { '${file}', '--coverage', 'false' },
+          rootPath = '${workspaceFolder}',
+          sourceMaps = true,
+          console = 'integratedTerminal',
+          internalConsoleOptions = 'neverOpen',
+          skipFiles = { '<node_internals>/**', 'node_modules/**' },
+        },
+      }
+    end
   end,
 }

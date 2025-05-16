@@ -24,6 +24,9 @@ function module.apply_to_config(config)
 	config.colors = wezterm.color.get_builtin_schemes()[config.color_scheme]
 	config.colors.foreground = "silver"
 	config.font_size = 13.0
+	config.window_frame = {
+		font_size = config.font_size,
+	}
 	config.font = wezterm.font("FiraCode Nerd Font Mono", { weight = "Regular", stretch = "Normal", style = "Normal" })
 
 	-- must come after setting the color scheme
