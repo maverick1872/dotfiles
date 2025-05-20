@@ -13,6 +13,7 @@ fi
 # Define Plugins to load (loaded in order specified)
 plugins=(
   core
+  development
   bitwarden
   brew
   chezmoi
