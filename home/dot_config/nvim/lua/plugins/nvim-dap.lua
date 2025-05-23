@@ -15,6 +15,8 @@ return {
   -- https://github.com/ecosse3/nvim/blob/dev/lua/plugins/dap.lua
   config = function()
     local dap = require('dap')
+    require('dap.ext.vscode').load_launchjs() -- Configures nvim-dap to support launch.json files
+
     local dapui = require('dapui')
     require('mason').setup()
 
