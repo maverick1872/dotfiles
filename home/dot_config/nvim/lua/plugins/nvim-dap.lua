@@ -15,8 +15,6 @@ return {
   -- https://github.com/ecosse3/nvim/blob/dev/lua/plugins/dap.lua
   config = function()
     local dap = require('dap')
-    require('dap.ext.vscode').load_launchjs() -- Configures nvim-dap to support launch.json files
-
     local dapui = require('dapui')
     require('mason').setup()
 
@@ -115,49 +113,51 @@ return {
 
     -- ╭──────────────────────────────────────────────────────────╮
     -- │ Configurations                                           │
+    -- │ Not necessary at the moment due to default loading of    │
+    -- │ configurations defined in .vscode/launch.json            │
     -- ╰──────────────────────────────────────────────────────────╯
-    exts = { 'javascript', 'typescript' }
-    for i, ext in ipairs(exts) do
-      dap.configurations[ext] = {
-        {
-          name = 'Attach Node Process (pwa-node)',
-          type = 'pwa-node',
-          request = 'attach',
-          port = 9229,
-          skipFiles = { '<node_internals>/**', 'node_modules/**' },
-          cwd = '${workspaceFolder}',
-        },
-        {
-          type = 'pwa-node',
-          request = 'launch',
-          name = 'Launch Current File (pwa-node with ts-node)',
-          cwd = vim.fn.getcwd(),
-          runtimeArgs = { '--loader', 'ts-node/esm' },
-          runtimeExecutable = 'node',
-          args = { '${file}' },
-          sourceMaps = true,
-          protocol = 'inspector',
-          skipFiles = { '<node_internals>/**', 'node_modules/**' },
-          resolveSourceMapLocations = {
-            '${workspaceFolder}/**',
-            '!**/node_modules/**',
-          },
-        },
-        {
-          type = 'pwa-node',
-          request = 'launch',
-          name = 'Launch Test Current File (pwa-node with jest)',
-          cwd = vim.fn.getcwd(),
-          runtimeArgs = { '${workspaceFolder}/node_modules/.bin/jest' },
-          runtimeExecutable = 'node',
-          args = { '${file}', '--coverage', 'false' },
-          rootPath = '${workspaceFolder}',
-          sourceMaps = true,
-          console = 'integratedTerminal',
-          internalConsoleOptions = 'neverOpen',
-          skipFiles = { '<node_internals>/**', 'node_modules/**' },
-        },
-      }
-    end
+    -- exts = { 'javascript', 'typescript' }
+    -- for i, ext in ipairs(exts) do
+    --   dap.configurations[ext] = {
+    --     {
+    --       name = 'Attach Node Process (pwa-node)',
+    --       type = 'pwa-node',
+    --       request = 'attach',
+    --       port = 9229,
+    --       skipFiles = { '<node_internals>/**', 'node_modules/**' },
+    --       cwd = '${workspaceFolder}',
+    --     },
+    --     {
+    --       type = 'pwa-node',
+    --       request = 'launch',
+    --       name = 'Launch Current File (pwa-node with ts-node)',
+    --       cwd = vim.fn.getcwd(),
+    --       runtimeArgs = { '--loader', 'ts-node/esm' },
+    --       runtimeExecutable = 'node',
+    --       args = { '${file}' },
+    --       sourceMaps = true,
+    --       protocol = 'inspector',
+    --       skipFiles = { '<node_internals>/**', 'node_modules/**' },
+    --       resolveSourceMapLocations = {
+    --         '${workspaceFolder}/**',
+    --         '!**/node_modules/**',
+    --       },
+    --     },
+    --     {
+    --       type = 'pwa-node',
+    --       request = 'launch',
+    --       name = 'Launch Test Current File (pwa-node with jest)',
+    --       cwd = vim.fn.getcwd(),
+    --       runtimeArgs = { '${workspaceFolder}/node_modules/.bin/jest' },
+    --       runtimeExecutable = 'node',
+    --       args = { '${file}', '--coverage', 'false' },
+    --       rootPath = '${workspaceFolder}',
+    --       sourceMaps = true,
+    --       console = 'integratedTerminal',
+    --       internalConsoleOptions = 'neverOpen',
+    --       skipFiles = { '<node_internals>/**', 'node_modules/**' },
+    --     },
+    --   }
+    -- end
   end,
 }
