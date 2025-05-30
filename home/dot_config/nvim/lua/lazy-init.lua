@@ -1,0 +1,35 @@
+---- Lazy.nvim Installation ----
+--     https://github.com/folke/lazy.nvim
+--    `:help lazy.nvim.txt` for more info
+
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  local out = vim.fn.system({ 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
+      { out, 'WarningMsg' },
+      { '\nPress any key to exit...' },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
+
+---- Lazy.nvim Configuration ----
+require('lazy').setup('plugins', {
+  performance = {
+    rtp = {
+      disabled_plugins = { 'netrwPlugin' },
+    },
+    checker = {
+      enabled = true,
+      notify = true, -- get a notification when new updates are found
+      frequency = 604800, -- check for updates every weekly (7 days)
+      check_pinned = false, -- check for pinned packages that can't be updated
+    },
+  },
+})
