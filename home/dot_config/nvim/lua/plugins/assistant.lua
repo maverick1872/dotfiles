@@ -1,6 +1,7 @@
 return {
   'yetone/avante.nvim',
   cmd = { 'AvanteAsk', 'AvanteEdit', 'AvanteChat', 'AvanteToggle' },
+  keys = { { '<leader>aa', nil, { mode = { 'n', 'v' } } }, { '<leader>ae', nil, { mode = { 'n', 'v' } } }, '<leader>ac' },
   commit = '0d26590', -- Never set this value to "*"! Never!
   opts = {
     provider = 'copilot',
