@@ -22,6 +22,7 @@ return {
         'markdown_inline',
         'prisma',
         'python',
+        'regex',
         'rust',
         'terraform',
         'toml',
