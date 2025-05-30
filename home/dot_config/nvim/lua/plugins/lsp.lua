@@ -40,7 +40,7 @@ return {
         'prismals', -- Prisma ORM
         'rust_analyzer', -- Rust
         'sqlls', -- SQL
-        'volar', -- Vue
+        'vuels', -- Vue
         'yamlls', -- YAML
         'terraformls', -- Terraform
         'bashls', -- Bash (minimal support for ZSH)
