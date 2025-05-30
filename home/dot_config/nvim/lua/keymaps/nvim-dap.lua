@@ -25,16 +25,21 @@ if is_available('nvim-dap') then
   map('n', '<leader>dp', require('dap').pause, 'Pause')
   map('n', '<leader>dR', require('dap').restart_frame, 'Restart')
 
-  if is_available('nvim-dap-ui') then
-    map('n', '<leader>dE', function()
-      vim.ui.input({ prompt = 'Expression: ' }, function(expr)
-        if expr then
-          require('dapui').eval(expr, { enter = true })
-        end
-      end)
-    end, 'Evaluate Input')
-    map('v', '<leader>dE', require('dapui').eval, 'Evaluate Input')
-    map('n', '<leader>du', require('dapui').toggle, 'Toggle Debugger UI')
-    map('n', '<leader>dh', require('dap.ui.widgets').hover, 'Debugger Hover')
+  -- TODO: remove in facvor of nvim-dap-view
+  -- if is_available('nvim-dap-ui') then
+  --   map('n', '<leader>dE', function()
+  --     vim.ui.input({ prompt = 'Expression: ' }, function(expr)
+  --       if expr then
+  --         require('dapui').eval(expr, { enter = true })
+  --       end
+  --     end)
+  --   end, 'Evaluate Input')
+  --   map('v', '<leader>dE', require('dapui').eval, 'Evaluate Input')
+  --   map('n', '<leader>du', require('dapui').toggle, 'Toggle Debugger UI')
+  --   map('n', '<leader>dh', require('dap.ui.widgets').hover, 'Debugger Hover')
+  -- end
+
+  if is_available('nvim-dap-view') then
+    map('n', '<leader>du', require('dap-view').toggle, 'Toggle Debugger UI')
   end
 end

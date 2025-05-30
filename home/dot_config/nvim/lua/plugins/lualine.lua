@@ -69,15 +69,8 @@ return {
       disabled_filetypes = {
         'dashboard',
         tabline = {},
-        statusline = {
-          -- 'dap-repl',
-          -- 'dapui_breakpoints',
-          -- 'dapui_console',
-          -- 'dapui_scopes',
-          -- 'dapui_watches',
-          -- 'dapui_stacks',
-        },
         winbar = {
+          'dap-view',
           'dap-repl',
           'dapui_breakpoints',
           'dapui_console',
