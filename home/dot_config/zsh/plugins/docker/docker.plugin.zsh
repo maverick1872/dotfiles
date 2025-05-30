@@ -19,28 +19,71 @@ compdefas () {
   fi
 }
 
+
 dco() {
-  if [[ $1 == "ps" ]]; then
-    strict_mode
-    local header="Name|Status|Created At|Ports|Networks"
-    local container_info=$(docker compose ps -q | xargs docker inspect --format "{{index .Config.Labels \"com.docker.compose.service\"}}|\
-      {{.State.Status}}|\
-      {{slice .Created 0 19}}")
-# {{range .NetworkSettings.Ports}}{{.HostIp}}:{{.HostPort}}->{{.ContainerPort}}{{end}}|\
-# {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}")
-    strict_mode off
+  local subcommand=$1
+  shift || true
 
-    print $header'\n'$container_info | column -ts '|'
-    return
-  elif [[ $1 == "down" ]]; then
-    command docker compose "$@" --remove-orphans
-    return
-  elif [[ $1 == "up" ]]; then
-    command docker compose "$@" -d
-    return
-  fi
+  case "$subcommand" in
+    ps)
+      # Ensure we only run inspect if containers exist
+      local container_ids
+      container_ids=("${(@f)$(docker compose ps -q)}")
+      if [[ -z $container_ids ]]; then
+        echo "No containers found."
+        return
+      fi
 
-  command docker compose "$@"
+      local header="Name|Status|Created At|Ports|Networks"
+      local container_info=""
+      local raw_container_info_json
+
+      raw_container_info_json=$(docker inspect "${container_ids[@]}")
+
+      container_info=$(jq -r '
+        def age_string($seconds):
+          if $seconds < 60 then "\($seconds)s"
+          elif $seconds < 3600 then "\(($seconds / 60) | floor)m"
+          elif $seconds < 86400 then "\(($seconds / 3600) | floor)h"
+          else "\(($seconds / 86400) | floor)d"
+          end;
+
+        
+        .[] |
+        [
+          .Config.Labels["com.docker.compose.service"],
+          .State.Status + (if .State.Health? then " (" + .State.Health.Status + ")" else "" end),
+          (.Created | sub("\\..*"; "")),
+          (
+            .NetworkSettings.Ports
+            | to_entries
+            | map(select(.value != null) | "\(.value[0].HostIp):\(.value[0].HostPort) -> \(.key)")
+            | join(" ")
+          ),
+          (
+            .NetworkSettings.Networks
+            | to_entries
+            | map("\(.key):\(.value.IPAddress)")
+            | join(" ")
+          )
+        ] | @tsv
+      ' <<< "$raw_container_info_json" | sed 's/\t/|/g')
+
+      echo -e "$header\n$container_info" | column -ts '|'
+      ;;
+
+    down)
+      docker compose down --remove-orphans "$@"
+      ;;
+
+    up)
+      docker compose up -d "$@"
+      ;;
+
+    *)
+      docker compose "$subcommand" "$@"
+      ;;
+  esac
 }
 
 # Traverses directory structure and updates all docker images
