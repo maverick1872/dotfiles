@@ -11,5 +11,5 @@ alias rg='rg --ignore-file=${RIPGREP_CONFIG_DIR}/ignore'
 
 # Search and replace leveraging ripgrep
 rg-sr() {
-  rg $1 --hidden --files-with-matches | xargs -p sed -Ee "s|${1}|${2}|g"
+  rg $1 --hidden --files-with-matches | xargs -p sed -i'' -Ee "s|${1}|${2}|g"
 }
