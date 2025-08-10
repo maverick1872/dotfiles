@@ -25,11 +25,11 @@ require('lazy').setup('plugins', {
     rtp = {
       disabled_plugins = { 'netrwPlugin' },
     },
-    checker = {
-      enabled = true,
-      notify = true, -- get a notification when new updates are found
-      frequency = 604800, -- check for updates every weekly (7 days)
-      check_pinned = false, -- check for pinned packages that can't be updated
-    },
+  },
+  checker = {
+    enabled = true,
+    notify = true, -- get a notification when new updates are found
+    frequency = 604800, -- check for updates every weekly (7 days)
+    check_pinned = false, -- check for pinned packages that can't be updated
   },
 })
