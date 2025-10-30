@@ -1,7 +1,7 @@
 tap "hashicorp/tap"
 
-brew "slack"
-brew "gcloud-cli"
+cask "slack"
+cask "gcloud-cli"
 
 brew "java"
 brew "hashicorp/tap/terraform"
