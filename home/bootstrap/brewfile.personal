@@ -1,4 +1,8 @@
+tap "creativeprojects/tap" # required for restic & associated brews
+
 brew "ffmpeg" 
+brew "restic" # Backup utitlity that's os agnostic
+brew "resticprofile" # Profile based wrapper for Restic
 
 cask "autodesk-fusion"
 cask "bambu-studio"
