@@ -15,6 +15,7 @@ brew "yq"
 brew "ripgrep"
 brew "tealdeer"
 brew "neovim"
+brew "luarocks"
 brew "wget"
 brew "nghttp2" # HTTP2 Client
 brew "git-delta"
