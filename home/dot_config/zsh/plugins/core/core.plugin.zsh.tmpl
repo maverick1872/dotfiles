@@ -52,12 +52,6 @@ show-port() {
   lsof -P -n -i :"$1"
 }
 
-_debug() {
-  if [[ -n $ZSH_DEBUG ]]; then
-    echo "[ZSH] $1"
-  fi
-}
-
 list-path-dirs() {
   local output=$(sed "s/:/\n/g" <<< $PATH)
   awk '{print NR, "\t", $0}' <<< $output
