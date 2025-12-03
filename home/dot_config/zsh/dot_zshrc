@@ -23,6 +23,7 @@ plugins=(
   gcloud
   git
   github
+  kubectl
   node # Must come after FNM as we leverage it for all Node Version Management
   restic
   ripgrep
@@ -31,7 +32,6 @@ plugins=(
   zsh-syntax-highlighting
   zsh-autosuggestions
   history-search-multi-word
-  work
 )
 
 # Load ZSH initialization
