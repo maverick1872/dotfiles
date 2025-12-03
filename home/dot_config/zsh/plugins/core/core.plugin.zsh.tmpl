@@ -87,45 +87,173 @@ reload-shell() {
 # GPG Key Management
 alias gen-gpg-key='gpg --full-generate-key --expert'
 
-# Function to enable exporting GPG keys using FZF with enriched file names for backup purposes
-backup-gpg() {
-  local key_list
-  key_list=$(gpg --list-keys --with-colons | awk -F: '/^pub:/ {print $5}')
+# Backup GPG keys with interactive selection and robust handling
+gpg-backup() {
+  set -o pipefail
 
-  if [[ -z "$key_list" ]]; then
-    echo "No GPG keys found. Aborting."
+  for bin in gpg fzf awk date; do
+    command -v "$bin" >/dev/null 2>&1 || { echo "Missing dependency: $bin"; return 2; }
+  done
+
+  local gnupg_dir="${GNUPGHOME:-$HOME/.gnupg}"
+  local backup_dir="${gnupg_dir}/backup"
+  local export_date
+  export_date="$(date +'%Y-%m-%d')"
+
+  # Restrict permissions for created files/dirs
+  umask 077
+  mkdir -p "$backup_dir" || { echo "Could not create $backup_dir"; return 3; }
+
+  # Collect pub fingerprints + first UID
+  local key_lines
+  key_lines="$(gpg --list-keys --with-colons 2>/dev/null |
+    awk -F: '
+      $1=="pub" { fp=$5 }
+      $1=="uid" && fp {
+        if (!seen[fp]++) { print fp "\t" $10 }
+      }
+    ')"
+
+  if [[ -z "$key_lines" ]]; then
+    echo "No GPG public keys found."
     return 1
   fi
 
-  local selected_key
-  selected_key=$(echo "$key_list" | fzf --prompt="Select GPG key: ")
+  local selected_line selected_fp selected_uid
+  if [[ $(printf "%s\n" "$key_lines" | wc -l) -eq 1 ]]; then
+    selected_line="$key_lines"
+    echo "Single key detected; auto-selecting."
+  else
+    selected_line="$(printf "%s\n" "$key_lines" | fzf \
+      --prompt="Select GPG key: " \
+      --with-nth=2 \
+      --header="Fingerprint | Primary UID" \
+      --preview='FP=$(echo {} | cut -f1); gpg --list-keys --fingerprint "$FP"' \
+      --preview-window=down:60%)"
+  fi
 
-  if [[ -z "$selected_key" ]]; then
-    echo "No key selected. Aborting."
+  if [[ -z "$selected_line" ]]; then
+    echo "No key selected."
     return 1
   fi
 
-  local backup_dir="$GNUPGHOME/backup"
-  [[ ! -d "$backup_dir" ]] && mkdir -p "$backup_dir"
+  selected_fp="$(echo "$selected_line" | cut -f1)"
+  selected_uid="$(echo "$selected_line" | cut -f2-)"
 
-  local export_date=$(date +"%Y-%m-%d")
-  local main_private_key_filename="${backup_dir}/${selected_key}_${export_date}.private.key"
-  local main_public_key_filename="${backup_dir}/${selected_key}_${export_date}.public.asc"
-  local subkey_private_key_filename="${backup_dir}/${selected_key}_subkeys_${export_date}.private.key"
-  local trust_filename="${backup_dir}/owner_trust_${export_date}.txt"
+  echo "Exporting key: $selected_fp ($selected_uid)"
 
-  # Export the main public key
-  gpg --export "$selected_key" > "$main_public_key_filename"
+  # Structured layout:
+  # backup/ownertrust_date.txt
+  # backup/<fingerprint>_<date>/public.asc
+  # backup/<fingerprint>_<date>/private.asc
+  # backup/<fingerprint>_<date>/subkeys/subkey_<subfingerprint>_<date>.asc
+  local base="${selected_fp}_${export_date}"
+  local primary_dir="${backup_dir}/${base}"
+  local subkeys_dir="${primary_dir}/subkeys"
+  local trust_file="${backup_dir}/ownertrust_${export_date}.txt"
 
-  # Export the main & subkey private keys
-  gpg --export-secret-keys "$selected_key" > "$main_private_key_filename"
-  gpg --export-secret-subkeys "$selected_key" > "$subkey_private_key_filename"
+  mkdir -p "$primary_dir" "$subkeys_dir" || { echo "Could not create $primary_dir or $subkeys_dir"; return 3; }
+  local pub_file="${primary_dir}/public.asc"
+  local sec_file="${primary_dir}/private.asc"
 
-  # Export owner trust
-  gpg --export-ownertrust > "$trust_filename"
-  echo "Owner trust saved: $trust_filename"
+  # Track created per-subkey files for zsh-safe summary
+  local -a created_subkey_files
+  created_subkey_files=()
 
-  echo "Private & public keys exported to $backup_dir"
+  # Public key
+  if ! gpg --output "$pub_file" --armor --export "$selected_fp"; then
+    echo "Failed to export public key."
+    return 4
+  fi
+
+  # Full secret (primary + all subkeys)
+  if ! gpg --output "$sec_file" --armor --export-secret-keys "$selected_fp"; then
+    echo "Failed to export full secret keys."
+    return 5
+  fi
+
+  # Enumerate subkey fingerprints (secret subkeys) and export individually
+  local _list_secret
+  _list_secret="$(gpg --list-secret-keys --keyid-format=long --with-colons "$selected_fp" 2>/dev/null)"
+  # Collect long key IDs (5th field of ssb line) instead of full fingerprints
+  local sub_ids_raw
+  sub_ids_raw="$(print -- "$_list_secret" | awk -F: '$1=="ssb"{print $5}')"
+
+  if [[ -z "$sub_ids_raw" ]]; then
+    echo "WARNING: No secret subkeys found (may have been moved to smartcard or none exist)."
+  else
+    local -a sub_ids
+    sub_ids=(${(f)sub_ids_raw})
+    echo "Found subkeys (${#sub_ids[@]}):"
+    local _sf
+    for _sf in "${sub_ids[@]}"; do
+      echo "  $_sf"
+    done
+
+    local sf
+    for sf in "${sub_ids[@]}"; do
+      local sub_out="${subkeys_dir}/${sf}.asc"
+      if gpg --output "$sub_out" --armor --export-secret-subkeys "${sf}!" 2>"$sub_out.err"; then
+        if [[ ! -s "$sub_out" ]]; then
+          echo "WARNING: No private material exported for subkey $sf (likely smartcard); skipping empty file." >&2
+          rm -f "$sub_out" "$sub_out.err"
+          continue
+        fi
+        created_subkey_files+=("$sub_out")
+      else
+        echo "Failed to export individual subkey: $sf" >&2
+      fi
+      rm -f "$sub_out.err"
+    done
+  fi
+
+  # Ownertrust (global; includes trust for all keys)
+  if ! gpg --export-ownertrust > "$trust_file"; then
+    echo "Failed to export owner trust."
+    return 7
+  fi
+
+  # Summary
+  echo
+  echo
+  echo "======================== GPG BACKUP SUMMARY ========================"
+  echo "Date:                 $export_date"
+  echo "Primary Fingerprint:  $selected_fp"
+  echo "Primary UID:          $selected_uid"
+  echo "Backup Directory:     $backup_dir"
+  echo
+  echo "FILES:"
+  if [[ -s "$trust_file" ]]; then
+    echo "- ownertrust_${export_date}.txt"
+  else
+    echo "- ownertrust_${export_date}.txt (MISSING)"
+  fi
+  if [[ -s "$pub_file" ]]; then
+    echo "- ${base}/public.asc"
+  else
+    echo "- ${base}/public.asc (MISSING)"
+  fi
+  if [[ -s "$sec_file" ]]; then
+    echo "- ${base}/private.asc"
+  else
+    echo "- ${base}/private.asc (MISSING)"
+  fi
+  if (( ${#created_subkey_files[@]} > 0 )); then
+    local sf_out
+    for sf_out in "${created_subkey_files[@]}"; do
+      echo "- ${base}/subkeys/$(basename "$sf_out")"
+    done
+  fi
+  echo
+  echo "NOTES:"
+  echo "- ${base}/private.asc contains PRIMARY + ALL SUBKEY PRIVATE MATERIAL." 
+  echo "- ownertrust file affects trust assignments for ALL keys (review before import)."
+  echo "- Store private exports OFFLINE (encrypted removable media)."
+  echo "- Consider checksum manifest (sha256sum) for integrity verification."
+  echo
+  echo "IMPORTANT: Secure these files (restrict permissions, encrypted at rest)."
+  echo "===================================================================="
+  return 0
 }
 
 {{- if contains "darwin" .osID }}
