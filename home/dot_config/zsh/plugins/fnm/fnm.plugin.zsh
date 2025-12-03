@@ -1,11 +1,19 @@
-## Source FNM (Fast Node Manager)
+## If FNM (Fast Node Manager) is not installed, don't load this plugin
 if (( ! $+commands[fnm] )); then
   return
 fi
 
-# Maintain a reference to the Default alias node path so that we can use it as necessary
-_debug "FNM: Setting system node version to FNM Default alias"
-export SYSTEM_NODE_PATH=$(fnm exec --using=default which node)
+# Maintain a reference to the system/default node path so that we can use it as necessary
+# Try system version first, then fall back to default if system is not available
+if fnm exec --using=system which node &>/dev/null; then
+  _debug "FNM: Setting system node version to FNM system alias"
+  export SYSTEM_NODE_PATH=$(fnm exec --using=system which node)
+elif fnm exec --using=default which node &>/dev/null; then
+  _debug "FNM: Setting system node version to FNM default alias (system not available)"
+  export SYSTEM_NODE_PATH=$(fnm exec --using=default which node)
+else
+  _debug "FNM: Warning - Neither system nor default node version available"
+fi
 
 eval "$(fnm env --use-on-cd)"
 
