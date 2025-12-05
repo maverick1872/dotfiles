@@ -23,6 +23,7 @@ strict_mode(){
     ## set -e # exit immediately on errors
     ## set -u # exit on not assigned variables
     ## set -o pipefail # exit on pipe failure
+    ## FIXME: this should be `-` rather than `+` to enable strict mode
     set +Ceuo pipefail
     _debug 'Strict mode enabled'
   else
@@ -33,7 +34,7 @@ strict_mode(){
 
 # Provide _debug functionality as early as possible
 _debug() {
-  if [[ -n $ZSH_DEBUG- ]]; then
+  if [[ -n ${ZSH_DEBUG-} ]]; then
     echo "[ZSH] $1"
   fi
 }
@@ -129,11 +130,16 @@ gpg-backup() {
     echo "Single key detected; auto-selecting."
   else
     selected_line="$(printf "%s\n" "$key_lines" | fzf \
-      --prompt="Select GPG key: " \
+      --delimiter="\t" \
       --with-nth=2 \
-      --header="Fingerprint | Primary UID" \
-      --preview='FP=$(echo {} | cut -f1); gpg --list-keys --fingerprint "$FP"' \
-      --preview-window=down:60%)"
+      --border \
+      --prompt="Select GPG key: " \
+      --header="Primary UID" \
+      --height=30% \
+      --reverse \
+      --preview='FP=$(echo {} | cut -f1); gpg --list-keys "$FP"' \
+      --preview-window=down
+      )"
   fi
 
   if [[ -z "$selected_line" ]]; then
