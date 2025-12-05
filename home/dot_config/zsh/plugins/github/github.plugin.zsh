@@ -35,10 +35,29 @@ viewpr() {
   fi
 }
 
+closepr() {
+  if [[ -n $1 ]]; then
+    gh pr close "$1"
+  else
+    GH_FORCE_TTY=100% gh pr list --limit=100 \
+      | fzf --prompt='Filter PRs: ' \
+        --border \
+        --height '~50%' \
+        --reverse \
+        --ansi \
+        --header-lines 4 \
+        --preview 'GH_FORCE_TTY=100% gh pr view {1}' \
+        --preview-window 'down' \
+      | awk '{print $1}' | xargs gh pr close
+  fi
+}
+
 # Open Github Repo
 viewrepo() {
   gh repo view -w
 }
+
+
 
 # Github CLI
 alias newpr='gh pr create'

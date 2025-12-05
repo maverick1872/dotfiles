@@ -24,7 +24,10 @@ return {
         prepend_args = { '--indent-size', '2' },
       },
       yamlfmt = {
-        prepend_args = { '-formatter', 'retain_line_breaks_single=true,trim_trailing_whitespace=true' },
+        prepend_args = {
+          '-formatter',
+          'retain_line_breaks_single=true,trim_trailing_whitespace=true,pad_line_comments=2',
+        },
       },
     },
   },

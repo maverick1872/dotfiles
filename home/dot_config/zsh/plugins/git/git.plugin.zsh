@@ -98,19 +98,44 @@ gstas() {
   git stash push --staged -m "$*"
 }
 
-clean_merged_branches() {
-  git checkout -q main && git for-each-ref refs/heads/ "--format=%(refname:short)" | \
-  while read branch; do
-    mergeBase=$(git merge-base main $branch) &&
-    if [[ $(git cherry main $(git commit-tree $(git rev-parse "$branch^{tree}") -p $mergeBase -m _)) == "-"* ]]; then
-      read -q "REPLY?Would you like to delete branch: '${branch}'? (YyNn)"
+clean-stale-branches() {
+  local current_branch=$(git rev-parse --abbrev-ref HEAD)
+  local main_branch=$(git_main_branch 2>/dev/null)
+  local develop_branch=$(git_develop_branch 2>/dev/null)
+
+	git branch --sort=-committerdate | while read branch; do
+    # Skip current branch and main/develop branches
+		if [[ "$branch" == "$current_branch" || "$branch" == "$main_branch" || "$branch" == "$develop_branch" || "$branch" == \*\ * ]]; then
+      continue
+    fi
+
+		# Evaluate if the branch has not been updated in the last 2 weeks
+    if [[ -z "$(git log -1 --since='2 weeks ago' -s "$branch")" ]]; then
+			read -q "REPLY?Would you like to delete branch: '${branch}'? (YyNn)"
       echo ""
       if [[ $? -eq 0 ]]; then
-        git branch -D $branch;
+        git branch -q -D $branch;
         echo ""
       fi
     fi
    done
+}
+
+gtl() {
+  git tag \
+    | awk -F@ '{print $1}' \
+    | sort -u \
+    | while read module; do
+      latest_tag=$(git tag | grep "^${module}@" \
+        | sed "s/^${module}@//" \
+        | sort -V \
+        | tail -n1)
+
+      full_tag="${module}@${latest_tag}"
+      description=$(git for-each-ref --format="%(subject)" "refs/tags/$full_tag" 2>/dev/null)
+
+      printf "%-30s %s\n" "$full_tag" "$description"
+    done
 }
 
 # Random
@@ -176,14 +201,14 @@ alias gdod='git diff origin/$(git_develop_branch)'
 
 # Git Fetch
 alias gf='git fetch'
-alias gfa='git fetch --all --prune --jobs=10'
+alias gfa='git fetch --all --prune --prune-tags --jobs=10'
 
 # Git Pull
 alias gl='git pull'
 
 # Git Log
 alias glg='git log --stat'
-alias glo='git log --pretty=format:"%Cred%cs%Creset - %C(auto)%h%Creset - %Cgreen%an %G?%Creset - %s %C(auto)%d" --date=local'
+alias glo='git log --pretty=format:"%Cred%cs%Creset - %C(auto)%h%Creset - %Cgreen%an%Creset - %s %C(auto)%d" --date=local'
 
 # Git Merge
 alias gm='git merge'
@@ -258,6 +283,6 @@ alias gswm='git switch $(git_main_branch)'
 
 # Git Tag
 alias gta='git tag --annotate'
-alias gtl='gtl(){ git tag --sort=-v:refname -n --list "${1}*" }; noglob gtl'
+# alias gtl='gtl(){ git tag --sort=-v:refname -n --list "${1}*" }; noglob gtl'
 alias gts='git tag --sign'
-alias gtv='git tag | sort -V'
+# alias gtv='git tag | sort -V'
