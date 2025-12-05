@@ -31,6 +31,14 @@ strict_mode(){
   fi
 }
 
+# Provide _debug functionality as early as possible
+_debug() {
+  if [[ -n $ZSH_DEBUG- ]]; then
+    echo "[ZSH] $1"
+  fi
+}
+
+
 # Creates a temp file name and leverages it to swap to files "in place"
 swap() {
   tmp_name=$(TMPDIR=$(dirname -- "$1") mktemp) &&
@@ -74,6 +82,8 @@ alias random-string='openssl rand -base64 16'
 reload-shell() {
   if [[ $1 == "debug" ]]; then
     ZSH_DEBUG=true
+  else
+    unset ZSH_DEBUG
   fi
   source $ZDOTDIR/.zshrc
 }
