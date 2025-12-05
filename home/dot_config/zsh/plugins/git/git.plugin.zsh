@@ -183,7 +183,7 @@ alias gl='git pull'
 
 # Git Log
 alias glg='git log --stat'
-alias glo='git log --pretty=format:"%Cred%cs%Creset - %C(auto)%h%Creset - %<(16,trunc)%Cgreen%an%Creset - %s %C(auto)%d" --date=local'
+alias glo='git log --pretty=format:"%Cred%cs%Creset - %C(auto)%h%Creset - %Cgreen%an %G?%Creset - %s %C(auto)%d" --date=local'
 
 # Git Merge
 alias gm='git merge'
