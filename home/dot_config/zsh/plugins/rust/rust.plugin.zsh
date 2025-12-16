@@ -1,11 +1,12 @@
+# Export Cargo and Rustup paths so XDG Base Directory Specification is adhered to if installation is attempted
+export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
+export RUSTUP_HOME="$XDG_CONFIG_HOME/rustup"
+
 # If .cargo/bin/ does not exist, we don't need to do anything
 if [[ ! -d $XDG_CONFIG_HOME/cargo/bin ]]; then
   _debug 'Cargo is not installed'
   return
 fi
-
-export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
-export RUSTUP_HOME="$XDG_CONFIG_HOME/rustup"
 
 # The following will preprend to PATH the cargo bin directory
 if [[ -f "$CARGO_HOME/env" ]]; then
