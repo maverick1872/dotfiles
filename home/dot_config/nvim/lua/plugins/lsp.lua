@@ -47,6 +47,7 @@ return {
         'lua_ls', -- Lua
         'dockerls', -- Docker
         'ts_ls', -- Typescript/Javascript
+        'biome',
         'helm_ls', -- Helm
       },
     })

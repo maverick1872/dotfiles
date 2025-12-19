@@ -5,18 +5,18 @@ return {
   opts = {
     format_on_save = false, -- Formatting is triggered by the `FormatBuffer` command
     formatters_by_ft = {
-      css = { 'prettier' },
-      html = { 'prettier' },
-      json = { 'prettier' },
-      javascript = { 'prettier' },
-      javascriptreact = { 'prettier' },
+      css = { 'biome', 'prettier' },
+      html = { 'biome', 'prettier' },
+      json = { 'biome', 'prettier' },
+      javascript = { 'biome', 'prettier' },
+      javascriptreact = { 'biome', 'prettier' },
       jinja = { 'djlint' },
       lua = { 'stylua', 'trim_whitespace' },
       sh = { 'beautysh' },
       terraform = { 'terraform_fmt' },
       hcl = { 'terraform_fmt' },
-      typescript = { 'prettier' },
-      typescriptreact = { 'prettier' },
+      typescript = { 'biome', 'prettier' },
+      typescriptreact = { 'biome', 'prettier' },
       yaml = { 'yamlfmt' },
     },
     formatters = {
