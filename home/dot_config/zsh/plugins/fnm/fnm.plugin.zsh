@@ -8,6 +8,10 @@ fi
 if fnm exec --using=system which node &>/dev/null; then
   _debug "FNM: Setting system node version to FNM system alias"
   export SYSTEM_NODE_PATH=$(fnm exec --using=system which node)
+  # Guard against mistakenly pointing SYSTEM_NODE_PATH to an fnm-managed node
+  if printf '%s' "$SYSTEM_NODE_PATH" | grep -q 'fnm'; then
+    echo "[ZSH] FNM Plugin: SYSTEM_NODE_PATH points unexpectedly to an fnm-managed node: $SYSTEM_NODE_PATH" >&2
+  fi
 elif fnm exec --using=default which node &>/dev/null; then
   _debug "FNM: Setting system node version to FNM default alias (system not available)"
   export SYSTEM_NODE_PATH=$(fnm exec --using=default which node)
@@ -62,3 +66,18 @@ fnm completions --shell=zsh >| "$ZSH_CACHE_DIR/completions/_fnm" &|
 # autoload -U add-zsh-hook
 # add-zsh-hook chpwd __autoload-node-version
 
+
+fnm() {
+  local subcommand=$1
+  shift || true
+
+  case "$subcommand" in
+    clean)
+      _debug "FNM: Cleaning all Node versions"
+      command fnm ls | awk '$2 != "system" {print $2}' | xargs -p -I $ fnm uninstall $
+      ;;
+    *)
+      command fnm "$subcommand" "$@"
+      ;;
+  esac
+}
