@@ -57,6 +57,17 @@ local lsp = {
   icon = ' LSPs:',
   color = { fg = colors.ltgrey, gui = 'bold' },
 }
+local function custom_buffer_name(buffer, context)
+  -- Get parent folder name and buffer name
+  if buffer == '[No Name]' then
+    return buffer
+  end
+
+  local bufname = vim.api.nvim_buf_get_name(context.bufnr)
+  local parentFolder = vim.fn.fnamemodify(bufname, ':h:t')
+  local filename = vim.fn.fnamemodify(bufname, ':t')
+  return parentFolder .. '/' .. filename
+end
 
 return {
   'nvim-lualine/lualine.nvim',
@@ -169,7 +180,8 @@ return {
       lualine_a = {
         {
           'buffers',
-          show_filename_only = true,
+          show_filename_only = false,
+          fmt = custom_buffer_name,
           show_modified_status = true,
           buffers_color = {
             active = { fg = colors.white, bg = colors.dark_violet, gui = 'bold' },
