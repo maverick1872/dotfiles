@@ -1,3 +1,6 @@
+# For some reason this doesn't work when it's defined in .config/ripgrep/ignore
+# I'm guessing that's because there's a precedence order with a gitignore files
+
 # Files that should always be included in rg results
 !.env
 

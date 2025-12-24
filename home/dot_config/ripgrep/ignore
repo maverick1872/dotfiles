@@ -1,8 +1,10 @@
-# Files that should be ignored in rg results
+# Directories that should always be ignored 
 .git/
 dist/
-package-lock.json
 .idea/
 .vscode/
+
+# Files that should be ignored
+*.lock
 
 # vim: set ft=gitignore:
