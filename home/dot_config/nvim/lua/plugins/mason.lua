@@ -3,6 +3,7 @@ local formatters = {
   'prettierd', -- Daemonized Prettier
   'shfmt', -- Shell (sh/bash/mksh)
   'stylua', -- Lua
+  'taplo', -- TOML
   'yamlfmt', -- Yaml
 }
 

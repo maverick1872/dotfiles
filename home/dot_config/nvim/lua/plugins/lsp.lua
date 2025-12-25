@@ -47,7 +47,8 @@ return {
         'lua_ls', -- Lua
         'dockerls', -- Docker
         'ts_ls', -- Typescript/Javascript
-        'biome',
+        'biome', -- BiomeJS Formatter (supports multiple filetypes)
+        'taplo', --TOML
         'helm_ls', -- Helm
       },
     })
