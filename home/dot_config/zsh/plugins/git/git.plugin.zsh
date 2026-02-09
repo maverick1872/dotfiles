@@ -11,7 +11,7 @@ git_main_branch() {
       return
     fi
   done
-  echo "No main branch found. Set git local config 'user.mainBranchName' to specify a non traditional branch" >&2
+  echo "No main branch found. Use \"git config --local 'user.mainBranchName'\" to specify a non traditional branch" >&2
   return 1
 }
 
@@ -28,7 +28,7 @@ git_develop_branch() {
       return
     fi
   done
-  echo "No develop branch found. Set git local config 'user.developBranchName' to specify a non traditional branch" >&2
+  echo "No develop branch found. Use \"git config --local 'user.developBranchName'\" to specify a non traditional branch" >&2
   return 1
 }
 
