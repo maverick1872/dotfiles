@@ -9,14 +9,12 @@
 ## The follow block is all pre-defined values for a non-interactive setup
 {{ $name := "Jonathon Terry" -}}
 {{ $isPersonalMachine := false -}}
-{{ $registries := false -}}
 {{ $githubToken := false -}}
 
 ## Override pre-defined values if interactive mode is allowed
 {{- if $interactive -}}
 {{- writeToStdout "Interactive configuration generation\n" -}}
 {{- $isPersonalMachine = promptBool  "Is this a personal machine" -}}
-{{- $registries = splitList " " (promptString "Configure any GitHub Package Organizations") }}
 {{- end -}}
 
 sourceDir = {{ .chezmoi.sourceDir | quote }}
@@ -37,6 +35,3 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
   isPersonal = {{ $isPersonalMachine }}
   osID = {{ $osID | quote }}
 
-  {{ if and ($registries) ( first $registries ) -}}
-    registries = {{ $registries | toToml }}
-  {{ end -}}
