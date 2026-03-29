@@ -4,6 +4,11 @@ source $ZDOTDIR/core/env.zsh
 # Load all options
 source $ZDOTDIR/core/options.zsh
 
+# Load theme configuration
+if [[ $ZSH_THEME = "powerlevel10k/powerlevel10k" ]]; then
+  source $ZDOTDIR/themes/p10k-config.zsh
+fi
+
 # Load OMZ if not disabled
 if [[ -z $NO_OMZ ]]; then
   # Define where Oh My ZSH is installed
