@@ -5,3 +5,22 @@ _debug() {
   fi
 }
 
+# Usage: _require_commands <plugin_name> <cmd> [cmd...]
+# Returns 1 and skips loading if any command is missing.
+#
+# Example:
+#   _require_commands "go.plugin.zsh" go gofmt || return
+#
+_require_commands() {
+  local plugin="$1"
+  shift
+
+  for cmd in "$@"; do
+    if (( ! $+commands[$cmd] )); then
+      _debug "Skipping $plugin (missing: $cmd)"
+      return 1
+    fi
+  done
+
+  _debug "Loading $plugin"
+}
