@@ -1,0 +1,7 @@
+# Provide _debug functionality as early as possible
+_debug() {
+  if [[ -n ${ZSH_DEBUG-} ]]; then
+    echo "[ZSH] $1"
+  fi
+}
+

@@ -1,3 +1,6 @@
+# Drop duplicate occurrences when present
+typeset -U path fpath manpath infopath
+
 # Set XDG Spec Dirs explicitly
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_CONFIG_HOME=$HOME/.config
@@ -11,16 +14,8 @@ export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 export ZSH_CACHE_DIR=$XDG_CACHE_HOME/zsh
 export ZSH_STATE_DIR=$XDG_STATE_HOME/zsh
 
-# Provide _debug functionality as early as possible
-_debug() {
-  if [[ -n ${ZSH_DEBUG-} ]]; then
-    echo "[ZSH] $1"
-  fi
-}
-
 # Source .zshenv from custom configuration dir if it exists
 if [[ -f $ZDOTDIR/.zshenv ]]; then
-  _debug 'Loading ${ZDOTDIR}/.zshenv'
   source $ZDOTDIR/.zshenv
 fi
 
