@@ -11,6 +11,7 @@ fi
 
 # Load OMZ if not disabled
 if [[ -z $NO_OMZ ]]; then
+  _debug "Initializing with OMZ"
   # Define where Oh My ZSH is installed
   export ZSH=$XDG_DATA_HOME/oh-my-zsh
   # Define where Oh My ZSH overrides live
@@ -27,6 +28,8 @@ if [[ -z $NO_OMZ ]]; then
   # Add alias to load zsh without OMZ
   alias custom-zsh="NO_OMZ=1 zsh"
 else
+  _debug "Initializing without omz"
+
   has_plugin() {
     local name=$1
     builtin test -f $ZDOTDIR/plugins/$name/$name.plugin.zsh
@@ -37,12 +40,19 @@ else
     builtin test -f $ZDOTDIR/plugins/$name/_$name
   }
 
-  source $ZDOTDIR/core/completion.zsh
+
+  FPATH="/usr/share/zsh/${ZSH_VERSION}/functions:${FPATH}"
+
   # Load Completion Configuration
+  source $ZDOTDIR/core/completion.zsh
+
+  # Load theme utils
+  source $ZDOTDIR/themes/utils.zsh
 
   # Add all themes to fpath and load the chosen theme if applicable
   FPATH="${ZDOTDIR}/themes/:${FPATH}"
-  autoload -Uz ${ZTHEME:=default}.zsh-theme; ${ZTHEME:=default}.zsh-theme
+  source $ZDOTDIR/themes/utils.zsh
+  source "${ZDOTDIR}/themes/${ZTHEME:=default}.zsh-theme"
 
   # Load all plugins
   for plugin ($plugins); do
@@ -56,3 +66,4 @@ else
     # fi
   done
 fi
+

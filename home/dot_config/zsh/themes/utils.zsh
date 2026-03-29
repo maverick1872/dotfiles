@@ -1,3 +1,5 @@
+autoload -U colors && colors
+
 build_prompt () {
 	local promptString="" 
 	if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]
@@ -25,6 +27,12 @@ build_prompt () {
 	repo_dir="$blueb$internal_repo_path$reset" 
 	promptString+="$repo_org$repo_name/$repo_dir%1(j. $jobs_bg.)" 
 	echo $promptString
+}
+
+git_prompt_info() {
+  local branch
+  branch=$(git symbolic-ref --short HEAD 2>/dev/null) || return
+  echo "${ZSH_THEME_GIT_PROMPT_PREFIX}${branch}${ZSH_THEME_GIT_PROMPT_SUFFIX}"
 }
 
 git_status_info () {
