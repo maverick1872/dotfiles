@@ -1,7 +1,5 @@
 ## If FNM (Fast Node Manager) is not installed, don't load this plugin
-if (( ! $+commands[fnm] )); then
-  return
-fi
+_require_commands "fnm.plugin.zsh" fnm || return
 
 # Maintain a reference to the system/default node path so that we can use it as necessary
 # Try system version first, then fall back to default if system is not available

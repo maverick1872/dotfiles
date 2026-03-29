@@ -1,3 +1,5 @@
+_require_commands "node.plugin.zsh" node || return
+
 # NODE & NPM
 alias update-npm='npm install -g npm'
 alias npmid='npm i -D'

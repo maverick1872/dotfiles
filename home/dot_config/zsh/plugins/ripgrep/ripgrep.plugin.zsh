@@ -1,8 +1,4 @@
-## If rg is not installed, don't load this plugin
-if (( ! $+commands[rg] )); then
-  _debug 'Ripgrep is not installed'
-  return
-fi
+_require_commands "ripgrep.plugin.zsh" rg || return
 
 export RIPGREP_CONFIG_DIR="$HOME/.config/ripgrep"
 export RIPGREP_CONFIG_PATH="${RIPGREP_CONFIG_DIR}/config"

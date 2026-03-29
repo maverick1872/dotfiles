@@ -24,3 +24,23 @@ _require_commands() {
 
   _debug "Loading $plugin"
 }
+
+# Usage: _require_dirs <dir> [dir...]
+# Returns 1 and skips loading if any directory is missing.
+#
+# Example:
+#   _require_dirs "$CARGO_HOME/bin" || return
+#
+_require_dirs() {
+  local plugin="$1"
+  shift
+
+  for dir in "$@"; do
+    if [[ ! -d "$dir" ]]; then
+      _debug "Skipping $plugin (missing directory: $dir)"
+      return 1
+    fi
+  done
+
+  _debug "Loading $plugin"
+}

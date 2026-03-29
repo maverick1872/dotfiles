@@ -1,3 +1,5 @@
+_require_commands "docker.plugin.zsh" docker || return
+
 alias clean-images='docker images -aq | xargs docker rmi'
 alias stop-containers='docker ps -aq | xargs docker stop'
 alias clean-containers='docker ps -aq | xargs docker rm'

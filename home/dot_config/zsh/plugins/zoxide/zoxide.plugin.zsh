@@ -1,7 +1,4 @@
-if (( ! $+commands[zoxide] )); then
-  _debug "zoxide is not installed"
-  return
-fi
+_require_commands "zoxide.plugin.zsh" zoxide || return
 
 eval "$(zoxide init --cmd cd zsh)"
 

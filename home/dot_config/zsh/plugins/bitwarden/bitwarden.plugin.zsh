@@ -1,3 +1,5 @@
+_require_commands "bitwarden.plugin.zsh" bw || return
+
 # Wrapper for BitWarden CLI to auto unlock vault and persist session when attempting to sync
 bw() {
   if [[ ! -d "${HOME}/.cache/bw" ]]; then

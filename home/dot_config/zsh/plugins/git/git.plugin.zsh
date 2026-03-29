@@ -1,3 +1,5 @@
+_require_commands "git.plugin.zsh" git || return
+
 git_main_branch() {
   command git rev-parse --git-dir &>/dev/null || return
   

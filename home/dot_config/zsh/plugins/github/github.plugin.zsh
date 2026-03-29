@@ -1,3 +1,5 @@
+_require_commands "github.plugin.zsh" gh || return
+
 # Checkout Github PR
 gcopr() {
   if [[ -n $1 ]]; then

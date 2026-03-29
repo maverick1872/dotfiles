@@ -1,3 +1,5 @@
+_require_commands "chezmoi.plugin.zsh" chezmoi || return
+
 compdef _chezmoi ch
 
 ch() {

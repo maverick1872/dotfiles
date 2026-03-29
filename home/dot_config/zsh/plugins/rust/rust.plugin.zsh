@@ -2,11 +2,7 @@
 export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
 export RUSTUP_HOME="$XDG_CONFIG_HOME/rustup"
 
-# If .cargo/bin/ does not exist, we don't need to do anything
-if [[ ! -d $XDG_CONFIG_HOME/cargo/bin ]]; then
-  _debug 'Cargo is not installed'
-  return
-fi
+_require_dirs "rust.plugin.zsh" "${CARGO_HOME}/bin" || return
 
 # The following will preprend to PATH the cargo bin directory
 if [[ -f "$CARGO_HOME/env" ]]; then

@@ -2,6 +2,8 @@
 # gcloud plugin for oh-my-zsh                       #
 # Author: Ian Chesal (github.com/ianchesal)         #
 #####################################################
+_require_commands "gcloud.plugin.zsh" gcloud || return
+
 
 if [[ -z "${CLOUDSDK_HOME}" ]]; then
   search_locations=(

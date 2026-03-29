@@ -1,7 +1,4 @@
-if ! (( $+commands[tmux] )); then
-  _debug 'Tmux is not installed'
-  return 1
-fi
+_require_commands "tmux.plugin.zsh" tmux || return
 
 # CONFIGURATION VARIABLES
 # Automatically start tmux

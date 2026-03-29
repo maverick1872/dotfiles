@@ -1,8 +1,4 @@
-## If restic is not installed, don't load this plugin
-if (( ! $+commands[restic] )); then
-  _debug 'Restic is not installed'
-  return
-fi
+_require_commands "restic.plugin.zsh" restic || return
 
 export RESTIC_CONFIG_DIR="$HOME/.config/restic"
 
