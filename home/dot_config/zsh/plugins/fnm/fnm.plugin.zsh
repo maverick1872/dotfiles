@@ -5,18 +5,21 @@ fi
 
 # Maintain a reference to the system/default node path so that we can use it as necessary
 # Try system version first, then fall back to default if system is not available
-if fnm exec --using=system which node &>/dev/null; then
-  _debug "FNM: Setting system node version to FNM system alias"
-  export SYSTEM_NODE_PATH=$(fnm exec --using=system which node)
-  # Guard against mistakenly pointing SYSTEM_NODE_PATH to an fnm-managed node
-  if printf '%s' "$SYSTEM_NODE_PATH" | grep -q 'fnm'; then
-    echo "[ZSH] FNM Plugin: SYSTEM_NODE_PATH points unexpectedly to an fnm-managed node: $SYSTEM_NODE_PATH" >&2
-  fi
-elif fnm exec --using=default which node &>/dev/null; then
-  _debug "FNM: Setting system node version to FNM default alias (system not available)"
-  export SYSTEM_NODE_PATH=$(fnm exec --using=default which node)
-else
-  _debug "FNM: Warning - Neither system nor default node version available"
+if [[ -n "$SYSTEM_NODE_PATH" ]]; then
+	_debug "FNM: SYSTEM_NODE_PATH already set to $SYSTEM_NODE_PATH, skipping detection"
+	if fnm exec --using=system which node &>/dev/null; then
+		_debug "FNM: Setting system node version to FNM system alias"
+		export SYSTEM_NODE_PATH=$(fnm exec --using=system which node)
+		# Guard against mistakenly pointing SYSTEM_NODE_PATH to an fnm-managed node
+		if printf '%s' "$SYSTEM_NODE_PATH" | grep -q 'fnm'; then
+			echo "[ZSH] FNM Plugin: SYSTEM_NODE_PATH points unexpectedly to an fnm-managed node: $SYSTEM_NODE_PATH" >&2
+		fi
+	elif fnm exec --using=default which node &>/dev/null; then
+		_debug "FNM: Setting system node version to FNM default alias (system not available)"
+		export SYSTEM_NODE_PATH=$(fnm exec --using=default which node)
+	else
+		_debug "FNM: Warning - Neither system nor default node version available"
+	fi
 fi
 
 eval "$(fnm env --use-on-cd)"
