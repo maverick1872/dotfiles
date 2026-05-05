@@ -70,9 +70,9 @@ autoCmd('BufWritePost', {
 autoCmd('BufReadPost', {
   pattern = '*/node_modules/*',
   callback = function()
-    -- default to presentation mode enabled
+    -- Only set buffer-local mode for node_modules
     vim.b.presentation_mode = true
-    vim.cmd('PresentationModeEnable')
+    vim.diagnostic.enable(false, { bufnr = vim.api.nvim_get_current_buf() })
   end,
   desc = 'Enable presentation mode for files in node_modules',
 })
@@ -89,7 +89,7 @@ autoCmd('InsertEnter', {
 autoCmd('InsertLeave', {
   pattern = '*',
   callback = function()
-    if not vim.g.presentation_mode or vim.b.presentation_mode then
+    if not (vim.g.presentation_mode or vim.b.presentation_mode) then
       vim.diagnostic.enable(true)
     end
   end,

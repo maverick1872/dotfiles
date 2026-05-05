@@ -64,23 +64,31 @@ userCmd('FormatBuffer', function(args)
 end, { desc = 'Format the current buffer, use ! for sync mode', bang = true })
 
 userCmd('PresentationModeEnable', function()
-  -- Store the previous state when enabling manually
-  vim.b.presentation_mode = true
   vim.g.presentation_mode = true
+
+  -- Disable diagnostics globally
   vim.diagnostic.enable(false)
-  notify('Presentation mode enabled', 'info')
-end, { desc = 'Enable presentation mode' })
+  notify('Presentation mode enabled globally', 'info')
+end, { desc = 'Enable presentation mode globally' })
 
 userCmd('PresentationModeDisable', function()
-  vim.b.presentation_mode = false
   vim.g.presentation_mode = false
+
+  -- Clear buffer-local presentation mode for all buffers
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) then
+      vim.b[buf].presentation_mode = false
+    end
+  end
+
+  -- Re-enable diagnostics globally
   vim.diagnostic.enable(true)
-  notify('Presentation mode disabled', 'info')
-end, { desc = 'Disable presentation mode' })
+  notify('Presentation mode disabled globally', 'info')
+end, { desc = 'Disable presentation mode globally and reset all buffers' })
 
 userCmd('PresentationModeToggle', function(args)
   if args.bang then
-    -- PresentationModeToggle! will disable presentation mode for all buffers
+    -- PresentationModeToggle! toggles global mode for all buffers
     if vim.g.presentation_mode then
       vim.cmd('PresentationModeDisable')
     else
@@ -88,11 +96,22 @@ userCmd('PresentationModeToggle', function(args)
     end
     return
   end
+
+  -- Toggle buffer-local mode
   vim.b.presentation_mode = not vim.b.presentation_mode
 
+  -- Update diagnostics based on combined state
   local bufnr = vim.api.nvim_get_current_buf()
-  vim.diagnostic.enable(true, { nil, bufnr })
-end, { desc = 'Toggle presentation mode for current buffer only', bang = true })
+  local is_presentation_active = vim.g.presentation_mode or vim.b.presentation_mode
+
+  if is_presentation_active then
+    vim.diagnostic.enable(false, { bufnr = bufnr })
+  else
+    vim.diagnostic.enable(true, { bufnr = bufnr })
+  end
+
+  notify('Presentation mode ' .. (vim.b.presentation_mode and 'enabled' or 'disabled') .. ' for this buffer', 'info')
+end, { desc = 'Toggle presentation mode for current buffer, use ! for global', bang = true })
 
 userCmd('FormatDisable', function(args)
   if args.bang then

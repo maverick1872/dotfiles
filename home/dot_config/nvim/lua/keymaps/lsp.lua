@@ -6,14 +6,15 @@ map('n', '<leader>ll', function()
   vim.cmd('ListLspCapabilities')
 end, 'Buffer Clients Information')
 
--- Presentation mode
+-- Presentation mode - buffer-local toggle
 map('n', '<leader>lp', function()
   vim.cmd('PresentationModeToggle')
-end, 'Presentation mode toggle for buffer')
+end, 'Presentation mode toggle (buffer)')
 
-map('n', '<leader>lp', function()
+-- Presentation mode - global toggle
+map('n', '<leader>lP', function()
   vim.cmd('PresentationModeToggle!')
-end, 'Presentation mode toggle')
+end, 'Presentation mode toggle (global)')
 
 -- Treesitter
 if is_available('nvim-treesitter') then
