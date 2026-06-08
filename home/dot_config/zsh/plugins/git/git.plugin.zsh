@@ -93,7 +93,7 @@ ucp() {
 
 ## Git Stash w/ message
 gsta() {
-  git stash push -m "$*"
+  git stash push -k -m "$*"
 }
 
 gstas() {
